@@ -9623,16 +9623,10 @@ var __spread = undefined && undefined.__spread || function () {
       }
     },
     sortBy: {
-      type: [String, Array],
-      default: function _default() {
-        return [];
-      }
+      type: [String, Array]
     },
     sortDesc: {
-      type: [Boolean, Array],
-      default: function _default() {
-        return [];
-      }
+      type: [Boolean, Array]
     },
     customSort: {
       type: Function,
@@ -15019,8 +15013,9 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__["default"])(_
         }, [_this.$createElement('div', {
           class: _this.contentClasses,
           attrs: __assign({
-            role: 'document',
-            tabindex: _this.isActive ? 0 : undefined
+            role: 'dialog',
+            tabindex: _this.isActive ? 0 : undefined,
+            'aria-modal': _this.hideOverlay ? undefined : 'true'
           }, _this.getScopeIdAttrs()),
           on: {
             keydown: _this.onKeydown
@@ -15078,9 +15073,6 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__["default"])(_
       staticClass: 'v-dialog__container',
       class: {
         'v-dialog__container--attached': this.attach === '' || this.attach === true || this.attach === 'attach'
-      },
-      attrs: {
-        role: 'dialog'
       }
     }, [this.genActivator(), this.genContent()]);
   }
@@ -20045,7 +20037,9 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_12__["default"])(_
 
 
       this.runDelay('close', function () {
-        if (_this.$refs.content.contains(e.relatedTarget)) return;
+        var _a;
+
+        if ((_a = _this.$refs.content) === null || _a === void 0 ? void 0 : _a.contains(e.relatedTarget)) return;
         requestAnimationFrame(function () {
           _this.isActive = false;
 
@@ -20669,7 +20663,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_13__["default"])(O
       return isNaN(width) ? this.$el.clientWidth : width;
     },
     updateMiniVariant: function updateMiniVariant(val) {
-      if (this.miniVariant !== val) this.$emit('update:mini-variant', val);
+      if (this.expandOnHover && this.miniVariant !== val) this.$emit('update:mini-variant', val);
     }
   },
   render: function render(h) {
@@ -28347,7 +28341,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__["factory"])('tabsBar'), _m
     data.attrs = __assign(__assign({}, data.attrs), {
       'aria-selected': String(this.isActive),
       role: 'tab',
-      tabindex: 0
+      tabindex: this.disabled ? -1 : 0
     });
     data.on = __assign(__assign({}, data.on), {
       keydown: function keydown(e) {
@@ -35009,7 +35003,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.2";
+  Vuetify.version = "2.6.3";
   Vuetify.config = {
     silent: false
   };
@@ -40178,7 +40172,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_4__["default"])(_s
       var activatorLeft = (this.attach !== false ? a.offsetLeft : a.left) || 0;
       var minWidth = Math.max(a.width, c.width);
       var left = 0;
-      left += this.left ? activatorLeft - (minWidth - a.width) : activatorLeft;
+      left += activatorLeft;
+      if (this.left || this.$vuetify.rtl && !this.right) left -= minWidth - a.width;
 
       if (this.offsetX) {
         var maxWidth = isNaN(Number(this.maxWidth)) ? a.width : Math.min(a.width, Number(this.maxWidth));
