@@ -3268,12 +3268,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -3348,9 +3350,9 @@ var __spread = undefined && undefined.__spread || function () {
       this.days.forEach(function (d, j) {
         var day = new Array(_this.parsedCategories.length || 1);
         day.fill(d);
-        days.push.apply(days, __spread(day.map(function (v, i) {
+        days.push.apply(days, __spreadArray([], __read(day.map(function (v, i) {
           return _this.genDay(v, j, i);
-        })));
+        })), false));
       });
       return days;
     },
@@ -3365,7 +3367,7 @@ var __spread = undefined && undefined.__spread || function () {
         on: this.getDefaultMouseEventHandlers(':time', function (e) {
           return _this.getSlotScope(_this.getTimestampAtEvent(e, day));
         })
-      }, __spread(this.genDayIntervals(index, category), this.genDayBody(day, category)));
+      }, __spreadArray(__spreadArray([], __read(this.genDayIntervals(index, category)), false), __read(this.genDayBody(day, category)), false));
     },
     genDayIntervals: function genDayIntervals(index, category) {
       var _this = this;
@@ -3488,12 +3490,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -3546,7 +3550,7 @@ var __spread = undefined && undefined.__spread || function () {
         style: {
           marginRight: this.scrollPush + 'px'
         }
-      }, __spread([this.genHeadIntervals()], this.genHeadDays()));
+      }, __spreadArray([this.genHeadIntervals()], __read(this.genHeadDays()), false));
     },
     genHeadIntervals: function genHeadIntervals() {
       var width = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["convertToUnit"])(this.intervalWidth);
@@ -3572,7 +3576,7 @@ var __spread = undefined && undefined.__spread || function () {
             nativeEvent: nativeEvent
           }, _this.getSlotScope(day));
         })
-      }, __spread([this.genHeadWeekday(day), this.genHeadDayLabel(day)], this.genDayHeader(day, index)));
+      }, __spreadArray([this.genHeadWeekday(day), this.genHeadDayLabel(day)], __read(this.genDayHeader(day, index)), false));
     },
     genDayHeader: function genDayHeader(day, index) {
       var _this = this;
@@ -3645,7 +3649,7 @@ var __spread = undefined && undefined.__spread || function () {
     genDayContainer: function genDayContainer() {
       return this.$createElement('div', {
         staticClass: 'v-calendar-daily__day-container'
-      }, __spread([this.genBodyIntervals()], this.genDays()));
+      }, __spreadArray([this.genBodyIntervals()], __read(this.genDays()), false));
     },
     genDays: function genDays() {
       return this.days.map(this.genDay);
@@ -3662,7 +3666,7 @@ var __spread = undefined && undefined.__spread || function () {
             nativeEvent: nativeEvent
           }, _this.getSlotScope(_this.getTimestampAtEvent(nativeEvent, day)));
         })
-      }, __spread(this.genDayIntervals(index), this.genDayBody(day)));
+      }, __spreadArray(__spreadArray([], __read(this.genDayIntervals(index)), false), __read(this.genDayBody(day)), false));
     },
     genDayBody: function genDayBody(day) {
       var _this = this;
@@ -3859,12 +3863,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -3999,13 +4005,13 @@ var __spread = undefined && undefined.__spread || function () {
             nativeEvent: nativeEvent
           }, day);
         })
-      }, __spread([this.genDayLabel(day)], Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["getSlot"])(this, 'day', function () {
+      }, __spreadArray([this.genDayLabel(day)], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["getSlot"])(this, 'day', function () {
         return __assign({
           outside: outside,
           index: index,
           week: week
         }, day);
-      }) || []));
+      }) || []), false));
     },
     genDayLabel: function genDayLabel(day) {
       return this.$createElement('div', {
@@ -4056,7 +4062,7 @@ var __spread = undefined && undefined.__spread || function () {
           e.preventDefault();
         }
       }
-    }, __spread([!this.hideHeader ? this.genHead() : ''], this.genWeeks()));
+    }, __spreadArray([!this.hideHeader ? this.genHead() : ''], __read(this.genWeeks()), false));
   }
 }));
 
@@ -7547,7 +7553,7 @@ var __assign = undefined && undefined.__assign || function () {
   name: 'v-simple-checkbox',
   functional: true,
   directives: {
-    ripple: _directives_ripple__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Ripple: _directives_ripple__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: __assign(__assign(__assign({}, _mixins_colorable__WEBPACK_IMPORTED_MODULE_4__["default"].options.props), _mixins_themeable__WEBPACK_IMPORTED_MODULE_5__["default"].options.props), {
     disabled: Boolean,
@@ -7586,16 +7592,17 @@ var __assign = undefined && undefined.__assign || function () {
     }), icon));
 
     if (props.ripple && !props.disabled) {
-      var ripple_1 = h('div', _mixins_colorable__WEBPACK_IMPORTED_MODULE_4__["default"].options.methods.setTextColor(props.color, {
+      var ripple = h('div', _mixins_colorable__WEBPACK_IMPORTED_MODULE_4__["default"].options.methods.setTextColor(props.color, {
         staticClass: 'v-input--selection-controls__ripple',
         directives: [{
+          def: _directives_ripple__WEBPACK_IMPORTED_MODULE_1__["default"],
           name: 'ripple',
           value: {
             center: true
           }
         }]
       }));
-      children.push(ripple_1);
+      children.push(ripple);
     }
 
     return h('div', Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_6__["default"])(data, {
@@ -9595,12 +9602,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Helpers
 
 
@@ -9701,11 +9710,11 @@ var __spread = undefined && undefined.__spread || function () {
     var groupDiff = groupBy.length - groupDesc.length;
 
     if (sortDiff > 0) {
-      (_a = internalOptions.sortDesc).push.apply(_a, __spread(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_0__["fillArray"])(sortDiff, false)));
+      (_a = internalOptions.sortDesc).push.apply(_a, __spreadArray([], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_0__["fillArray"])(sortDiff, false)), false));
     }
 
     if (groupDiff > 0) {
-      (_b = internalOptions.groupDesc).push.apply(_b, __spread(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_0__["fillArray"])(groupDiff, false)));
+      (_b = internalOptions.groupDesc).push.apply(_b, __spreadArray([], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_0__["fillArray"])(groupDiff, false)), false));
     }
 
     return {
@@ -9976,8 +9985,8 @@ var __spread = undefined && undefined.__spread || function () {
       }
 
       if (this.internalOptions.groupBy.length) {
-        sortBy = __spread(this.internalOptions.groupBy, sortBy);
-        sortDesc = __spread(this.internalOptions.groupDesc, sortDesc);
+        sortBy = __spreadArray(__spreadArray([], __read(this.internalOptions.groupBy), false), __read(sortBy), false);
+        sortDesc = __spreadArray(__spreadArray([], __read(this.internalOptions.groupDesc), false), __read(sortDesc), false);
       }
 
       return this.customSort(items, sortBy, sortDesc, this.locale);
@@ -10213,13 +10222,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         props: {
           disabled: disabled || this.disablePagination,
           icon: true,
-          text: true
+          text: true // dark: this.dark, // TODO: add mixin
+          // light: this.light // TODO: add mixin
+
         },
         on: {
           click: click
         },
         attrs: {
-          'aria-label': label
+          'aria-label': label // TODO: Localization
+
         }
       }, [this.$createElement(_VIcon__WEBPACK_IMPORTED_MODULE_2__["default"], icon)]);
     },
@@ -10871,12 +10883,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Types
 
 
@@ -10912,15 +10926,15 @@ function needsTd(slot) {
       var regularSlot = computedSlots.hasOwnProperty(slotName) && computedSlots[slotName];
 
       if (scopedSlot) {
-        children.push.apply(children, __spread(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["wrapInArray"])(scopedSlot({
+        children.push.apply(children, __spreadArray([], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["wrapInArray"])(scopedSlot({
           item: props.item,
           isMobile: false,
           header: header,
           index: props.index,
           value: value
-        }))));
+        }))), false));
       } else if (regularSlot) {
-        children.push.apply(children, __spread(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["wrapInArray"])(regularSlot)));
+        children.push.apply(children, __spreadArray([], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["wrapInArray"])(regularSlot)), false));
       } else {
         children.push(value == null ? value : String(value));
       }
@@ -10976,12 +10990,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -11014,17 +11030,17 @@ var __spread = undefined && undefined.__spread || function () {
         staticClass: props.headerClass
       }, computedSlots['column.header']));
     } else if (computedSlots['row.header']) {
-      children.push.apply(children, __spread(computedSlots['row.header']));
+      children.push.apply(children, __spreadArray([], __read(computedSlots['row.header']), false));
     }
 
-    if (computedSlots['row.content'] && props.value) children.push.apply(children, __spread(computedSlots['row.content']));
+    if (computedSlots['row.content'] && props.value) children.push.apply(children, __spreadArray([], __read(computedSlots['row.content']), false));
 
     if (computedSlots['column.summary']) {
       children.push(h('tr', {
         staticClass: props.summaryClass
       }, computedSlots['column.summary']));
     } else if (computedSlots['row.summary']) {
-      children.push.apply(children, __spread(computedSlots['row.summary']));
+      children.push.apply(children, __spreadArray([], __read(computedSlots['row.summary']), false));
     }
 
     return children;
@@ -11286,6 +11302,17 @@ function searchTableItems(items, search, headersWithCustomFilters, headersWithou
       }
 
       return itemsPerPage;
+    },
+    groupByText: function groupByText() {
+      var _this = this;
+
+      var _a, _b, _c;
+
+      return (_c = (_b = (_a = this.headers) === null || _a === void 0 ? void 0 : _a.find(function (header) {
+        var _a;
+
+        return header.value === ((_a = _this.internalGroupBy) === null || _a === void 0 ? void 0 : _a[0]);
+      })) === null || _b === void 0 ? void 0 : _b.text) !== null && _c !== void 0 ? _c : '';
     }
   },
   created: function created() {
@@ -11481,7 +11508,7 @@ function searchTableItems(items, search, headersWithCustomFilters, headersWithou
         var column = this.$createElement('td', {
           staticClass: 'text-start',
           attrs: this.colspanAttrs
-        }, [toggle, props.options.groupBy[0] + ": " + group, remove]);
+        }, [toggle, this.groupByText + ": " + group, remove]);
         children.unshift(this.$createElement('template', {
           slot: 'column.header'
         }, [column]));
@@ -11910,12 +11937,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -11980,7 +12009,7 @@ var __spread = undefined && undefined.__spread || function () {
           width: Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["convertToUnit"])(header.width),
           minWidth: Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["convertToUnit"])(header.width)
         },
-        class: __spread(["text-" + (header.align || 'start')], Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["wrapInArray"])(header.class), [header.divider && 'v-data-table__divider']),
+        class: __spreadArray(__spreadArray(["text-" + (header.align || 'start')], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["wrapInArray"])(header.class)), false), [header.divider && 'v-data-table__divider'], false),
         on: {}
       };
       var children = [];
@@ -12084,12 +12113,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -12170,7 +12201,7 @@ var __spread = undefined && undefined.__spread || function () {
 
     if (header && !this.singleSelect) {
       children.push(this.$createElement('div', {
-        class: __spread(['v-data-table-header-mobile__select'], Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["wrapInArray"])(header.class)),
+        class: __spreadArray(['v-data-table-header-mobile__select'], __read(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["wrapInArray"])(header.class)), false),
         attrs: {
           width: header.width
         }
@@ -12932,7 +12963,8 @@ var __read = undefined && undefined.__read || function (o, n) {
       default: 'date',
       validator: function validator(type) {
         return ['date', 'month'].includes(type);
-      }
+      } // TODO: year
+
     },
     value: [Array, String],
     weekdayFormat: Function,
@@ -14170,12 +14202,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
  // Directives
@@ -14406,7 +14440,7 @@ var __spread = undefined && undefined.__spread || function () {
     isSelected: function isSelected(value) {
       if (Array.isArray(this.value)) {
         if (this.range && this.value.length === 2) {
-          var _a = __read(__spread(this.value).sort(), 2),
+          var _a = __read(__spreadArray([], __read(this.value), false).sort(), 2),
               from = _a[0],
               to = _a[1];
 
@@ -14809,12 +14843,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -15024,15 +15060,15 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_9__["default"])(_m
         return el.contains(target);
       }) // So we must have focused something outside the dialog and its children
       ) {
-          // Find and focus the first available element inside the dialog
-          var focusable = this.$refs.dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        // Find and focus the first available element inside the dialog
+        var focusable = this.$refs.dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
 
-          var el = __spread(focusable).find(function (el) {
-            return !el.hasAttribute('disabled');
-          });
+        var el = __spreadArray([], __read(focusable), false).find(function (el) {
+          return !el.hasAttribute('disabled');
+        });
 
-          el && el.focus();
-        }
+        el && el.focus();
+      }
     },
     genContent: function genContent() {
       var _this = this;
@@ -15759,12 +15795,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -16012,7 +16050,7 @@ var __spread = undefined && undefined.__spread || function () {
       return node;
     },
     onInput: function onInput(e) {
-      var files = __spread(e.target.files || []);
+      var files = __spreadArray([], __read(e.target.files || []), false);
 
       this.internalValue = this.multiple ? files : files[0]; // Set initialValue here otherwise isFocused
       // watcher in VTextField will emit a change
@@ -16749,12 +16787,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -16773,7 +16813,7 @@ function makeProps(prefix, def) {
 }
 
 var alignValidator = function alignValidator(str) {
-  return __spread(ALIGNMENT, ['baseline', 'stretch']).includes(str);
+  return __spreadArray(__spreadArray([], __read(ALIGNMENT), false), ['baseline', 'stretch'], false).includes(str);
 };
 
 var alignProps = makeProps('align', function () {
@@ -16785,7 +16825,7 @@ var alignProps = makeProps('align', function () {
 });
 
 var justifyValidator = function justifyValidator(str) {
-  return __spread(ALIGNMENT, ['space-between', 'space-around']).includes(str);
+  return __spreadArray(__spreadArray([], __read(ALIGNMENT), false), ['space-between', 'space-around'], false).includes(str);
 };
 
 var justifyProps = makeProps('justify', function () {
@@ -16797,7 +16837,7 @@ var justifyProps = makeProps('justify', function () {
 });
 
 var alignContentValidator = function alignContentValidator(str) {
-  return __spread(ALIGNMENT, ['space-between', 'space-around', 'stretch']).includes(str);
+  return __spreadArray(__spreadArray([], __read(ALIGNMENT), false), ['space-between', 'space-around', 'stretch'], false).includes(str);
 };
 
 var alignContentProps = makeProps('alignContent', function () {
@@ -18400,10 +18440,12 @@ var BaseItemGroup = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_4__["default"])
       this.updateInternalValue(this.getValue(item, index));
     },
     updateMultiple: function updateMultiple(value) {
+      var _this = this;
+
       var defaultValue = Array.isArray(this.internalValue) ? this.internalValue : [];
       var internalValue = defaultValue.slice();
       var index = internalValue.findIndex(function (val) {
-        return val === value;
+        return _this.valueComparator(val, value);
       });
       if (this.mandatory && // Item already exists
       index > -1 && // value would be reduced below min
@@ -18416,7 +18458,7 @@ var BaseItemGroup = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_4__["default"])
       this.internalValue = internalValue;
     },
     updateSingle: function updateSingle(value) {
-      var isSame = value === this.internalValue;
+      var isSame = this.valueComparator(this.internalValue, value);
       if (this.mandatory && isSame) return;
       this.internalValue = isSame ? undefined : value;
     }
@@ -19717,12 +19759,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -20007,7 +20051,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
             },
             closeConditional: this.closeConditional,
             include: function include() {
-              return __spread([_this.$el], _this.getOpenDependentElements());
+              return __spreadArray([_this.$el], __read(_this.getOpenDependentElements()), false);
             }
           }
         });
@@ -20811,12 +20855,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -21037,7 +21083,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_7__["default"])(_V
       var value = target.value;
       var inputDataArray = (value === null || value === void 0 ? void 0 : value.split('')) || [];
 
-      var newOtp = __spread(this.otp);
+      var newOtp = __spreadArray([], __read(this.otp), false);
 
       for (var i = 0; i < inputDataArray.length; i++) {
         var appIdx = index + i;
@@ -21523,12 +21569,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -21632,15 +21680,15 @@ var __spread = undefined && undefined.__spread || function () {
         var end = this.value + left - 2 - even;
         var secondItem = start - 1 === firstItem + 1 ? 2 : '...';
         var beforeLastItem = end + 1 === lastItem - 1 ? end + 1 : '...';
-        return __spread([1, secondItem], this.range(start, end), [beforeLastItem, this.length]);
+        return __spreadArray(__spreadArray([1, secondItem], __read(this.range(start, end)), false), [beforeLastItem, this.length], false);
       } else if (this.value === left) {
         var end = this.value + left - 1 - even;
-        return __spread(this.range(1, end), ['...', this.length]);
+        return __spreadArray(__spreadArray([], __read(this.range(1, end)), false), ['...', this.length], false);
       } else if (this.value === right) {
         var start = this.value - left + 1;
-        return __spread([1, '...'], this.range(start, this.length));
+        return __spreadArray([1, '...'], __read(this.range(start, this.length)), false);
       } else {
-        return __spread(this.range(1, left), ['...'], this.range(right, this.length));
+        return __spreadArray(__spreadArray(__spreadArray([], __read(this.range(1, left)), false), ['...'], false), __read(this.range(right, this.length)), false);
       }
     }
   },
@@ -22738,7 +22786,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
       if (this.isDisabled || this.isReadonly || this.isActive) return;
       this.toggle();
     },
-    onKeydown: function onKeydown() {}
+    onKeydown: function onKeydown() {} // Override default with noop
+
   },
   render: function render(h) {
     var data = {
@@ -22975,12 +23024,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -23108,12 +23159,12 @@ var __spread = undefined && undefined.__spread || function () {
         styles: [this.inputWidth[1], Math.abs(100 - this.inputWidth[1]), padding, -padding]
       }];
       if (this.$vuetify.rtl) sections.reverse();
-      children.push.apply(children, __spread(sections.map(function (section) {
+      children.push.apply(children, __spreadArray([], __read(sections.map(function (section) {
         return _this.$createElement('div', _this.setBackgroundColor(section.color, {
           staticClass: section.class,
-          style: _this.getTrackStyle.apply(_this, __spread(section.styles))
+          style: _this.getTrackStyle.apply(_this, __spreadArray([], __read(section.styles), false))
         }));
-      })));
+      })), false));
       return this.$createElement('div', {
         staticClass: 'v-slider__track-container',
         ref: 'track'
@@ -24173,8 +24224,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_14__["default"])(_
       this.attach === true || // If bound to a boolean (<v-menu :attach="true">)
       this.attach === 'attach' // If bound as boolean prop in pug (v-menu(attach))
       ) {
-          props.attach = this.$el;
-        } else {
+        props.attach = this.$el;
+      } else {
         props.attach = this.attach;
       }
 
@@ -24653,7 +24704,8 @@ var __assign = undefined && undefined.__assign || function () {
         on: {
           mousedown: function mousedown(e) {
             return e.preventDefault();
-          }
+          } // Prevent onBlur from being called
+
         }
       };
       return this.$createElement(_VList__WEBPACK_IMPORTED_MODULE_3__["VListItem"], tile, [this.genTileContent(this.noDataText)]);
@@ -25146,10 +25198,10 @@ var __read = undefined && undefined.__read || function (o, n) {
 
       if (type === bone) {} // Array of values - e.g. 'heading, paragraph, text@2'
       else if (type.indexOf(',') > -1) return this.mapBones(type); // Array of values - e.g. 'paragraph@4'
-        else if (type.indexOf('@') > -1) return this.genBones(type); // Array of values - e.g. 'card@2'
-          else if (bone.indexOf(',') > -1) children = this.mapBones(bone); // Array of values - e.g. 'list-item@2'
-            else if (bone.indexOf('@') > -1) children = this.genBones(bone); // Single value - e.g. 'card-heading'
-              else if (bone) children.push(this.genStructure(bone));
+      else if (type.indexOf('@') > -1) return this.genBones(type); // Array of values - e.g. 'card@2'
+      else if (bone.indexOf(',') > -1) children = this.mapBones(bone); // Array of values - e.g. 'list-item@2'
+      else if (bone.indexOf('@') > -1) children = this.genBones(bone); // Single value - e.g. 'card-heading'
+      else if (bone) children.push(this.genStructure(bone));
 
       return [this.genBone(type, children)];
     },
@@ -26053,14 +26105,9 @@ var __assign = undefined && undefined.__assign || function () {
     value: {
       handler: function handler(v) {
         this.internalValue = v;
-      }
+      },
+      immediate: true
     }
-  },
-  // If done in as immediate in
-  // value watcher, causes issues
-  // with vue-test-utils
-  beforeMount: function beforeMount() {
-    this.internalValue = this.value;
   },
   mounted: function mounted() {
     // Without a v-app, iOS does not work with body selectors
@@ -26107,7 +26154,8 @@ var __assign = undefined && undefined.__assign || function () {
           disabled: true,
           readonly: true,
           tabindex: -1
-        }, this.$attrs)
+        }, this.$attrs) // on: this.genListeners(), // TODO: do we need to attach the listeners to input?
+
       });
     },
     genTrackContainer: function genTrackContainer() {
@@ -26926,7 +26974,8 @@ var __assign = undefined && undefined.__assign || function () {
           textAnchor: 'middle',
           dominantBaseline: 'mathematical',
           fill: 'currentColor'
-        }
+        } // TODO: TS 3.5 is too eager with the array type here
+
       }, children);
     },
     genPath: function genPath() {
@@ -27070,12 +27119,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 function genPoints(values, boundary) {
@@ -27084,8 +27135,8 @@ function genPoints(values, boundary) {
       minY = boundary.minY,
       maxY = boundary.maxY;
   var totalValues = values.length;
-  var maxValue = Math.max.apply(Math, __spread(values));
-  var minValue = Math.min.apply(Math, __spread(values));
+  var maxValue = Math.max.apply(Math, __spreadArray([], __read(values), false));
+  var minValue = Math.min.apply(Math, __spreadArray([], __read(values), false));
   var gridX = (maxX - minX) / (totalValues - 1);
   var gridY = (maxY - minY) / (maxValue - minValue || 1);
   return values.map(function (value, index) {
@@ -27102,8 +27153,8 @@ function genBars(values, boundary) {
       minY = boundary.minY,
       maxY = boundary.maxY;
   var totalValues = values.length;
-  var maxValue = Math.max.apply(Math, __spread(values));
-  var minValue = Math.min.apply(Math, __spread(values));
+  var maxValue = Math.max.apply(Math, __spreadArray([], __read(values), false));
+  var minValue = Math.min.apply(Math, __spreadArray([], __read(values), false));
   if (minValue > 0) minValue = 0;
   if (maxValue < 0) maxValue = 0;
   var gridX = maxX / totalValues;
@@ -29136,12 +29187,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -29249,7 +29302,7 @@ var dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'mo
         return this.counterValue(this.internalValue);
       }
 
-      return __spread((this.internalValue || '').toString()).length;
+      return __spreadArray([], __read((this.internalValue || '').toString()), false).length;
     },
     hasCounter: function hasCounter() {
       return this.counter !== false && this.counter != null;
@@ -31525,12 +31578,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 var __values = undefined && undefined.__values || function (o) {
@@ -31598,7 +31653,8 @@ var __values = undefined && undefined.__values || function (o) {
     openAll: Boolean,
     returnObject: {
       type: Boolean,
-      default: false
+      default: false // TODO: Should be true in next major
+
     },
     search: String,
     value: {
@@ -31646,7 +31702,7 @@ var __values = undefined && undefined.__values || function (o) {
           return delete _this.nodes[k];
         });
 
-        var oldSelectedCache = __spread(this.selectedCache);
+        var oldSelectedCache = __spreadArray([], __read(this.selectedCache), false);
 
         this.selectedCache = new Set();
         this.activeCache = new Set();
@@ -31656,7 +31712,7 @@ var __values = undefined && undefined.__values || function (o) {
         // potential double emit when selecting a node
         // with dynamic children
 
-        if (!Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["deepEqual"])(oldSelectedCache, __spread(this.selectedCache))) this.emitSelected();
+        if (!Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["deepEqual"])(oldSelectedCache, __spreadArray([], __read(this.selectedCache), false))) this.emitSelected();
       },
       deep: true
     },
@@ -31753,7 +31809,7 @@ var __values = undefined && undefined.__values || function (o) {
         var children = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["getObjectValueByPath"])(items[i], this.itemChildren);
 
         if (children) {
-          keys.push.apply(keys, __spread(this.getKeys(children)));
+          keys.push.apply(keys, __spreadArray([], __read(this.getKeys(children)), false));
         }
       }
 
@@ -31842,9 +31898,9 @@ var __values = undefined && undefined.__values || function (o) {
     emitNodeCache: function emitNodeCache(event, cache) {
       var _this = this;
 
-      this.$emit(event, this.returnObject ? __spread(cache).map(function (key) {
+      this.$emit(event, this.returnObject ? __spreadArray([], __read(cache), false).map(function (key) {
         return _this.nodes[key].item;
-      }) : __spread(cache));
+      }) : __spreadArray([], __read(cache), false));
     },
     handleNodeCacheWatcher: function handleNodeCacheWatcher(value, cache, updateFn, emitFn) {
       var _this = this;
@@ -31853,7 +31909,7 @@ var __values = undefined && undefined.__values || function (o) {
         return Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["getObjectValueByPath"])(v, _this.itemKey);
       }) : value;
 
-      var old = __spread(cache);
+      var old = __spreadArray([], __read(cache), false);
 
       if (Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["deepEqual"])(old, value)) return;
       old.forEach(function (key) {
@@ -31870,7 +31926,7 @@ var __values = undefined && undefined.__values || function (o) {
       }
 
       var children = this.nodes[key].children;
-      descendants.push.apply(descendants, __spread(children));
+      descendants.push.apply(descendants, __spreadArray([], __read(children), false));
 
       for (var i = 0; i < children.length; i++) {
         descendants = this.getDescendants(children[i], descendants);
@@ -32121,12 +32177,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Components
 
 
@@ -32230,7 +32288,8 @@ var VTreeviewNode = baseMixins.extend().extend({
       isIndeterminate: false,
       isLoading: false,
       isOpen: false,
-      isSelected: false
+      isSelected: false // Node is selected (checkbox)
+
     };
   },
   computed: {
@@ -32391,10 +32450,10 @@ var VTreeviewNode = baseMixins.extend().extend({
       if (this.hasChildren) {
         children.unshift(this.genToggle());
       } else {
-        children.unshift.apply(children, __spread(this.genLevel(1)));
+        children.unshift.apply(children, __spreadArray([], __read(this.genLevel(1)), false));
       }
 
-      children.unshift.apply(children, __spread(this.genLevel(this.level)));
+      children.unshift.apply(children, __spreadArray([], __read(this.genLevel(this.level)), false));
       return this.$createElement('div', this.setTextColor(this.isActive && this.color, {
         staticClass: 'v-treeview-node__root',
         class: (_a = {}, _a[this.activeClass] = this.isActive, _a),
@@ -33730,12 +33789,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -33755,7 +33816,7 @@ function mergeTransitions(dest) {
   /* eslint-disable-next-line no-array-constructor */
 
 
-  return (_a = Array()).concat.apply(_a, __spread([dest], transitions));
+  return (_a = Array()).concat.apply(_a, __spreadArray([dest], __read(transitions), false));
 }
 
 function createSimpleTransition(name, origin, mode) {
@@ -34462,12 +34523,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Styles
 
 
@@ -34783,7 +34846,7 @@ function directive(el, binding, node) {
 
       if (computed && computed.display === 'inline') {
         var context = node.fnOptions ? [node.fnOptions, node.context] : [node.componentInstance];
-        _util_console__WEBPACK_IMPORTED_MODULE_1__["consoleWarn"].apply(void 0, __spread(['v-ripple can only be used on block-level elements'], context));
+        _util_console__WEBPACK_IMPORTED_MODULE_1__["consoleWarn"].apply(void 0, __spreadArray(['v-ripple can only be used on block-level elements'], __read(context), false));
       }
     });
   }
@@ -35053,7 +35116,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.7";
+  Vuetify.version = "2.6.8";
   Vuetify.config = {
     silent: false
   };
@@ -39546,12 +39609,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -39565,7 +39630,7 @@ function searchChildren(children) {
     if (child.isActive && child.isDependent) {
       results.push(child);
     } else {
-      results.push.apply(results, __spread(searchChildren(child.$children)));
+      results.push.apply(results, __spreadArray([], __read(searchChildren(child.$children)), false));
     }
   }
 
@@ -39603,7 +39668,7 @@ function searchChildren(children) {
       var openDependents = this.getOpenDependents();
 
       for (var index = 0; index < openDependents.length; index++) {
-        result.push.apply(result, __spread(openDependents[index].getClickableDependentElements()));
+        result.push.apply(result, __spreadArray([], __read(openDependents[index].getClickableDependentElements()), false));
       }
 
       return result;
@@ -39612,7 +39677,7 @@ function searchChildren(children) {
       var result = [this.$el];
       if (this.$refs.content) result.push(this.$refs.content);
       if (this.overlay) result.push(this.overlay.$el);
-      result.push.apply(result, __spread(this.getOpenDependentElements()));
+      result.push.apply(result, __spreadArray([], __read(this.getOpenDependentElements()), false));
       return result;
     }
   }
@@ -40650,7 +40715,7 @@ __webpack_require__.r(__webpack_exports__);
       showScroll && this.showScroll();
     },
     scrollListener: function scrollListener(e) {
-      if (e.type === 'keydown') {
+      if ('key' in e) {
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName) || // https://github.com/vuetifyjs/vuetify/issues/4715
         e.target.isContentEditable) return;
         var up = [_util_helpers__WEBPACK_IMPORTED_MODULE_1__["keyCodes"].up, _util_helpers__WEBPACK_IMPORTED_MODULE_1__["keyCodes"].pageup];
@@ -41830,12 +41895,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -41877,7 +41944,7 @@ var __spread = undefined && undefined.__spread || function () {
       // prevent an Edge bug with Symbol.iterator
       // https://github.com/vuetifyjs/vuetify/issues/2146
 
-      var activeElements = __spread(document.getElementsByClassName('v-menu__content--active'), document.getElementsByClassName('v-dialog__content--active')); // Get z-index for all active dialogs
+      var activeElements = __spreadArray(__spreadArray([], __read(document.getElementsByClassName('v-menu__content--active')), false), __read(document.getElementsByClassName('v-dialog__content--active')), false); // Get z-index for all active dialogs
 
 
       for (var index = 0; index < activeElements.length; index++) {
@@ -41886,7 +41953,7 @@ var __spread = undefined && undefined.__spread || function () {
         }
       }
 
-      return Math.max.apply(Math, __spread(zis));
+      return Math.max.apply(Math, __spreadArray([], __read(zis), false));
     }
   }
 }));
@@ -42527,6 +42594,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -42619,6 +42688,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -42897,6 +42968,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -43099,6 +43172,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -43513,6 +43588,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -43550,12 +43627,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 }; // Extensions
 
 
@@ -43620,7 +43699,7 @@ function (_super) {
     }
 
     if (!key.startsWith(LANG_PREFIX)) return this.replace(key, params);
-    return this.translator.apply(this, __spread([key], params));
+    return this.translator.apply(this, __spreadArray([key], __read(params), false));
   };
 
   Lang.prototype.defaultTranslator = function (key) {
@@ -43678,6 +43757,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -43798,6 +43879,8 @@ var __extends = undefined && undefined.__extends || function () {
   };
 
   return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
     _extendStatics(d, b);
 
     function __() {
@@ -45442,12 +45525,14 @@ var __read = undefined && undefined.__read || function (o, n) {
   return ar;
 };
 
-var __spread = undefined && undefined.__spread || function () {
-  for (var ar = [], i = 0; i < arguments.length; i++) {
-    ar = ar.concat(__read(arguments[i]));
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return ar;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -45823,7 +45908,7 @@ function debounce(fn, delay) {
 
     clearTimeout(timeoutId);
     timeoutId = setTimeout(function () {
-      return fn.apply(void 0, __spread(args));
+      return fn.apply(void 0, __spreadArray([], __read(args), false));
     }, delay);
   };
 }
@@ -45841,7 +45926,7 @@ function throttle(fn, limit) {
       setTimeout(function () {
         return throttling = false;
       }, limit);
-      return fn.apply(void 0, __spread(args));
+      return fn.apply(void 0, __spreadArray([], __read(args), false));
     }
   };
 }
