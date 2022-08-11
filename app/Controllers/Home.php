@@ -2,10 +2,32 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Settings;
+
 class Home extends BaseController
 {
-    public function index()
-    {
-        return view('welcome_message');
-    }
+	protected $setting;
+
+	public function __construct()
+	{
+		//memanggil Model
+		$this->setting = new Settings();
+	}
+
+	public function index()
+	{
+		return view('home', [
+			'title' => $this->setting->info['app_name'],
+		]);
+	}
+
+	public function setLanguage()
+	{
+		$lang = $this->request->uri->getSegments()[1];
+		$this->session->set("lang", $lang);
+		return redirect()->to(base_url());
+	}
+
+	//--------------------------------------------------------------------
+
 }

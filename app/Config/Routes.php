@@ -25,7 +25,7 @@ $routes->set404Override();
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
 // Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-//$routes->setAutoRoute(false);
+$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -36,6 +36,22 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+
+/**
+ * --------------------------------------------------------------------
+ * HMVC Routing
+ * --------------------------------------------------------------------
+ */
+
+foreach(glob(APPPATH . 'Modules/*', GLOB_ONLYDIR) as $item_dir)
+{
+	if (file_exists($item_dir . '/Config/Routes.php'))
+	{
+		require_once($item_dir . '/Config/Routes.php');
+	}	
+}
+
+$routes->get("/lang/{locale}", "Home::setLanguage");
 
 /*
  * --------------------------------------------------------------------

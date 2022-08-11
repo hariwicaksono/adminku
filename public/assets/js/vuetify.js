@@ -3172,6 +3172,9 @@ var __assign = undefined && undefined.__assign || function () {
         weekdays: weekdays,
         categories: categories
       }),
+      attrs: {
+        role: 'grid'
+      },
       directives: [{
         modifiers: {
           quiet: true
@@ -3936,7 +3939,10 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
     },
     genHead: function genHead() {
       return this.$createElement('div', {
-        staticClass: 'v-calendar-weekly__head'
+        staticClass: 'v-calendar-weekly__head',
+        attrs: {
+          role: 'row'
+        }
       }, this.genHeadDays());
     },
     genHeadDays: function genHeadDays() {
@@ -3956,7 +3962,10 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
       return this.$createElement('div', this.setTextColor(color, {
         key: day.date,
         staticClass: 'v-calendar-weekly__head-weekday',
-        class: this.getRelativeClasses(day, outside)
+        class: this.getRelativeClasses(day, outside),
+        attrs: {
+          role: 'columnheader'
+        }
       }), this.weekdayFormatter(day, this.shortWeekdays));
     },
     genWeeks: function genWeeks() {
@@ -3983,7 +3992,10 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 
       return this.$createElement('div', {
         key: week[0].date,
-        staticClass: 'v-calendar-weekly__week'
+        staticClass: 'v-calendar-weekly__week',
+        attrs: {
+          role: 'row'
+        }
       }, weekNodes);
     },
     getWeekNumber: function getWeekNumber(determineDay) {
@@ -4000,6 +4012,9 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
         key: day.date,
         staticClass: 'v-calendar-weekly__day',
         class: this.getRelativeClasses(day, outside),
+        attrs: {
+          role: 'cell'
+        },
         on: this.getDefaultMouseEventHandlers(':day', function (nativeEvent) {
           return __assign({
             nativeEvent: nativeEvent
@@ -4947,6 +4962,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 
 /* harmony default export */ __webpack_exports__["default"] = (vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend({
   name: 'mouse',
@@ -4954,29 +4985,19 @@ __webpack_require__.r(__webpack_exports__);
     getDefaultMouseEventHandlers: function getDefaultMouseEventHandlers(suffix, getEvent) {
       var _a;
 
-      return this.getMouseEventHandlers((_a = {}, _a['click' + suffix] = {
-        event: 'click'
-      }, _a['contextmenu' + suffix] = {
+      var listeners = Object.keys(this.$listeners).filter(function (key) {
+        return key.endsWith(suffix);
+      }).reduce(function (acc, key) {
+        acc[key] = {
+          event: key.slice(0, -suffix.length)
+        };
+        return acc;
+      }, {});
+      return this.getMouseEventHandlers(__assign(__assign({}, listeners), (_a = {}, _a['contextmenu' + suffix] = {
         event: 'contextmenu',
         prevent: true,
         result: false
-      }, _a['mousedown' + suffix] = {
-        event: 'mousedown'
-      }, _a['mousemove' + suffix] = {
-        event: 'mousemove'
-      }, _a['mouseup' + suffix] = {
-        event: 'mouseup'
-      }, _a['mouseenter' + suffix] = {
-        event: 'mouseenter'
-      }, _a['mouseleave' + suffix] = {
-        event: 'mouseleave'
-      }, _a['touchstart' + suffix] = {
-        event: 'touchstart'
-      }, _a['touchmove' + suffix] = {
-        event: 'touchmove'
-      }, _a['touchend' + suffix] = {
-        event: 'touchend'
-      }, _a), getEvent);
+      }, _a)), getEvent);
     },
     getMouseEventHandlers: function getMouseEventHandlers(events, getEvent) {
       var _this = this;
@@ -7158,7 +7179,8 @@ var __assign = undefined && undefined.__assign || function () {
             icon: true,
             small: true,
             value: this.getValue(this.items[i], i)
-          }
+          },
+          key: i
         }, [this.$createElement(_VIcon__WEBPACK_IMPORTED_MODULE_3__["default"], {
           props: {
             size: 18
@@ -21659,7 +21681,7 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
     items: function items() {
       var totalVisible = parseInt(this.totalVisible, 10);
 
-      if (totalVisible === 0) {
+      if (totalVisible === 0 || isNaN(this.length) || this.length > Number.MAX_SAFE_INTEGER) {
         return [];
       }
 
@@ -22703,6 +22725,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
       }, this.themeClasses), this.groupClasses);
     },
     computedColor: function computedColor() {
+      if (this.isDisabled) return undefined;
       return _mixins_selectable__WEBPACK_IMPORTED_MODULE_9__["default"].options.computed.computedColor.call(this);
     },
     computedIcon: function computedIcon() {
@@ -35116,7 +35139,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.8";
+  Vuetify.version = "2.6.9";
   Vuetify.config = {
     silent: false
   };
