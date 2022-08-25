@@ -1,14 +1,9 @@
 <?php
 
 namespace App\Modules\Auth\Controllers;
-/*
-IT Shop Purwokerto (Tokopedia, Shopee & Bukalapak)
-Dibuat oleh: Hari Wicaksono, S.Kom
-06-2022
-*/
 
 use App\Controllers\BaseController;
-use App\Modules\Auth\Models\LoginModel;
+use App\Modules\Auth\Models\UserModel;
 
 class Auth extends BaseController
 {
@@ -51,7 +46,7 @@ class Auth extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$user_model = new LoginModel();
+		$user_model = new UserModel();
 		$user = $user_model->where(['email' => $input['email'], 'token' => $input['token']])->first();
 		$user_data = [
 			'active' => 1,

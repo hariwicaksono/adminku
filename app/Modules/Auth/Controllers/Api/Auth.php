@@ -3,7 +3,7 @@
 namespace App\Modules\Auth\Controllers\Api;
 
 use App\Controllers\BaseControllerApi;
-use App\Modules\Auth\Models\LoginModel;
+use App\Modules\Auth\Models\UserModel;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
@@ -12,7 +12,7 @@ use ReflectionException;
 class Auth extends BaseControllerApi
 {
     protected $format       = 'json';
-    protected $modelName    = LoginModel::class;
+    protected $modelName    = UserModel::class;
 
     /**
      * Register a new user
@@ -222,7 +222,7 @@ class Auth extends BaseControllerApi
             helper('jwt');
 
             $setSession = [
-                'id' => $user['id'],
+                'id' => $user['id_user'],
                 'email' => $user['email'],
                 'fullname' => $user['fullname'],
                 'username' => $user['username'],

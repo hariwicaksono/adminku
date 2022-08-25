@@ -8,7 +8,6 @@
                     <v-card-text>
                         <v-row>
                             <v-col md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
-
                             </v-col>
                             <v-col md="7" class="pa-10">
                                 <h2 class="font-weight-medium text-center mb-5 black--text">Silahkan Login</h2>
@@ -17,15 +16,15 @@
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>
 
                                     <p class="mb-2 black--text">Password</p>
-                                    <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.min]" :type="show1 ? 'text' : 'password'" label="Password" hint="<?= lang('App.minChar') ?>" @click:append="show1 = !show1" :error-messages="passwordError" counter outlined></v-text-field>
+                                    <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.min]" :type="show1 ? 'text' : 'password'" label="<?= lang('App.labelPassword') ?>" hint="<?= lang('App.minChar') ?>" @click:append="show1 = !show1" :error-messages="passwordError" counter outlined></v-text-field>
 
                                     <v-layout justify-space-between>
-                                        <v-checkbox v-model="remember" label="Remember me" class="mt-0"></v-checkbox>
+                                        <v-checkbox v-model="remember" label="<?= lang('App.rememberMe'); ?>" class="mt-0"></v-checkbox>
                                         <v-spacer></v-spacer>
                                         <a href="<?= base_url('/password/reset') ?>"><?= lang('App.forgotPass') ?></a>
                                     </v-layout>
 
-                                    <v-btn large block @click="submit" color="primary" :loading="loading" elevation="1">Login</v-btn>
+                                    <v-btn large block @click="submit" color="primary" :loading="loading" elevation="1"><?= lang('App.signIn'); ?></v-btn>
                                 </v-form>
                             </v-col>
                         </v-row>

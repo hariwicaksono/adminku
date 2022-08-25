@@ -5,8 +5,8 @@
 use App\Libraries\Settings;
 
 $setting = new Settings();
-$appname = $setting->info['nama_aplikasi'];
-$logo = $setting->info['logo'];
+$appname = $setting->info['app_name'];
+$logo = $setting->info['app_logo'];
 ?>
 
 <head>
@@ -14,7 +14,7 @@ $logo = $setting->info['logo'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title><?= $title ?> - <?= $appname ?></title>
-    <link rel="shortcut icon" href="<?= base_url() . "/" . $logo; ?>" />
+    <link rel="shortcut icon" href="<?= base_url(); ?>/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" rel="stylesheet">

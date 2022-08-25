@@ -15,7 +15,7 @@ $logo = $setting->info['app_logo'];
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title><?= $title; ?> | <?= $appname; ?></title>
     <meta name="description" content="<?= $title; ?>">
-    <link rel="shortcut icon" href="<?= base_url() . "/" . $logo; ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url(); ?>/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" type="text/css" rel="stylesheet" />
@@ -145,7 +145,7 @@ $logo = $setting->info['app_logo'];
             </v-main>
 
             <p class="mx-auto pt-3 text-center subtitle-2">
-                {{ new Date().getFullYear() }} Your Company - <?= $appname; ?>
+                {{ new Date().getFullYear() }} Your Company - <?= $appname; ?> v<?= APP_VERSION ?>
             </p>
 
             <?= $this->include('App\Views\partials/login'); ?>

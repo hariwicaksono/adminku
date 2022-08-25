@@ -1,4 +1,4 @@
-<v-dialog v-model="modalAuth" persistent max-width="400px" min-width="400px" scrollable>
+<v-dialog v-model="modalAuth" persistent max-width="450px" min-width="450px" scrollable>
     <v-card class="pa-5">
         <v-card-title class="mb-5 text-h5">
             Login
@@ -10,16 +10,16 @@
         <v-card-text>
             <v-form ref="formLogin" v-model="valid">
                 <p class="mb-2 black--text">Email</p>
-                <v-text-field v-model="loginEmail" :rules="[rules.email]" label="Email" :error-messages="emailError" outlined></v-text-field>
+                <v-text-field v-model="loginEmail" :rules="[rules.email]" label="<?= lang('App.labelEmail'); ?>" :error-messages="emailError" outlined></v-text-field>
 
                 <p class="mb-2 black--text">Password</p>
-                <v-text-field v-model="loginPassword" :append-icon="show?'mdi-eye':'mdi-eye-off'" :rules="[rules.min]" :type="show ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" :error-messages="passwordError" counter @click:append="show = !show" outlined></v-text-field>
+                <v-text-field v-model="loginPassword" :append-icon="show?'mdi-eye':'mdi-eye-off'" :rules="[rules.min]" :type="show ? 'text' : 'password'" name="input-10-1" label="<?= lang('App.labelPassword'); ?>" hint="At least 8 characters" :error-messages="passwordError" counter @click:append="show = !show" outlined></v-text-field>
                 <v-layout justify-space-between>
-                    <v-checkbox v-model="remember" label="Remember me" class="mt-0"></v-checkbox>
+                    <v-checkbox v-model="remember" label="<?= lang('App.rememberMe'); ?>" class="mt-0"></v-checkbox>
                     <v-spacer></v-spacer>
                     <a class="subtitle-2" href="<?= base_url('/password/reset') ?>"><?= lang('App.forgotPass') ?></a>
                 </v-layout>
-                <v-btn color="primary" large :loading="loading" @click="submitLogin" elevation="1" block>Masuk</v-btn>
+                <v-btn color="primary" large :loading="loading" @click="submitLogin" elevation="1" block><?= lang('App.signIn'); ?></v-btn>
             </v-form>
         </v-card-text>
     </v-card>

@@ -17,7 +17,7 @@ class Home extends BaseController
 	public function index()
 	{
 		return view('home', [
-			'title' => $this->setting->info['app_name'],
+			'title' => 'Home',
 		]);
 	}
 

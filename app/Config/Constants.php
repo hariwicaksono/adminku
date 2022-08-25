@@ -15,6 +15,9 @@
  */
 defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 
+// Custom
+defined('APP_VERSION') || define('APP_VERSION', '1.0');
+
 /*
  | --------------------------------------------------------------------------
  | Composer Path
