@@ -20,6 +20,8 @@ return [
     'printSuccess' => 'Berhasil mencetak data',
     'camera' => 'Kamera',
     'loadingWait' => 'Memuat, silahkan tunggu...',
+    'settings' => 'Pengaturan',
+    'theme' => 'Tema',
 
     //Auth Login Register
     'signIn' => 'Masuk',

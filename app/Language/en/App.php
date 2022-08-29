@@ -20,6 +20,8 @@ return [
     'printSuccess' => 'Successfully print data',
     'camera' => 'Camera',
     'loadingWait' => 'Loading, please wait...',
+    'settings' => 'Settings',
+    'theme' => 'Theme',
  
     //Auth Login Register
     'signIn' => 'Sign in',

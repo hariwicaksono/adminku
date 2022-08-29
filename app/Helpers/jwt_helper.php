@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\Auth\Models\LoginModel;
+use App\Modules\Auth\Models\UserModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -72,7 +72,7 @@ function validateJWTFromRequest(string $encodedToken)
 {
     $key = publicKey();
     $decodedToken = JWT::decode($encodedToken, new Key($key, 'RS256'));
-    $userModel = new LoginModel();
+    $userModel = new UserModel();
     $userModel->findUserByEmailAddress($decodedToken->email);
 }
 

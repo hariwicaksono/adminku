@@ -26,9 +26,6 @@ class App extends BaseConfig
      */
     public $baseURL = BASE_URL;
 
-    // Custom
-    public $appVersion = APP_VERSION;
-
     /**
      * --------------------------------------------------------------------------
      * Index File

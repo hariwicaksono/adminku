@@ -16,7 +16,9 @@
 defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 
 // Custom
-defined('APP_VERSION') || define('APP_VERSION', '1.0');
+$version = 'v'.'1.0';
+defined('COMPANY_NAME') || define('COMPANY_NAME', 'Your Company');
+defined('APP_VERSION') || define('APP_VERSION', $version);
 
 /*
  | --------------------------------------------------------------------------

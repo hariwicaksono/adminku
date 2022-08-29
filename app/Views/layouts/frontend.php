@@ -100,7 +100,7 @@ $logo = $setting->info['app_logo'];
                 <template v-slot:prepend>
                     <v-list-item>
                         <v-list-item-content>
-                            <v-list-item-title>Pengaturan</v-list-item-title>
+                            <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </template>
@@ -112,7 +112,7 @@ $logo = $setting->info['app_logo'];
                         <v-icon>mdi-theme-light-dark</v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        Tema {{themeText}}
+                        <?= lang('App.theme');?> {{themeText}}
                     </v-list-item-content>
                     <v-list-item-action>
                         <v-switch v-model="dark" inset @click="toggleTheme"></v-switch>
@@ -124,7 +124,7 @@ $logo = $setting->info['app_logo'];
                         <v-icon>mdi-earth</v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        Language
+                        Lang
                     </v-list-item-content>
                     <v-list-item-action>
                         <v-btn-toggle>
@@ -144,8 +144,8 @@ $logo = $setting->info['app_logo'];
                 <?= $this->renderSection('content') ?>
             </v-main>
 
-            <p class="mx-auto pt-3 text-center subtitle-2">
-                {{ new Date().getFullYear() }} Your Company - <?= $appname; ?> v<?= APP_VERSION ?>
+            <p class="mx-auto pt-5 text-center subtitle-2">
+                {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appname; ?> <?= APP_VERSION ?>
             </p>
 
             <?= $this->include('App\Views\partials/login'); ?>
