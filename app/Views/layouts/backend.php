@@ -120,15 +120,6 @@ $logo = $setting->info['app_logo'];
                 <v-list nav>
                     <?php $uri = new \CodeIgniter\HTTP\URI(current_url()); ?>
 
-                    <v-list-item link href="<?= base_url('display'); ?>" alt="Lihat Display" title="Lihat Display" target="_blank">
-                        <v-list-item-icon>
-                            <v-icon>mdi-arrow-right</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Lihat Display</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
                     <v-list-item link href="<?= base_url('dashboard'); ?>" <?php if ($uri->getSegment(1) == "dashboard") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Dashboard" title="Dashboard">
                         <v-list-item-icon>
                             <v-icon>mdi-home</v-icon>
@@ -138,101 +129,7 @@ $logo = $setting->info['app_logo'];
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item link href="<?= base_url('layout'); ?>" <?php if ($uri->getSegment(1) == "layout") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Layout" title="Layout">
-                        <v-list-item-icon>
-                            <v-icon>mdi-view-dashboard</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Layout</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
                     <?php if (session()->get('user_type') == 1) : ?>
-                        <v-list-group v-for="(item, i) in displays" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-file-document</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
-                        <v-list-group v-for="(item, i) in masjid" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-mosque</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
-                        <v-list-group v-for="(item, i) in kampus" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-school</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
-                        <v-list-group v-for="(item, i) in sekolah" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-school</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
-                        <v-list-group v-for="(item, i) in rsklinik" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-medical-bag</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
                         <v-list-group v-for="(item, i) in settings" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
                             <template v-slot:activator>
                                 <v-list-item-content>
