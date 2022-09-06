@@ -1,4 +1,4 @@
-<v-dialog v-model="modalAuth" persistent max-width="450px" min-width="450px" scrollable>
+<v-dialog v-model="modalAuth" persistent max-width="420px" min-width="420px" scrollable>
     <v-card class="pa-5">
         <v-card-title class="mb-5 text-h5">
             Login
