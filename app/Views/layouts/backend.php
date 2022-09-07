@@ -111,7 +111,7 @@ $logo = $setting->info['app_logo'];
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title class="text-h6">
-                                DISFO
+                                <?= $appname; ?>
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
@@ -129,25 +129,17 @@ $logo = $setting->info['app_logo'];
                         </v-list-item-content>
                     </v-list-item>
 
+                    <v-divider></v-divider>
+
                     <?php if (session()->get('user_type') == 1) : ?>
-                        <v-list-group v-for="(item, i) in settings" :key="item.title" v-model="item.active" :prepend-icon="item.action" color="white">
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item v-for="child in item.items" :key="child.title" link :href="child.url" v-model="child.active">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-cog</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="child.title"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-
-                        <v-divider></v-divider>
+                        <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?> <?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pengaturan" title="Pengaturan">
+                            <v-list-item-icon>
+                                <v-icon>mdi-cog</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>Pengaturan</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
 
                         <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?> <?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Daftar User" title="Daftar User">
                             <v-list-item-icon>
@@ -178,9 +170,9 @@ $logo = $setting->info['app_logo'];
                     <div class="text-center">
                         <v-list-item>
                             <v-list-item-icon style="font-size:12px;" v-if="toggleMini">
-                                &copy; {{ new Date().getFullYear() }} ITSP DISFO v2
+                                &copy; {{ new Date().getFullYear() }}
                             </v-list-item-icon>
-                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} IT Shop Purwokerto. DISFO v2</v-list-item-content>
+                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?>. <?= $appname; ?> <?= APP_VERSION ?></v-list-item-content>
                         </v-list-item>
                     </div>
                 </template>
@@ -191,7 +183,7 @@ $logo = $setting->info['app_logo'];
                 <template v-slot:prepend>
                     <v-list-item>
                         <v-list-item-content>
-                            <v-list-item-title>Pengaturan</v-list-item-title>
+                            <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </template>
@@ -251,7 +243,7 @@ $logo = $setting->info['app_logo'];
     <script src="<?= base_url('assets/js/vuetify.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/axios.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main.js') ?>" type="text/javascript"></script>
-    
+
     <script>
         var vue = null;
         var computedVue = {
@@ -331,23 +323,6 @@ $logo = $setting->info['app_logo'];
                 zero: v => v > 0 || "<?= lang('App.isZero'); ?>",
                 varchar: v => (v || '').length <= 255 || 'Maks 255 Karakter'
             },
-            settings: [{
-                title: 'Pengaturan',
-                action: 'mdi-cog',
-                active: <?php if ($uri->getSegment(2) == "general" || $uri->getSegment(2) == "app") { ?><?php echo 'true'; ?><?php } else { ?><?php echo 'false'; ?><?php } ?>,
-                items: [{
-                        title: 'Umum',
-                        url: '<?= base_url('setting/general'); ?>',
-                        active: <?php if ($uri->getSegment(2) == "general") { ?><?php echo 'true'; ?><?php } else { ?><?php echo 'false'; ?><?php } ?>,
-                    },
-                    {
-                        title: 'Aplikasi',
-                        url: '<?= base_url('setting/app'); ?>',
-                        active: <?php if ($uri->getSegment(2) == "app") { ?><?php echo 'true'; ?><?php } else { ?><?php echo 'false'; ?><?php } ?>,
-                    },
-                ],
-
-            }, ],
         }
         var methodsVue = {
             toggleTheme() {
@@ -367,9 +342,6 @@ $logo = $setting->info['app_logo'];
             created: createdVue,
             watch: watchVue,
             methods: methodsVue,
-            components: {
-                apexchart: VueApexCharts,
-            },
         })
     </script>
 </body>
