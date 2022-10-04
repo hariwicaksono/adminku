@@ -4,7 +4,6 @@ use App\Libraries\Settings;
 
 $setting = new Settings();
 $appname = $setting->info['app_name'];
-$logo = $setting->info['app_logo'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +14,7 @@ $logo = $setting->info['app_logo'];
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title><?= $title; ?> | <?= $appname; ?></title>
     <meta name="description" content="<?= $title; ?>">
-    <link rel="shortcut icon" href="<?= base_url(); ?>/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url('favicon.ico'); ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" type="text/css" rel="stylesheet" />
@@ -26,7 +25,7 @@ $logo = $setting->info['app_logo'];
     <!-- ========================= preloader start ========================= -->
     <div class="preloader">
         <div class="loader">
-            <div class="loader-logo"><img src="<?= base_url('images/logo.png') ?>" alt="Preloader" width="64" style="margin-top: 5px;"></div>
+            <div class="loader-logo"><img src="<?= base_url('assets/images/logo.png') ?>" alt="Preloader" width="64" style="margin-top: 5px;"></div>
             <div class="spinner">
                 <div class="spinner-container">
                     <div class="spinner-rotator">
@@ -145,7 +144,7 @@ $logo = $setting->info['app_logo'];
             </v-main>
 
             <p class="mx-auto pt-5 text-center subtitle-2">
-                {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appname; ?> <?= APP_VERSION ?>
+                &copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appname; ?> <?= APP_VERSION ?>
             </p>
 
             <?= $this->include('App\Views\partials/login'); ?>
@@ -236,6 +235,9 @@ $logo = $setting->info['app_logo'];
             },
         }
     </script>
+    <!-- Include script khusus dari views partials/login -->
+    <?= $this->renderSection('js_auth') ?>
+    <!-- Include script dari semua views -->
     <?= $this->renderSection('js') ?>
     <script>
         new Vue({

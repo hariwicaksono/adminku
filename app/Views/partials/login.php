@@ -1,4 +1,4 @@
-<v-dialog v-model="modalAuth" persistent max-width="420px" min-width="420px" scrollable>
+<v-dialog v-model="modalAuth" persistent max-width="400px" min-width="400px" scrollable>
     <v-card class="pa-5">
         <v-card-title class="mb-5 text-h5">
             Login
@@ -23,10 +23,9 @@
             </v-form>
         </v-card-text>
     </v-card>
-
 </v-dialog>
 
-<?php $this->section("js") ?>
+<?php $this->section("js_auth") ?>
 <script>
     var errorKeys = []
     computedVue = {
@@ -101,4 +100,4 @@
     }
 </script>
 
-<?php $this->endSection("js") ?>
+<?php $this->endSection("js_auth") ?>

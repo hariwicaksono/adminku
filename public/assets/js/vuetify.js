@@ -4272,11 +4272,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _calendar_with_events_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_calendar_with_events_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _directives_ripple__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../directives/ripple */ "./src/directives/ripple/index.ts");
 /* harmony import */ var _calendar_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar-base */ "./src/components/VCalendar/mixins/calendar-base.ts");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/helpers */ "./src/util/helpers.ts");
-/* harmony import */ var _util_props__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/props */ "./src/components/VCalendar/util/props.ts");
-/* harmony import */ var _modes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modes */ "./src/components/VCalendar/modes/index.ts");
-/* harmony import */ var _util_timestamp__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/timestamp */ "./src/components/VCalendar/util/timestamp.ts");
-/* harmony import */ var _util_events__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/events */ "./src/components/VCalendar/util/events.ts");
+/* harmony import */ var _util_props__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/props */ "./src/components/VCalendar/util/props.ts");
+/* harmony import */ var _modes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modes */ "./src/components/VCalendar/modes/index.ts");
+/* harmony import */ var _util_timestamp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/timestamp */ "./src/components/VCalendar/util/timestamp.ts");
+/* harmony import */ var _util_events__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/events */ "./src/components/VCalendar/util/events.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var __assign = undefined && undefined.__assign || function () {
@@ -4300,8 +4299,6 @@ var __assign = undefined && undefined.__assign || function () {
 
  // Mixins
 
- // Helpers
-
  // Util
 
 
@@ -4318,7 +4315,7 @@ var MINUTES_IN_DAY = 1440;
   directives: {
     ripple: _directives_ripple__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: __assign(__assign(__assign({}, _util_props__WEBPACK_IMPORTED_MODULE_4__["default"].events), _util_props__WEBPACK_IMPORTED_MODULE_4__["default"].calendar), _util_props__WEBPACK_IMPORTED_MODULE_4__["default"].category),
+  props: __assign(__assign(__assign({}, _util_props__WEBPACK_IMPORTED_MODULE_3__["default"].events), _util_props__WEBPACK_IMPORTED_MODULE_3__["default"].calendar), _util_props__WEBPACK_IMPORTED_MODULE_3__["default"].category),
   computed: {
     noEvents: function noEvents() {
       return this.events.length === 0;
@@ -4354,11 +4351,11 @@ var MINUTES_IN_DAY = 1440;
       var _this = this;
 
       return typeof this.eventName === 'function' ? this.eventName : function (event, timedEvent) {
-        return Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["escapeHTML"])(event.input[_this.eventName] || '');
+        return event.input[_this.eventName] || '';
       };
     },
     eventModeFunction: function eventModeFunction() {
-      return typeof this.eventOverlapMode === 'function' ? this.eventOverlapMode : _modes__WEBPACK_IMPORTED_MODULE_5__["CalendarEventOverlapModes"][this.eventOverlapMode];
+      return typeof this.eventOverlapMode === 'function' ? this.eventOverlapMode : _modes__WEBPACK_IMPORTED_MODULE_4__["CalendarEventOverlapModes"][this.eventOverlapMode];
     },
     eventWeekdays: function eventWeekdays() {
       return this.parsedWeekdays;
@@ -4376,7 +4373,7 @@ var MINUTES_IN_DAY = 1440;
         index = 0;
       }
 
-      return Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["parseEvent"])(input, index, this.eventStart, this.eventEnd, this.eventTimedFunction(input), this.categoryMode ? this.eventCategoryFunction(input) : false);
+      return Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["parseEvent"])(input, index, this.eventStart, this.eventEnd, this.eventTimedFunction(input), this.categoryMode ? this.eventCategoryFunction(input) : false);
     },
     formatTime: function formatTime(withTime, ampm) {
       var formatter = this.getFormatter({
@@ -4468,7 +4465,7 @@ var MINUTES_IN_DAY = 1440;
       var event = _a.event;
       var eventHeight = this.eventHeight;
       var eventMarginBottom = this.eventMarginBottom;
-      var dayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
+      var dayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(day);
       var week = day.week;
       var start = dayIdentifier === event.startIdentifier;
       var end = dayIdentifier === event.endIdentifier;
@@ -4476,7 +4473,7 @@ var MINUTES_IN_DAY = 1440;
 
       if (!this.categoryMode) {
         for (var i = day.index + 1; i < week.length; i++) {
-          var weekdayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(week[i]);
+          var weekdayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(week[i]);
 
           if (event.endIdentifier >= weekdayIdentifier) {
             width += WIDTH_FULL;
@@ -4519,11 +4516,11 @@ var MINUTES_IN_DAY = 1440;
           left = _a.left,
           width = _a.width;
 
-      if (day.timeDelta(event.end) < 0 || day.timeDelta(event.start) >= 1 || Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventHiddenOn"])(event, day)) {
+      if (day.timeDelta(event.end) < 0 || day.timeDelta(event.start) >= 1 || Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventHiddenOn"])(event, day)) {
         return false;
       }
 
-      var dayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
+      var dayIdentifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(day);
       var start = event.startIdentifier >= dayIdentifier;
       var end = event.endIdentifier > dayIdentifier;
       var top = start ? day.timeToY(event.start) : 0;
@@ -4555,7 +4552,7 @@ var MINUTES_IN_DAY = 1440;
       var text = this.eventTextColorFunction(event.input);
       var background = this.eventColorFunction(event.input);
       var overlapsNoon = event.start.hour < 12 && event.end.hour >= 12;
-      var singline = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["diffMinutes"])(event.start, event.end) <= this.parsedEventOverlapThreshold;
+      var singline = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["diffMinutes"])(event.start, event.end) <= this.parsedEventOverlapThreshold;
       var formatTime = this.formatTime;
 
       var timeSummary = function timeSummary() {
@@ -4566,15 +4563,17 @@ var MINUTES_IN_DAY = 1440;
         var name = _this.eventNameFunction(event, timedEvent);
 
         if (event.start.hasTime) {
-          var eventSummaryClass = 'v-event-summary';
-
           if (timedEvent) {
             var time = timeSummary();
-            var delimiter = singline ? ', ' : '<br>';
-            return "<span class=\"" + eventSummaryClass + "\"><strong>" + name + "</strong>" + delimiter + time + "</span>";
+            var delimiter = singline ? ', ' : _this.$createElement('br');
+            return _this.$createElement('span', {
+              staticClass: 'v-event-summary'
+            }, [_this.$createElement('strong', [name]), delimiter, time]);
           } else {
             var time = formatTime(event.start, true);
-            return "<span class=\"" + eventSummaryClass + "\"><strong>" + time + "</strong> " + name + "</span>";
+            return _this.$createElement('span', {
+              staticClass: 'v-event-summary'
+            }, [_this.$createElement('strong', [time]), ' ', name]);
           }
         }
 
@@ -4605,11 +4604,8 @@ var MINUTES_IN_DAY = 1440;
     },
     genName: function genName(eventSummary) {
       return this.$createElement('div', {
-        staticClass: 'pl-1',
-        domProps: {
-          innerHTML: eventSummary()
-        }
-      });
+        staticClass: 'pl-1'
+      }, [eventSummary()]);
     },
     genPlaceholder: function genPlaceholder(day) {
       var height = this.eventHeight + this.eventMarginBottom;
@@ -4657,37 +4653,37 @@ var MINUTES_IN_DAY = 1440;
       });
     },
     getVisibleEvents: function getVisibleEvents() {
-      var start = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(this.days[0]);
-      var end = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(this.days[this.days.length - 1]);
+      var start = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(this.days[0]);
+      var end = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(this.days[this.days.length - 1]);
       return this.parsedEvents.filter(function (event) {
-        return Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventOverlapping"])(event, start, end);
+        return Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventOverlapping"])(event, start, end);
       });
     },
     isEventForCategory: function isEventForCategory(event, category) {
       return !this.categoryMode || _typeof(category) === 'object' && category.categoryName && category.categoryName === event.category || typeof event.category === 'string' && category === event.category || typeof event.category !== 'string' && category === null;
     },
     getEventsForDay: function getEventsForDay(day) {
-      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
+      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(day);
       var firstWeekday = this.eventWeekdays[0];
       return this.parsedEvents.filter(function (event) {
-        return Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventStart"])(event, day, identifier, firstWeekday);
+        return Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventStart"])(event, day, identifier, firstWeekday);
       });
     },
     getEventsForDayAll: function getEventsForDayAll(day) {
       var _this = this;
 
-      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
+      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(day);
       var firstWeekday = this.eventWeekdays[0];
       return this.parsedEvents.filter(function (event) {
-        return event.allDay && (_this.categoryMode ? Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventOn"])(event, identifier) : Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventStart"])(event, day, identifier, firstWeekday)) && _this.isEventForCategory(event, day.category);
+        return event.allDay && (_this.categoryMode ? Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventOn"])(event, identifier) : Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventStart"])(event, day, identifier, firstWeekday)) && _this.isEventForCategory(event, day.category);
       });
     },
     getEventsForDayTimed: function getEventsForDayTimed(day) {
       var _this = this;
 
-      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
+      var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_5__["getDayIdentifier"])(day);
       return this.parsedEvents.filter(function (event) {
-        return !event.allDay && Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventOn"])(event, identifier) && _this.isEventForCategory(event, day.category);
+        return !event.allDay && Object(_util_events__WEBPACK_IMPORTED_MODULE_6__["isEventOn"])(event, identifier) && _this.isEventForCategory(event, day.category);
       });
     },
     getScopedSlots: function getScopedSlots() {
@@ -15083,10 +15079,10 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_9__["default"])(_m
       }) // So we must have focused something outside the dialog and its children
       ) {
         // Find and focus the first available element inside the dialog
-        var focusable = this.$refs.dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        var focusable = this.$refs.dialog.querySelectorAll('button, [href], input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])');
 
         var el = __spreadArray([], __read(focusable), false).find(function (el) {
-          return !el.hasAttribute('disabled');
+          return !el.hasAttribute('disabled') && !el.matches('[tabindex="-1"]');
         });
 
         el && el.focus();
@@ -18007,7 +18003,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__["default"])(_m
           color: this.validationState,
           dark: this.dark,
           disabled: this.isDisabled,
-          light: this.light
+          light: this.light,
+          tabindex: type === 'clear' ? -1 : undefined
         },
         on: !hasListener ? undefined : {
           click: function click(e) {
@@ -24758,14 +24755,14 @@ var __assign = undefined && undefined.__assign || function () {
     },
     genFilteredText: function genFilteredText(text) {
       text = text || '';
-      if (!this.searchInput || this.noFilter) return Object(_util_helpers__WEBPACK_IMPORTED_MODULE_7__["escapeHTML"])(text);
+      if (!this.searchInput || this.noFilter) return text;
 
       var _a = this.getMaskedCharacters(text),
           start = _a.start,
           middle = _a.middle,
           end = _a.end;
 
-      return "" + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_7__["escapeHTML"])(start) + this.genHighlight(middle) + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_7__["escapeHTML"])(end);
+      return [start, this.genHighlight(middle), end];
     },
     genHeader: function genHeader(props) {
       return this.$createElement(_VSubheader__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -24773,7 +24770,9 @@ var __assign = undefined && undefined.__assign || function () {
       }, props.header);
     },
     genHighlight: function genHighlight(text) {
-      return "<span class=\"v-list-item__mask\">" + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_7__["escapeHTML"])(text) + "</span>";
+      return this.$createElement('span', {
+        staticClass: 'v-list-item__mask'
+      }, text);
     },
     getMaskedCharacters: function getMaskedCharacters(text) {
       var searchInput = (this.searchInput || '').toString().toLocaleLowerCase();
@@ -24850,12 +24849,7 @@ var __assign = undefined && undefined.__assign || function () {
         index = 0;
       }
 
-      var innerHTML = this.genFilteredText(this.getText(item));
-      return this.$createElement(_VList__WEBPACK_IMPORTED_MODULE_3__["VListItemContent"], [this.$createElement(_VList__WEBPACK_IMPORTED_MODULE_3__["VListItemTitle"], {
-        domProps: {
-          innerHTML: innerHTML
-        }
-      })]);
+      return this.$createElement(_VList__WEBPACK_IMPORTED_MODULE_3__["VListItemContent"], [this.$createElement(_VList__WEBPACK_IMPORTED_MODULE_3__["VListItemTitle"], [this.genFilteredText(this.getText(item))])]);
     },
     hasItem: function hasItem(item) {
       return this.parsedItems.indexOf(this.getValue(item)) > -1;
@@ -35139,7 +35133,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.9";
+  Vuetify.version = "2.6.10";
   Vuetify.config = {
     silent: false
   };
@@ -40430,7 +40424,11 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_4__["default"])(_s
       }
     },
     checkActivatorFixed: function checkActivatorFixed() {
-      if (this.attach !== false) return;
+      if (this.attach !== false) {
+        this.activatorFixed = false;
+        return;
+      }
+
       var el = this.getActivator();
 
       while (el) {
@@ -45456,7 +45454,7 @@ function attachedRoot(node) {
 /*!*****************************!*\
   !*** ./src/util/helpers.ts ***!
   \*****************************/
-/*! exports provided: createSimpleFunctional, directiveConfig, addOnceEventListener, passiveSupported, addPassiveEventListener, getNestedValue, deepEqual, getObjectValueByPath, getPropertyFromItem, createRange, getZIndex, escapeHTML, filterObjectOnKeys, convertToUnit, kebabCase, isObject, keyCodes, remapInternalIcon, keys, camelize, arrayDiff, upperFirst, groupItems, wrapInArray, sortItems, defaultFilter, searchItems, getSlotType, debounce, throttle, getPrefixedScopedSlots, getSlot, clamp, padEnd, chunk, humanReadableFileSize, camelizeObjectKeys, mergeDeep, fillArray, composedPath */
+/*! exports provided: createSimpleFunctional, directiveConfig, addOnceEventListener, passiveSupported, addPassiveEventListener, getNestedValue, deepEqual, getObjectValueByPath, getPropertyFromItem, createRange, getZIndex, filterObjectOnKeys, convertToUnit, kebabCase, isObject, keyCodes, remapInternalIcon, keys, camelize, arrayDiff, upperFirst, groupItems, wrapInArray, sortItems, defaultFilter, searchItems, getSlotType, debounce, throttle, getPrefixedScopedSlots, getSlot, clamp, padEnd, chunk, humanReadableFileSize, camelizeObjectKeys, mergeDeep, fillArray, composedPath */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45472,7 +45470,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPropertyFromItem", function() { return getPropertyFromItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRange", function() { return createRange; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getZIndex", function() { return getZIndex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escapeHTML", function() { return escapeHTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterObjectOnKeys", function() { return filterObjectOnKeys; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertToUnit", function() { return convertToUnit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "kebabCase", function() { return kebabCase; });
@@ -45695,16 +45692,6 @@ function getZIndex(el) {
   var index = +window.getComputedStyle(el).getPropertyValue('z-index');
   if (!index) return getZIndex(el.parentNode);
   return index;
-}
-var tagsToReplace = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;'
-};
-function escapeHTML(str) {
-  return str.replace(/[&<>]/g, function (tag) {
-    return tagsToReplace[tag] || tag;
-  });
 }
 function filterObjectOnKeys(obj, keys) {
   var filtered = {};

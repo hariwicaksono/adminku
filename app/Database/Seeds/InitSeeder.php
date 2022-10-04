@@ -27,18 +27,6 @@ class InitSeeder extends Seeder
                 'variable_setting'      => 'app_name',
                 'value_setting'         => 'Adminku CI4',
                 'description_setting'  => 'Application Name',
-            ],
-            [
-                'group_setting'         => 'app',
-                'variable_setting'      => 'app_version',
-                'value_setting'         => '1.0',
-                'description_setting'  => 'Application Version',
-            ],
-            [
-                'group_setting'         => 'app',
-                'variable_setting'      => 'app_logo',
-                'value_setting'         => 'images/logo.png',
-                'description_setting'   => 'Application Logo',
             ]
         ];
         $this->db->table('settings')->insertBatch($dataSetting);
