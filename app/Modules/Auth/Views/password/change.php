@@ -6,7 +6,7 @@
             <v-flex xs12 sm6 md6>
                 <v-card elevation="2" outlined>
                     <v-card-text class="pa-10">
-                        <h1 class="font-weight-normal text-center mb-10"><?= lang('App.newPassword') ?></h1>
+                        <h1 class="font-weight-medium text-center mb-10"><?= lang('App.newPassword') ?></h1>
                         <v-alert v-if="notifType != ''" dense :type="notifType">{{notifMessage}}</v-alert>
                         <v-form v-model="valid" ref="form">
                             <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" label="Password" hint="<?= lang('App.minChar') ?>" counter @click:append="show1 = !show1" outlined dense :disabled="submitted"></v-text-field>

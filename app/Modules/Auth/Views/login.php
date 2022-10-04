@@ -10,7 +10,7 @@
                             <v-col md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
                             <v-col md="7" class="pa-10">
-                                <h2 class="font-weight-medium text-center mb-5 black--text">Silahkan Login</h2>
+                                <h1 class="font-weight-medium text-center mb-5">Login</h1>
                                 <v-form v-model="valid" ref="form">
                                     <p class="mb-2 black--text">Email</p>
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>

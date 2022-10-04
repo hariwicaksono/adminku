@@ -55,7 +55,8 @@ class Auth extends BaseControllerApi
                     'status' => true,
                     'message' => lang('App.regSuccess'),
                     'data' => ['url' => base_url("")]
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         } else {
             return $this->getResponse(
@@ -63,7 +64,8 @@ class Auth extends BaseControllerApi
                     'status' => false,
                     'message' => lang('App.regFailed'),
                     'data' => []
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         }
     }
@@ -130,10 +132,10 @@ class Auth extends BaseControllerApi
         ];
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_login']; 
-		$user_data = [
-			'token' => $token,
-		];
+        $user_id = $user['id_login'];
+        $user_data = [
+            'token' => $token,
+        ];
 
         if ($this->model->update($user_id, $user_data)) {
             helper('email');
@@ -143,7 +145,8 @@ class Auth extends BaseControllerApi
                     'status' => true,
                     'message' => lang('App.checkEmail'),
                     'data' => ['url' => base_url("")]
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         } else {
             return $this->getResponse(
@@ -151,7 +154,8 @@ class Auth extends BaseControllerApi
                     'status' => false,
                     'message' => lang('App.reqFailed'),
                     'data' => []
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         }
     }
@@ -182,23 +186,24 @@ class Auth extends BaseControllerApi
             );
         }
 
-        $forgot_pass = $this->model->where(['email' => $input['email'],'token' => $input['token']])->first();
+        $forgot_pass = $this->model->where(['email' => $input['email'], 'token' => $input['token']])->first();
         if (!$forgot_pass) {
             return $this->getResponse(["status" => false, "message" => lang('App.tokenInvalid'), "data" => []], ResponseInterface::HTTP_OK);
         }
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_login']; 
-		$user_data = [
-			'password' => $input['password'],
-		];
+        $user_id = $user['id_login'];
+        $user_data = [
+            'password' => $input['password'],
+        ];
         if ($this->model->update($user_id, $user_data)) {
             return $this->getResponse(
                 [
                     'status' => true,
                     'message' => lang('App.passChanged'),
                     'data' => ['url' => base_url("/login")]
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         } else {
             return $this->getResponse(
@@ -206,7 +211,8 @@ class Auth extends BaseControllerApi
                     'status' => false,
                     'message' => lang('App.regFailed'),
                     'data' => []
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         }
     }
@@ -233,7 +239,15 @@ class Auth extends BaseControllerApi
 
             $this->session->set($setSession);
 
-            setcookie("access_token", getSignedJWTForUser($emailAddress), time()+7200, "/", null, null, true);
+            setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 7200, "/", null, null, true);
+
+            helper('app');
+            $lastLogin = [
+                'last_logged_in' => date('Y-m-d H:i:s'),
+                'ip_address' => getIPAddress()
+            ];
+
+            $this->model->update($user['id_user'], $lastLogin);
 
             return $this->getResponse(
                 [
@@ -248,7 +262,7 @@ class Auth extends BaseControllerApi
             return $this->getResponse(
                 [
                     'status' => false,
-                    'error' => $exception->getMessage()
+                    'message' => $exception->getMessage()
                 ],
                 $responseCode
             );

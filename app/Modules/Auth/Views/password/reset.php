@@ -6,13 +6,13 @@
             <v-flex xs12 sm6 md6>
                 <v-card elevation="2" outlined>
                     <v-card-text class="pa-10">
-                        <h1 class="font-weight-normal text-center mb-10"><?= lang('App.forgotPass') ?></h1>
+                        <h1 class="font-weight-medium text-center mb-10"><?= lang('App.forgotPass') ?></h1>
                         <v-alert v-if="notifType != ''" dense :type="notifType">{{notifMessage}}</v-alert>
                         <v-form v-model="valid" ref="form">
                             <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.required, rules.email]" outlined :disabled="submitted"></v-text-field>
                             <v-layout justify-space-between>
                                 <p>
-                                    <a href="<?= base_url('/login') ?>">Login</a><br />
+                                    <a href="<?= base_url('/login') ?>"><?= lang('App.haveAccount') ?></a><br />
                                     <a href="<?= base_url('/register') ?>"><?= lang('App.register') ?></a>
                                 </p>
                                 <v-spacer></v-spacer>
