@@ -210,6 +210,11 @@ $appname = $setting->info['app_name'];
             toggleMini: false,
             dark: false,
             loading: false,
+            loading1: false,
+            loading2: false,
+            loading3: false,
+            loading4: false,
+            loading5: false,
             valid: true,
             notifMessage: '',
             notifType: '',
@@ -225,7 +230,8 @@ $appname = $setting->info['app_name'];
                 min: v => v.length >= 8 || '<?= lang('App.minChar'); ?>',
                 required: v => !!v || '<?= lang('App.isRequired'); ?>',
                 number: v => Number.isInteger(Number(v)) || "<?= lang('App.isNumber'); ?>",
-                zero: v => v > 0 || "<?= lang('App.isZero'); ?>"
+                zero: v => v > 0 || "<?= lang('App.isZero'); ?>",
+                varchar: v => (v || '').length <= 255 || 'Maks 255 Karakter'
             },
         }
         var methodsVue = {
