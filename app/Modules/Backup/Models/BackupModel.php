@@ -8,7 +8,7 @@ class BackupModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'backups';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_backup';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';

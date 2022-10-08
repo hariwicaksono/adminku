@@ -8,7 +8,7 @@ class SettingModel extends Model
 {
     protected $DBGroup              = 'default';
     protected $table                = 'settings';
-    protected $primaryKey           = 'id';
+    protected $primaryKey           = 'id_setting';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
     protected $returnType           = 'array';
