@@ -42,7 +42,7 @@
         ...methodsVue,
         submit() {
             this.loading = true;
-            axios.post('<?= base_url() ?>/api/auth/resetPassword', {
+            axios.post('<?= base_url() ?>/auth/resetPassword', {
                     email: this.email
                 })
                 .then(res => {

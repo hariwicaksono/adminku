@@ -15,7 +15,7 @@ $routes->group('api', ['filter' => 'jwtauth', 'namespace' => 'App\Modules\User\C
 	$routes->post('user/save', 'User::create');
 	$routes->put('user/update/(:segment)', 'User::update/$1');
 	$routes->delete('user/delete/(:segment)', 'User::delete/$1');
-	$routes->put('user/setactive/(:segment)', 'User::setActive/$1');
-	$routes->put('user/setrole/(:segment)', 'User::setRole/$1');
-	$routes->post('user/changepassword', 'User::changePassword');
+	$routes->put('user/setActive/(:segment)', 'User::setActive/$1');
+	$routes->put('user/setRole/(:segment)', 'User::setRole/$1');
+	$routes->post('user/changePassword', 'User::changePassword');
 });

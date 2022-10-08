@@ -53,7 +53,7 @@
             formData.append("token", this.token)
             formData.append("password", this.password)
             formData.append("verify", this.verify)
-            axios.post('<?= base_url() ?>/api/auth/changePassword', {
+            axios.post('<?= base_url() ?>/auth/changePassword', {
                     formData
                 })
                 .then(res => {

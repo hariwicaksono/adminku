@@ -478,7 +478,7 @@
             this.loading = true;
             this.userIdEdit = item.id_login;
             this.active = item.active;
-            axios.put(`<?= base_url(); ?>/api/user/setactive/${this.userIdEdit}`, {
+            axios.put(`<?= base_url(); ?>/api/user/setActive/${this.userIdEdit}`, {
                     is_active: this.is_active,
                 }, options)
                 .then(res => {
@@ -508,7 +508,7 @@
             this.loading = true;
             this.userIdEdit = item.id_login;
             this.user_type = item.user_type;
-            axios.put(`<?= base_url(); ?>/api/user/setrole/${this.userIdEdit}`, {
+            axios.put(`<?= base_url(); ?>/api/user/setRole/${this.userIdEdit}`, {
                     user_type: this.user_type,
                 }, options)
                 .then(res => {
@@ -548,7 +548,7 @@
 
         updatePassword() {
             this.loading = true;
-            axios.post('<?= base_url() ?>/api/user/changepassword', {
+            axios.post('<?= base_url() ?>/api/user/changePassword', {
                     email: this.emailEdit,
                     password: this.password,
                     verify: this.verify
