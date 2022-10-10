@@ -73,7 +73,7 @@ class User extends BaseControllerApi
             if ($simpan) {
                 $response = [
                     'status' => true,
-                    'message' => lang('App.productSuccess'),
+                    'message' => lang('App.saveSuccess'),
                     'data' => [],
                 ];
                 return $this->respond($response, 200);
@@ -172,7 +172,7 @@ class User extends BaseControllerApi
         } else {
             $response = [
                 'status' => false,
-                'message' => lang('App.delFailed'),
+                'message' => lang('App.updFailed'),
                 'data' => []
             ];
             return $this->respond($response, 200);
@@ -206,7 +206,7 @@ class User extends BaseControllerApi
         } else {
             $response = [
                 'status' => false,
-                'message' => lang('App.delFailed'),
+                'message' => lang('App.updFailed'),
                 'data' => []
             ];
             return $this->respond($response, 200);

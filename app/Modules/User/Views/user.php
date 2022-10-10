@@ -118,7 +118,6 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form ref="form" v-model="valid">
-                        <v-alert v-if="notifType != ''" dismissible dense outlined :type="notifType">{{notifMessage}}</v-alert>
                         <v-text-field label="Email *" v-model="emailEdit" :rules="[rules.email]" outlined></v-text-field>
 
                         <v-text-field label="Username *" v-model="userNameEdit" :error-messages="usernameError" outlined disabled></v-text-field>
@@ -218,7 +217,7 @@
         search: "",
         headers: [{
             text: '# ',
-            value: 'id'
+            value: 'id_user'
         }, {
             text: 'E-mail',
             value: 'email'
@@ -378,8 +377,7 @@
         editItem: function(user) {
             this.modalEdit = true;
             this.show = false;
-            this.notifType = "";
-            this.userIdEdit = user.id;
+            this.userIdEdit = user.id_user;
             this.userNameEdit = user.username;
             this.emailEdit = user.email;
             this.fullnameEdit = user.fullname;
@@ -438,7 +436,7 @@
         // Get Item Delete
         deleteItem: function(item) {
             this.modalDelete = true;
-            this.userIdDelete = item.id;
+            this.userIdDelete = item.id_user;
             this.userNameDelete = item.username;
         },
 
@@ -476,7 +474,7 @@
         // Set Item Active
         setActive: function(item) {
             this.loading = true;
-            this.userIdEdit = item.id_login;
+            this.userIdEdit = item.id_user;
             this.active = item.active;
             axios.put(`<?= base_url(); ?>/api/user/setActive/${this.userIdEdit}`, {
                     is_active: this.is_active,
@@ -506,7 +504,7 @@
         // Set Role
         setRole: function(item) {
             this.loading = true;
-            this.userIdEdit = item.id_login;
+            this.userIdEdit = item.id_user;
             this.user_type = item.user_type;
             axios.put(`<?= base_url(); ?>/api/user/setRole/${this.userIdEdit}`, {
                     user_type: this.user_type,
@@ -536,7 +534,7 @@
         // Change Password
         changePassword: function(user) {
             this.modalPassword = true;
-            this.userIdEdit = user.id;
+            this.userIdEdit = user.id_user;
             this.userNameEdit = user.username;
             this.emailEdit = user.email;
             this.fullnameEdit = user.fullname;
