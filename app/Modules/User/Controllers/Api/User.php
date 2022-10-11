@@ -235,7 +235,7 @@ class User extends BaseControllerApi
         }
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_login']; 
+        $user_id = $user['id_user']; 
 		$user_data = [
 			'password' => $input['password'],
 		];
