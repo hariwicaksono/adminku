@@ -6,7 +6,7 @@ if(!isset($routes))
 }
 
 $routes->group('backup', ['filter' => 'auth', 'namespace' => 'App\Modules\Backup\Controllers'], function($routes){
-	$routes->add('/', 'Backup::index');
+	$routes->get('/', 'Backup::index');
 });
 
 

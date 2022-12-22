@@ -13,12 +13,12 @@
                     </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang('App.search'); ?>" single-line hide-details>
                     </v-text-field>
                 </v-col>
             </v-row>
         </v-container>
-        <v-data-table :headers="dataTable" :items="dataBackup" :items-per-page="10" :loading="loading" :search="search" loading-text="Sedang memuat... Harap tunggu">
+        <v-data-table :headers="dataTable" :items="dataBackup" :items-per-page="10" :loading="loading" :search="search" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.id_backup}}</td>

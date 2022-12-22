@@ -66,16 +66,28 @@ $appname = $setting->info['app_name'];
                         </template>
 
                         <v-list>
-                            <v-subheader>Login: &nbsp;<v-chip color="primary" small><?= session()->get('username'); ?></v-chip>
+                            <v-list-item class="d-flex justify-center">
+                                <v-list-item-avatar size="100">
+                                    <v-img src="<?= base_url('assets/images/default.png'); ?>"></v-img>
+                                </v-list-item-avatar>
+                            </v-list-item>
+                            <v-list-item link>
+                                <v-list-item-content>
+                                    <v-list-item-title class="text-h6">
+                                        Hallo, <?= session()->get('fullname') ?>
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle><?= session()->get('email') ?></v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                            <v-subheader>Login: &nbsp;<v-chip color="primary" small><?= session()->get('user_type') == 1 ? 'admin' : 'user'; ?></v-chip>
                             </v-subheader>
-                            <v-list-item><p><?= session()->get('email') ?></p></v-list-item>
-                            <v-list-item link href="<?= base_url('dashboard'); ?>">
+                            <v-list-item link href="<?= base_url(); ?><?= session()->get('user_type') == 1 ? '/dashboard' : '/dashboard'; ?>">
                                 <v-list-item-icon>
                                     <v-icon>mdi-view-dashboard</v-icon>
                                 </v-list-item-icon>
 
                                 <v-list-item-content>
-                                    <v-list-item-title><?= lang('App.dashboard') ?></v-list-item-title>
+                                    <v-list-item-title><?= lang('App.dashboard') ?> App</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item link href="<?= base_url('logout'); ?>" @click="localStorage.removeItem('access_token')">

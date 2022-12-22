@@ -971,10 +971,6 @@ var defaultMenuProps = __assign(__assign({}, _VSelect_VSelect__WEBPACK_IMPORTED_
 /* harmony default export */ __webpack_exports__["default"] = (_VSelect_VSelect__WEBPACK_IMPORTED_MODULE_1__["default"].extend({
   name: 'v-autocomplete',
   props: {
-    allowOverflow: {
-      type: Boolean,
-      default: true
-    },
     autoSelectFirst: {
       type: Boolean,
       default: false
@@ -4577,7 +4573,9 @@ var MINUTES_IN_DAY = 1440;
           }
         }
 
-        return name;
+        return _this.$createElement('span', {
+          staticClass: 'v-event-summary'
+        }, [name]);
       };
 
       var scope = __assign(__assign({}, scopeInput), {
@@ -9388,6 +9386,7 @@ var __assign = undefined && undefined.__assign || function () {
     onPaste: function onPaste(event) {
       var _a;
 
+      this.$emit('paste', event);
       if (!this.multiple || this.searchIsDirty) return;
       var pastedItemText = (_a = event.clipboardData) === null || _a === void 0 ? void 0 : _a.getData('text/vnd.vuetify.autocomplete.item+plain');
 
@@ -11680,8 +11679,8 @@ function searchTableItems(items, search, headersWithCustomFilters, headersWithou
         on: {
           // TODO: for click, the first argument should be the event, and the second argument should be data,
           // but this is a breaking change so it's for v3
-          click: function click() {
-            return _this.$emit('click:row', item, data);
+          click: function click(event) {
+            return _this.$emit('click:row', item, data, event);
           },
           contextmenu: function contextmenu(event) {
             return _this.$emit('contextmenu:row', event, data);
@@ -16008,7 +16007,7 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 
       delete input.data.domProps.value; // This solves an issue in Safari where
       // nothing happens when adding a file
-      // do to the input event not firing
+      // due to the input event not firing
       // https://github.com/vuetifyjs/vuetify/issues/7941
 
       delete input.data.on.input;
@@ -16061,8 +16060,11 @@ var __spreadArray = undefined && undefined.__spreadArray || function (to, from, 
 
       var node = _VTextField__WEBPACK_IMPORTED_MODULE_1__["default"].options.methods.genTextFieldSlot.call(this);
       node.data.on = __assign(__assign({}, node.data.on || {}), {
-        click: function click() {
-          return _this.$refs.input.click();
+        click: function click(e) {
+          // Clicking the label already delegates to input element, so we shouldn't click it twice
+          if (e.target && e.target.nodeName === 'LABEL') return;
+
+          _this.$refs.input.click();
         }
       });
       return node;
@@ -34184,7 +34186,7 @@ function checkIsActive(e, binding) {
   return isActive(e);
 }
 
-function directive(e, el, binding, vnode) {
+function directive(e, el, binding) {
   var handler = typeof binding.value === 'function' ? binding.value : binding.value.handler;
   el._clickOutside.lastMousedownWasOutside && checkEvent(e, el, binding) && setTimeout(function () {
     checkIsActive(e, binding) && handler && handler(e);
@@ -34208,7 +34210,7 @@ var ClickOutside = {
   // clicks on body
   inserted: function inserted(el, binding, vnode) {
     var onClick = function onClick(e) {
-      return directive(e, el, binding, vnode);
+      return directive(e, el, binding);
     };
 
     var onMousedown = function onMousedown(e) {
@@ -34672,6 +34674,8 @@ var ripples = {
       animation.classList.remove('v-ripple__animation--in');
       animation.classList.add('v-ripple__animation--out');
       setTimeout(function () {
+        var _a;
+
         var ripples = el.getElementsByClassName('v-ripple__animation');
 
         if (ripples.length === 1 && el.dataset.previousPosition) {
@@ -34679,7 +34683,7 @@ var ripples = {
           delete el.dataset.previousPosition;
         }
 
-        animation.parentNode && el.removeChild(animation.parentNode);
+        if (((_a = animation.parentNode) === null || _a === void 0 ? void 0 : _a.parentNode) === el) el.removeChild(animation.parentNode);
       }, 300);
     }, delay);
   }
@@ -35133,7 +35137,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.10";
+  Vuetify.version = "2.6.13";
   Vuetify.config = {
     silent: false
   };

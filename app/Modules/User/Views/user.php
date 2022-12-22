@@ -18,7 +18,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-data-table :headers="headers" :items="users" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="Sedang memuat... Harap tunggu" dense>
+        <v-data-table :headers="headers" :items="users" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.id_user}}</td>

@@ -4,8 +4,6 @@ namespace App\Modules\Setting\Controllers\Api;
 
 use App\Controllers\BaseControllerApi;
 use App\Modules\Setting\Models\SettingModel;
-use App\Modules\Setting\Models\KotaModel;
-use App\Modules\Setting\Models\ProvinsiModel;
 
 class Setting extends BaseControllerApi
 {
@@ -15,8 +13,6 @@ class Setting extends BaseControllerApi
     public function __construct()
 	{
 		//memanggil Model
-		$this->kota = new KotaModel();
-        $this->provinsi = new ProvinsiModel();
 	}
 
     public function general()
@@ -91,24 +87,6 @@ class Setting extends BaseControllerApi
             ];
             return $this->respond($response, 200);
         }
-    }
-
-    public function kota()
-    {
-        return $this->respond(["status" => true, "message" => "Success", "data" => $this->kota->findAll()], 200);
-    }
-
-    public function getKota()
-    {
-        $input = $this->request->getVar();
-        $select = $input['provinsi'];
-        $data = $this->kota->where(['id_provinsi' => $select])->findAll();
-        return $this->respond(["status" => true, "message" => "Success", "data" => $data], 200);
-    }
-
-    public function provinsi()
-    {
-        return $this->respond(["status" => true, "message" => "Success", "data" => $this->provinsi->findAll()], 200);
     }
 
     public function setChange($id = NULL)

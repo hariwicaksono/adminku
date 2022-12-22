@@ -5,29 +5,15 @@
         <v-card-title>
             <h2><?= $title; ?></h2>
             <v-spacer></v-spacer>
-            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+            <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang('App.search'); ?>" single-line hide-details>
             </v-text-field>
         </v-card-title>
-        <v-data-table :headers="dataTable" :items="dataSettingWithIndex" :items-per-page="-1" :loading="loading" :search="search" loading-text="Sedang memuat... Harap tunggu">
+        <v-data-table :headers="dataTable" :items="dataSettingWithIndex" :items-per-page="-1" :loading="loading" :search="search" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.index}}</td>
                     <td>{{item.variable_setting}}</td>
-                    <td>
-                    <div v-if="item.variable_setting == 'kota'">
-                            <div v-for="items in dataKota" :key="items.id" v-if="items.id == item.value_setting">
-                                {{items.lokasi}}
-                            </div>
-                        </div>
-                        <div v-else-if="item.variable_setting == 'provinsi'">
-                            <div v-for="items in dataProvinsi" :key="items.id" v-if="items.id == item.value_setting">
-                                {{items.provinsi}}
-                            </div>
-                        </div>
-                        <div v-else>
-                            {{item.value_setting}}
-                        </div>
-                    </td>
+                    <td>{{item.value_setting}}</td>
                     <td><i>{{item.description_setting}}</i></td>
                     <td>{{item.updated_at}}</td>
                     <td>
@@ -209,7 +195,7 @@
         settingData: [],
         dataTable: [{
             text: '#',
-            value: 'id'
+            value: 'id_setting'
         }, {
             text: 'Variable',
             value: 'variable_setting'

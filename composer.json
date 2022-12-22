@@ -18,7 +18,7 @@
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "~3.13.0",
+        "friendsofphp/php-cs-fixer": "3.13.0",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
         "nexusphp/tachycardia": "^1.0",
@@ -27,9 +27,10 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.14.6"
+        "rector/rector": "0.15.1"
     },
     "suggest": {
+        "ext-curl": "If you use CURLRequest class",
         "ext-imagick": "If you use Image class ImageMagickHandler",
         "ext-gd": "If you use Image class GDHandler",
         "ext-exif": "If you run Image class tests",
@@ -44,6 +45,7 @@
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-dom": "If you use TestResponse",
         "ext-libxml": "If you use TestResponse",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()",
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },
