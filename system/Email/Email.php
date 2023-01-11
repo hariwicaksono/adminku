@@ -2101,6 +2101,11 @@ class Email
             return '[' . $_SERVER['SERVER_ADDR'] . ']';
         }
 
+        $hostname = gethostname();
+        if ($hostname !== false) {
+            return $hostname;
+        }
+
         return '[127.0.0.1]';
     }
 
@@ -2147,7 +2152,7 @@ class Email
      */
     protected function setErrorMessage($msg)
     {
-        $this->debugMessage[]    = $msg . '<br />';
+        $this->debugMessage[]    = $msg . '<br>';
         $this->debugMessageRaw[] = $msg;
     }
 
