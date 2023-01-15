@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
     /**
      * Instance of the main Request object.
@@ -37,12 +37,19 @@ class BaseController extends Controller
      */
     protected $helpers = [];
 
+    
+	/**
+     * An array of helpers to be loaded automatically upon
+     * class instantiation. These helpers will be available
+     * to all other controllers that extend BaseController.
+     *
+     * @var array
+     */
+    protected $session;
+	
     /**
      * Constructor.
      */
-
-    protected $session;
-    
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -51,7 +58,6 @@ class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
-
         $config = config("App");
 		$this->session = \Config\Services::session();
 		$language = \Config\Services::language();

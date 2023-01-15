@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
  *
  * @package CodeIgniter
  */
-class BaseControllerApi extends ResourceController
+abstract class BaseControllerApi extends ResourceController
 {
     /**
      * Instance of the main Request object.
@@ -42,20 +42,24 @@ class BaseControllerApi extends ResourceController
     protected $helpers = [];
 
     /**
-     * Constructor.
+     * Be sure to declare properties for any property fetch you initialized.
+     * The creation of dynamic property is deprecated in PHP 8.2.
      */
     protected $data;
     protected $session;
     protected $validator;
     
+	/**
+     * Constructor.
+     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        //--------------------------------------------------------------------
         // Preload any models, libraries, etc, here.
-        //--------------------------------------------------------------------
+
+        // E.g.: $this->session = \Config\Services::session();
         $config = config("App");
         $this->session = \Config\Services::session();
         $language = \Config\Services::language();
