@@ -69,7 +69,7 @@ class UserModel extends Model
     {
         $user = $this
             ->asArray()
-            ->where(['email' => $emailAddress])
+            ->where(['email' => $emailAddress, 'is_active' => 1])
             ->first();
 
         if (!$user)
