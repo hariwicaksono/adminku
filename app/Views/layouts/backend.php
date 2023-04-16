@@ -68,7 +68,7 @@ $appname = $setting->info['app_name'];
                     <v-menu offset-y>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn text v-bind="attrs" v-on="on">
-                                <v-icon>mdi-account-circle</v-icon> <?= session()->get('username') ?> <v-icon>mdi-chevron-down</v-icon>
+                                <v-icon>mdi-account-circle</v-icon> <span class="d-none d-sm-flex"><?= session()->get('email') ?></span> <v-icon>mdi-chevron-down</v-icon>
                             </v-btn>
                         </template>
 
@@ -138,8 +138,6 @@ $appname = $setting->info['app_name'];
                             <v-list-item-title>Dashboard</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-
-                    <v-divider></v-divider>
 
                     <?php if (session()->get('user_type') == 1) : ?>
                         <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?> <?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pengaturan" title="Pengaturan">

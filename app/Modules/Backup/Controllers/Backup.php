@@ -19,7 +19,7 @@ class Backup extends BaseController
 	public function index()
 	{
 		return view('App\Modules\Backup\Views/backup', [
-			'title' => 'Backup Database'
+			'title' => 'Backup DB'
 		]);
 	}
 

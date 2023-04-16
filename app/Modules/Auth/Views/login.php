@@ -55,7 +55,7 @@
         ...methodsVue,
         submit() {
             this.loading = true;
-            axios.post('<?= base_url() ?>/auth/login', {
+            axios.post('<?= base_url() ?>auth/login', {
                     email: this.email,
                     password: this.password,
                 })

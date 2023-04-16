@@ -61,7 +61,7 @@ $appname = $setting->info['app_name'];
                     <v-menu offset-y>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn text v-bind="attrs" v-on="on">
-                                <v-icon>mdi-account-circle</v-icon> <?= session()->get('username') ?> <v-icon>mdi-chevron-down</v-icon>
+                                <v-icon>mdi-account-circle</v-icon> <span class="d-none d-sm-flex"><?= session()->get('email') ?></span> <v-icon>mdi-chevron-down</v-icon>
                             </v-btn>
                         </template>
 
@@ -81,7 +81,7 @@ $appname = $setting->info['app_name'];
                             </v-list-item>
                             <v-subheader>Login: &nbsp;<v-chip color="primary" small><?= session()->get('user_type') == 1 ? 'admin' : 'user'; ?></v-chip>
                             </v-subheader>
-                            <v-list-item link href="<?= base_url(); ?><?= session()->get('user_type') == 1 ? '/dashboard' : '/dashboard'; ?>">
+                            <v-list-item link href="<?= base_url(); ?><?= session()->get('user_type') == 1 ? 'dashboard' : 'dashboard'; ?>">
                                 <v-list-item-icon>
                                     <v-icon>mdi-view-dashboard</v-icon>
                                 </v-list-item-icon>

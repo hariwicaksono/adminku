@@ -6,7 +6,7 @@ if(!isset($routes))
 }
 
 $routes->group('settings', ['filter' => 'auth', 'namespace' => 'App\Modules\Setting\Controllers'], function($routes){
-	$routes->add('/', 'Setting::index');
+	$routes->get('/', 'Setting::index');
 });
 
 $routes->group('api', ['filter' => 'jwtauth', 'namespace' => 'App\Modules\Setting\Controllers\Api'], function($routes){

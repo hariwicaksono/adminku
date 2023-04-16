@@ -1,9 +1,9 @@
 <?php $this->extend("layouts/backend"); ?>
 <?php $this->section("content"); ?>
 <template>
+<h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
-            <h2><?= $title; ?></h2>
             <v-spacer></v-spacer>
             <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang('App.search'); ?>" single-line hide-details>
             </v-text-field>
@@ -18,14 +18,14 @@
                     <td>{{item.updated_at}}</td>
                     <td>
                         <div v-if="item.variable_setting == 'app_background' || item.variable_setting == 'app_logo'">
-                            <v-btn color="primary" @click="editItem(item)" icon>
+                            <v-btn color="primary" @click="editItem(item)" title="Edit" alt="Edit" icon>
                                 <v-icon>mdi-camera</v-icon>
                             </v-btn>
                         </div>
                         <div v-else-if="item.variable_setting == 'developer'">
                         </div>
                         <div v-else>
-                            <v-btn color="primary" @click="editItem(item)" icon>
+                            <v-btn color="primary" @click="editItem(item)" title="Edit" alt="Edit" icon>
                                 <v-icon>mdi-pencil</v-icon>
                             </v-btn>
                         </div>
@@ -53,7 +53,7 @@
                     <v-form ref="form" v-model="valid">
                         <v-alert v-if="notifType != ''" dismissible dense outlined :type="notifType">{{notifMessage}}</v-alert>
                         <p class="mb-2 text-subtitle-1">Deskripsi Setting</p>
-                        <v-text-field v-model="deskripsiEdit" :error-messages="deskripsi_settingError" outlined disabled></v-text-field>
+                        <v-text-field v-model="deskripsiEdit" :error-messages="description_settingError" outlined disabled></v-text-field>
                         <p class="mb-2 text-subtitle-1">Value Setting</p>
 
                         <div v-if="variableEdit == 'ver'">
@@ -67,7 +67,7 @@
                         </div>
 
                         <div v-else-if="variableEdit == 'background' || variableEdit == 'background_masjid' ">
-                            <img v-bind:src="'<?= base_url() ?>' + '/' + valueEdit" width="150" class="mb-2" />
+                            <img v-bind:src="'<?= base_url() ?>' + valueEdit" width="150" class="mb-2" />
                             <v-file-input v-model="image" show-size label="Image Upload" id="file" class="mb-2" accept=".jpg, .jpeg, .png" prepend-icon="mdi-camera" @change="onFileChange" @click:clear="onFileClear" :loading="loading2" outlined dense></v-file-input>
                             <v-img :src="imagePreview" max-width="100">
                                 <v-overlay v-model="overlay" absolute :opacity="0.1">
@@ -146,7 +146,7 @@
 <v-dialog v-model="loading2" hide-overlay persistent width="300">
     <v-card>
         <v-card-text class="pt-3">
-            Memuat, silahkan tunggu...
+            <?= lang('App.loadingWait'); ?>
             <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
         </v-card-text>
     </v-card>
@@ -204,7 +204,7 @@
             value: 'value_setting'
         }, {
             text: 'Deskripsi',
-            value: 'deskripsi_setting'
+            value: 'description_setting'
         }, {
             text: 'Tgl Update',
             value: 'updated_at'
@@ -218,7 +218,7 @@
         variableEdit: "",
         deskripsiEdit: "",
         valueEdit: "",
-        deskripsi_settingError: "",
+        description_settingError: "",
         value_settingError: "",
         image: null,
         imagePreview: null,
@@ -355,9 +355,9 @@
             // Convert it to a blob to upload
             var blob = b64toBlob(realData, contentType);
             formData.append('image', blob);
-            formData.append('id', this.settingId);
+            formData.append('id_setting', this.settingId);
             this.loading2 = true;
-            axios.post(`<?= base_url() ?>/api/setting/upload`, formData)
+            axios.post(`<?= base_url() ?>api/setting/upload`, formData)
                 .then(res => {
                     // handle success
                     this.loading2 = false
@@ -389,7 +389,7 @@
         // Get Setting
         getSetting: function() {
             this.loading = true;
-            axios.get('<?= base_url() ?>/api/setting/app')
+            axios.get('<?= base_url() ?>api/setting/app')
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -420,10 +420,10 @@
         editItem: function(item) {
             this.modalEdit = true;
             this.notifType = "";
-            this.settingId = item.id;
+            this.settingId = item.id_setting;
             this.groupEdit = item.group_setting;
             this.variableEdit = item.variable_setting;
-            this.deskripsiEdit = item.deskripsi_setting;
+            this.deskripsiEdit = item.description_setting;
             this.valueEdit = item.value_setting;
         },
 
@@ -438,8 +438,8 @@
         //Update
         updateSetting: function() {
             this.loading2 = true;
-            axios.put(`<?= base_url() ?>/api/setting/update/${this.settingId}`, {
-                    deskripsi_setting: this.deskripsiEdit,
+            axios.put(`<?= base_url() ?>api/setting/update/${this.settingId}`, {
+                    description_setting: this.deskripsiEdit,
                     value_setting: this.valueEdit
                 })
                 .then(res => {

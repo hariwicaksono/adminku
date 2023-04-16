@@ -47,7 +47,7 @@
         ...methodsVue,
         submit() {
             this.loading = true;
-            axios.post('<?= base_url() ?>/auth/register', {
+            axios.post('<?= base_url() ?>auth/register', {
                     email: this.email,
                     username: this.username,
                     password: this.password,

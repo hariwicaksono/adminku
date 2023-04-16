@@ -17,7 +17,7 @@ class Setting extends BaseController
 
 	public function index()
 	{
-		return view('App\Modules\Setting\Views/setting_app', [
+		return view('App\Modules\Setting\Views/setting', [
 			'title' => 'Pengaturan',
 		]);
 	}

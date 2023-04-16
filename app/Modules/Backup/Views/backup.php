@@ -1,23 +1,16 @@
 <?php $this->extend("layouts/backend"); ?>
 <?php $this->section("content"); ?>
 <template>
+    <h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
-            <h2><?= $title ?></h2>
+            <v-btn large color="indigo" dark @click="saveBackup" elevation="1">
+                <v-icon>mdi-database-plus</v-icon> Backup Now
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang('App.search'); ?>" single-line hide-details>
+            </v-text-field>
         </v-card-title>
-        <v-container fluid>
-            <v-row>
-                <v-col cols="12" sm="6">
-                    <v-btn large color="indigo" dark @click="saveBackup" elevation="1">
-                        <v-icon>mdi-database-plus</v-icon> Backup Now
-                    </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang('App.search'); ?>" single-line hide-details>
-                    </v-text-field>
-                </v-col>
-            </v-row>
-        </v-container>
         <v-data-table :headers="dataTable" :items="dataBackup" :items-per-page="10" :loading="loading" :search="search" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
@@ -69,7 +62,7 @@
 <v-dialog v-model="loading2" hide-overlay persistent width="300">
     <v-card>
         <v-card-text class="pt-3">
-            Memuat, silahkan tunggu...
+            <?= lang('App.loadingWait'); ?>
             <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
         </v-card-text>
     </v-card>

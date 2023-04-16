@@ -1,6 +1,6 @@
 <?php
 
-namespace  App\Modules\Home\Controllers;
+namespace  App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Libraries\Settings;
@@ -17,7 +17,7 @@ class Home extends BaseController
 
 	public function index()
 	{
-		return view('App\Modules\Home\Views/home', [
+		return view('home', [
 			'title' => 'Home',
 		]);
 	}

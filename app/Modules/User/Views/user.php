@@ -1,24 +1,17 @@
 <?php $this->extend("layouts/backend"); ?>
 <?php $this->section("content"); ?>
 <template>
+    <h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
-            <h2><?= $title; ?></h2>
+            <v-btn color="indigo" dark @click="modalAddOpen" large elevation="1">
+                <v-icon>mdi-account</v-icon> <?= lang('App.add') ?>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-text-field v-model="search" v-on:keydown.enter="handleSubmit" @click:clear="handleSubmit" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
+            </v-text-field>
         </v-card-title>
-        <v-container fluid>
-            <v-row>
-                <v-col cols="12" sm="6">
-                    <v-btn color="indigo" dark @click="modalAddOpen" large elevation="1">
-                        <v-icon>mdi-account</v-icon> <?= lang('App.add') ?>
-                    </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details>
-                    </v-text-field>
-                </v-col>
-            </v-row>
-        </v-container>
-        <v-data-table :headers="headers" :items="users" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
+        <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.id_user}}</td>
@@ -42,19 +35,19 @@
                         </span>
                     </td>
                     <td>
-                        <v-btn color="indigo" class="mr-3" @click="editItem(item)" icon>
+                        <v-btn color="primary" class="mr-3" @click="editItem(item)" title="Edit" alt="Edit" icon>
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
-                        <v-btn color="grey darken-2" @click="changePassword(item)" class="mr-3" icon>
+                        <v-btn color="grey darken-2" @click="changePassword(item)" class="mr-3" title="Password" alt="Password" icon>
                             <v-icon>mdi-key-variant</v-icon>
                         </v-btn>
                         <span v-if="item.username == 'admin'">
-                            <v-btn color="red" icon disabled>
+                            <v-btn color="error" icon disabled>
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>
                         </span>
                         <span v-else>
-                            <v-btn color="red" @click="deleteItem(item)" icon>
+                            <v-btn color="error" @click="deleteItem(item)" title="Delete" alt="Delete" icon>
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>
                         </span>
@@ -198,6 +191,17 @@
     </v-row>
 </template>
 <!-- End Modal Delete -->
+
+<!-- Loading2 -->
+<v-dialog v-model="loading2" hide-overlay persistent width="300">
+    <v-card>
+        <v-card-text class="pt-3">
+            <?= lang('App.loadingWait'); ?>
+            <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
+        </v-card-text>
+    </v-card>
+</v-dialog>
+<!-- -->
 <?php $this->endSection("content") ?>
 
 <?php $this->section("js") ?>
@@ -215,6 +219,9 @@
     dataVue = {
         ...dataVue,
         search: "",
+        menu: false,
+        startDate: "",
+        endDate: "",
         headers: [{
             text: '# ',
             value: 'id_user'
@@ -235,7 +242,10 @@
             value: 'actions',
             sortable: false
         }, ],
-        users: [],
+        dataUsers: [],
+        totalData: 0,
+        data: [],
+        options: {},
         roles: [{
             label: 'Admin',
             value: '1'
@@ -270,10 +280,14 @@
         is_activeError: "",
     }
 
+    // Vue Created
+    // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
         this.getUsers();
     }
 
+    // Vue Computed
+    // Computed: Properti-properti terolah (computed) yang kemudian digabung kedalam Vue instance
     computedVue = {
         ...computedVue,
         passwordMatch() {
@@ -281,8 +295,97 @@
         }
     }
 
+    // Vue Watch
+    // Watch: Sebuah objek dimana keys adalah expresi-expresi untuk memantau dan values adalah callback-nya (fungsi yang dipanggil setelah suatu fungsi lain selesai dieksekusi).
+    watchVue = {
+        ...watchVue,
+        options: {
+            handler() {
+                this.getDataFromApi()
+            },
+            deep: true,
+        },
+
+        dataUsers: function() {
+            if (this.dataUsers != '') {
+                // Call server-side paginate and sort
+                this.getDataFromApi();
+            }
+        }
+    }
+
+    // Vue Methods
+    // Methods: Metode-metode yang kemudian digabung ke dalam Vue instance
     methodsVue = {
         ...methodsVue,
+        // Server-side paginate and sort
+        getDataFromApi() {
+            this.loading = true
+            this.fetchData().then(data => {
+                this.data = data.items
+                this.totalData = data.total
+                this.loading = false
+            })
+        },
+        fetchData() {
+            return new Promise((resolve, reject) => {
+                const {
+                    sortBy,
+                    sortDesc,
+                    page,
+                    itemsPerPage
+                } = this.options
+
+                let search = this.search ?? "".trim();
+
+                let items = this.dataUsers
+                const total = items.length
+
+                if (search == search.toLowerCase()) {
+                    items = items.filter(item => {
+                        return Object.values(item)
+                            .join(",")
+                            .toLowerCase()
+                            .includes(search);
+                    });
+                } else {
+                    items = items.filter(item => {
+                        return Object.values(item)
+                            .join(",")
+                            .includes(search);
+                    });
+                }
+
+                if (sortBy.length === 1 && sortDesc.length === 1) {
+                    items = items.sort((a, b) => {
+                        const sortA = a[sortBy[0]]
+                        const sortB = b[sortBy[0]]
+
+                        if (sortDesc[0]) {
+                            if (sortA < sortB) return 1
+                            if (sortA > sortB) return -1
+                            return 0
+                        } else {
+                            if (sortA < sortB) return -1
+                            if (sortA > sortB) return 1
+                            return 0
+                        }
+                    })
+                }
+
+                if (itemsPerPage > 0) {
+                    items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                }
+
+                setTimeout(() => {
+                    resolve({
+                        items,
+                        total,
+                    })
+                }, 100)
+            })
+        },
+
         modalAddOpen: function() {
             this.modalAdd = true;
         },
@@ -293,10 +396,45 @@
             this.$refs.form.resetValidation();
         },
 
+        // Filter Date
+        reset: function() {
+            this.startDate = "";
+            this.endDate = "";
+        },
+        tujuhHari: function() {
+            this.startDate = "<?= $tujuhHari; ?>";
+            this.endDate = "<?= $hariini; ?>";
+        },
+        hariini: function() {
+            this.startDate = "<?= $hariini; ?>";
+            this.endDate = "<?= $hariini; ?>";
+        },
+        bulanIni: function() {
+            this.startDate = "<?= $awalBulan; ?>";
+            this.endDate = "<?= $akhirBulan; ?>";
+        },
+        tahunIni: function() {
+            this.startDate = "<?= $awalTahun; ?>";
+            this.endDate = "<?= $akhirTahun; ?>";
+        },
+
+        // Handle Submit Filter
+        handleSubmit: function() {
+            //if (this.startDate != '' && this.endDate != '') {
+            //this.getUsersFiltered();
+            //this.menu = false;
+            //} else {
+            this.getUsers();
+            this.startDate = "";
+            this.endDate = "";
+            this.menu = false;
+            //}
+        },
+
         // Get User
         getUsers: function() {
             this.loading = true;
-            axios.get('<?= base_url(); ?>/api/user', options)
+            axios.get('<?= base_url(); ?>api/user', options)
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -304,10 +442,11 @@
                     if (data.status == true) {
                         //this.snackbar = true;
                         //this.snackbarMessage = data.message;
-                        this.users = data.data;
+                        this.dataUsers = data.data;
                     } else {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
+                        this.dataUsers = data.data;
                     }
                 })
                 .catch(err => {
@@ -325,7 +464,7 @@
         // Save User
         saveUser: function() {
             this.loading = true;
-            axios.post('<?= base_url(); ?>/api/user/save', {
+            axios.post('<?= base_url(); ?>api/user/save', {
                     email: this.email,
                     username: this.userName,
                     fullname: this.fullname,
@@ -390,7 +529,7 @@
         //Update
         updateUser: function() {
             this.loading = true;
-            axios.put(`<?= base_url(); ?>/api/user/update/${this.userIdEdit}`, {
+            axios.put(`<?= base_url(); ?>api/user/update/${this.userIdEdit}`, {
                     user: this.userNameEdit,
                     email: this.emailEdit,
                     fullname: this.fullnameEdit,
@@ -443,7 +582,7 @@
         // Delete
         deleteUser: function() {
             this.loading = true;
-            axios.delete(`<?= base_url(); ?>/api/user/delete/${this.userIdDelete}`, options)
+            axios.delete(`<?= base_url(); ?>api/user/delete/${this.userIdDelete}`, options)
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -476,7 +615,7 @@
             this.loading = true;
             this.userIdEdit = item.id_user;
             this.active = item.active;
-            axios.put(`<?= base_url(); ?>/api/user/setActive/${this.userIdEdit}`, {
+            axios.put(`<?= base_url(); ?>api/user/setActive/${this.userIdEdit}`, {
                     is_active: this.is_active,
                 }, options)
                 .then(res => {
@@ -506,7 +645,7 @@
             this.loading = true;
             this.userIdEdit = item.id_user;
             this.user_type = item.user_type;
-            axios.put(`<?= base_url(); ?>/api/user/setRole/${this.userIdEdit}`, {
+            axios.put(`<?= base_url(); ?>api/user/setRole/${this.userIdEdit}`, {
                     user_type: this.user_type,
                 }, options)
                 .then(res => {
@@ -546,7 +685,7 @@
 
         updatePassword() {
             this.loading = true;
-            axios.post('<?= base_url() ?>/api/user/changePassword', {
+            axios.post('<?= base_url() ?>api/user/changePassword', {
                     email: this.emailEdit,
                     password: this.password,
                     verify: this.verify

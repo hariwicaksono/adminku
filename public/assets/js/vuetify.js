@@ -442,7 +442,7 @@ var __assign = undefined && undefined.__assign || function () {
   },
   beforeCreate: function beforeCreate() {
     if (!this.$vuetify || this.$vuetify === this.$root) {
-      throw new Error('Vuetify is not properly initialized, see https://vuetifyjs.com/getting-started/quick-start#bootstrapping-the-vuetify-object');
+      throw new Error('Vuetify is not properly initialized, see https://v2.vuetifyjs.com/getting-started/quick-start#bootstrapping-the-vuetify-object');
     }
   },
   render: function render(h) {
@@ -10499,12 +10499,12 @@ var __read = undefined && undefined.__read || function (o, n) {
   },
   methods: {
     onKeyDown: function onKeyDown(e) {
-      if (e.keyCode !== _util_helpers__WEBPACK_IMPORTED_MODULE_5__["keyCodes"].shift) return;
-      this.shiftKeyDown = true;
+      this.shiftKeyDown = e.keyCode === _util_helpers__WEBPACK_IMPORTED_MODULE_5__["keyCodes"].shift || e.shiftKey;
     },
     onKeyUp: function onKeyUp(e) {
-      if (e.keyCode !== _util_helpers__WEBPACK_IMPORTED_MODULE_5__["keyCodes"].shift) return;
-      this.shiftKeyDown = false;
+      if (e.keyCode === _util_helpers__WEBPACK_IMPORTED_MODULE_5__["keyCodes"].shift || !e.shiftKey) {
+        this.shiftKeyDown = false;
+      }
     },
     toggleSelectAll: function toggleSelectAll(value) {
       var selection = Object.assign({}, this.selection);
@@ -18552,6 +18552,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_themeable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/themeable */ "./src/mixins/themeable/index.ts");
 /* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/mixins */ "./src/util/mixins.ts");
 /* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/helpers */ "./src/util/helpers.ts");
+/* harmony import */ var _util_mergeData__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util/mergeData */ "./src/util/mergeData.ts");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -18574,6 +18575,7 @@ var __assign = undefined && undefined.__assign || function () {
 
 
  // Helpers
+
 
 
 /* @vue/component */
@@ -18603,8 +18605,9 @@ var __assign = undefined && undefined.__assign || function () {
   render: function render(h, ctx) {
     var children = ctx.children,
         listeners = ctx.listeners,
-        props = ctx.props;
-    var data = {
+        props = ctx.props,
+        data = ctx.data;
+    var newData = Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_5__["default"])({
       staticClass: 'v-label',
       class: __assign({
         'v-label--active': props.value,
@@ -18621,8 +18624,8 @@ var __assign = undefined && undefined.__assign || function () {
         position: props.absolute ? 'absolute' : 'relative'
       },
       ref: 'label'
-    };
-    return h('label', _mixins_colorable__WEBPACK_IMPORTED_MODULE_1__["default"].options.methods.setTextColor(props.focused && props.color, data), children);
+    }, data);
+    return h('label', _mixins_colorable__WEBPACK_IMPORTED_MODULE_1__["default"].options.methods.setTextColor(props.focused && props.color, newData), children);
   }
 }));
 
@@ -24357,7 +24360,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_14__["default"])(_
     onKeyPress: function onKeyPress(e) {
       var _this = this;
 
-      if (this.multiple || !this.isInteractive || this.disableLookup) return;
+      if (this.multiple || !this.isInteractive || this.disableLookup || e.key.length > 1 || e.ctrlKey || e.metaKey || e.altKey) return;
       var KEYBOARD_LOOKUP_THRESHOLD = 1000; // milliseconds
 
       var now = performance.now();
@@ -35137,7 +35140,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.6.14";
+  Vuetify.version = "2.6.15";
   Vuetify.config = {
     silent: false
   };
