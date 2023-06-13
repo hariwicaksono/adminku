@@ -79,7 +79,7 @@ function validateJWTFromRequest(string $encodedToken)
 function getSignedJWTForUser(string $email)
 {
     $issuedAtTime = time();
-    $tokenTimeToLive = env('JWT_TIME_TO_LIVE') ?? "14400000"; //Dalam milisecond = 240 menit atau 4 jam
+    $tokenTimeToLive = env('JWT_TIME_TO_LIVE') ?? "28800000"; //Dalam milisecond = 480 menit atau 8 jam
     $tokenExpiration = $issuedAtTime + $tokenTimeToLive;
     $payload = [
         'email' => $email,

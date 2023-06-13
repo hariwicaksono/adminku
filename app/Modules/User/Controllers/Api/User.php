@@ -3,7 +3,9 @@
 namespace App\Modules\User\Controllers\Api;
 
 use App\Controllers\BaseControllerApi;
+use App\Modules\Group\Models\GroupUserModel;
 use App\Modules\User\Models\UserModel;
+use App\Modules\Log\Models\LogModel;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
@@ -13,10 +15,34 @@ class User extends BaseControllerApi
 {
     protected $format       = 'json';
     protected $modelName    = UserModel::class;
+    protected $log;
+    protected $group;
+
+    public function __construct()
+    {
+        $this->log = new LogModel();
+        $this->group = new GroupUserModel();
+    }
+
 
     public function index()
     {
-        return $this->respond(["status" => true, "message" => lang('App.getSuccess'), "data" => $this->model->findAll()], 200);
+        $data = $this->model->getUsers();
+        if (!empty($data)) {
+            $response = [
+                "status" => true,
+                "message" => lang('App.getSuccess'),
+                "data" => $data
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => false,
+                'message' => lang('App.noData'),
+                'data' => []
+            ];
+            return $this->respond($response, 200);
+        }
     }
 
     public function create()
@@ -38,25 +64,29 @@ class User extends BaseControllerApi
                 'rules'  => 'required',
                 'errors' => []
             ],
+            'id_group' => [
+                'rules'  => 'required',
+                'errors' => []
+            ],
         ];
 
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
+            $idGroup = $json->id_group;
             $data = [
                 'email' => $json->email,
                 'fullname' => $json->fullname,
                 'username' => $json->username,
                 'password' => $json->password,
-                'user_type' => 2,
                 'is_active' => 1
             ];
         } else {
+            $idGroup = $this->request->getPost('id_group');
             $data = [
                 'email' => $this->request->getPost('email'),
                 'fullname' => $this->request->getPost('fullname'),
                 'username' => $this->request->getPost('username'),
                 'password' => $this->request->getPost('password'),
-                'user_type' => 2,
                 'is_active' => 1
             ];
         }
@@ -69,18 +99,24 @@ class User extends BaseControllerApi
             ];
             return $this->respond($response, 200);
         } else {
-            $simpan = $this->model->save($data);
-            if ($simpan) {
-                $response = [
-                    'status' => true,
-                    'message' => lang('App.saveSuccess'),
-                    'data' => [],
-                ];
-                return $this->respond($response, 200);
-            }
+            $this->model->save($data);
+            $idUser =  $this->model->getInsertID();
+
+            $dataGroup = [
+                'id_login' => $idUser,
+                'id_group' => $idGroup
+            ];
+            $this->group->save($dataGroup);
+
+            $response = [
+                'status' => true,
+                'message' => lang('App.saveSuccess'),
+                'data' => [],
+            ];
+            return $this->respond($response, 200);
         }
     }
-    
+
     public function update($id = NULL)
     {
         $rules = [
@@ -128,6 +164,14 @@ class User extends BaseControllerApi
     public function delete($id = null)
     {
         $hapus = $this->model->find($id);
+
+        //Default role 1 jangan dihapus
+        if ($id == '1') :
+            $response = ['status' => false, 'message' => lang('App.delFailed'), 'data' => []];
+            return $this->respond($response, 200);
+        endif;
+        //
+
         if ($hapus) {
             $this->model->delete($id);
             $response = [
@@ -181,7 +225,6 @@ class User extends BaseControllerApi
 
     public function setRole($id = NULL)
     {
-
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
             $data = [
@@ -235,17 +278,18 @@ class User extends BaseControllerApi
         }
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_user']; 
-		$user_data = [
-			'password' => $input['password'],
-		];
+        $user_id = $user['id_user'];
+        $user_data = [
+            'password' => $input['password'],
+        ];
         if ($this->model->update($user_id, $user_data)) {
             return $this->getResponse(
                 [
                     'status' => true,
                     'message' => lang('App.passChanged'),
                     'data' => []
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
         } else {
             return $this->getResponse(
@@ -253,8 +297,48 @@ class User extends BaseControllerApi
                     'status' => false,
                     'message' => lang('App.regFailed'),
                     'data' => []
-                ], ResponseInterface::HTTP_OK
+                ],
+                ResponseInterface::HTTP_OK
             );
+        }
+    }
+
+    public function setGroup($id = NULL)
+    {
+        $loginGroup = $this->group->where('id_user', $id)->first();
+        $loginGroupId = $loginGroup['id_group_user'];
+        //var_dump($loginGroup);die;
+
+        if ($this->request->getJSON()) {
+            $json = $this->request->getJSON();
+            $data = [
+                'id_login' => $id,
+                'id_group' => $json->id_group
+            ];
+        } else {
+            $input = $this->request->getRawInput();
+            $data = [
+                'id_login' => $id,
+                'id_group' => $input['id_group']
+            ];
+        }
+
+        if ($data > 0) {
+            $this->group->update($loginGroupId, $data);
+
+            $response = [
+                'status' => true,
+                'message' => lang('App.updSuccess'),
+                'data' => []
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => false,
+                'message' => lang('App.delFailed'),
+                'data' => []
+            ];
+            return $this->respond($response, 200);
         }
     }
 }

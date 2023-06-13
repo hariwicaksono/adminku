@@ -22,6 +22,9 @@ return [
     'loadingWait' => 'Loading, please wait...',
     'settings' => 'Settings',
     'theme' => 'Theme',
+    'application' => 'Application',
+    'date' => 'Date',
+    'do' => 'Do',
  
     //Auth Login Register
     'signIn' => 'Sign in',
@@ -76,6 +79,7 @@ return [
     'videoDeleted' => 'Video successfully deleted',
 
     //User
+    'users' => 'Users',
     'editUser' => 'Edit User',
     'listUser' => 'User List',
     'newPassword' => 'Create New Password ',

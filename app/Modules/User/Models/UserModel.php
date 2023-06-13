@@ -77,4 +77,11 @@ class UserModel extends Model
 
         return $user;
     }
+
+    public function getUsers() 
+	{
+        $this->select("{$this->table}.*, groups_user.id_group");
+        $this->join("groups_user", "groups_user.id_user = {$this->table}.id_user", "left");
+        return $this->findAll();
+	}
 }

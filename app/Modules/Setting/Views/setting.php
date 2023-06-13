@@ -1,7 +1,7 @@
 <?php $this->extend("layouts/backend"); ?>
 <?php $this->section("content"); ?>
 <template>
-<h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
+    <h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
             <v-spacer></v-spacer>
@@ -17,12 +17,10 @@
                     <td><i>{{item.description_setting}}</i></td>
                     <td>{{item.updated_at}}</td>
                     <td>
-                        <div v-if="item.variable_setting == 'app_background' || item.variable_setting == 'app_logo'">
+                        <div v-if="item.variable_setting == 'img_background' || item.variable_setting == 'img_logo'">
                             <v-btn color="primary" @click="editItem(item)" title="Edit" alt="Edit" icon>
                                 <v-icon>mdi-camera</v-icon>
                             </v-btn>
-                        </div>
-                        <div v-else-if="item.variable_setting == 'developer'">
                         </div>
                         <div v-else>
                             <v-btn color="primary" @click="editItem(item)" title="Edit" alt="Edit" icon>
@@ -56,19 +54,9 @@
                         <v-text-field v-model="deskripsiEdit" :error-messages="description_settingError" outlined disabled></v-text-field>
                         <p class="mb-2 text-subtitle-1">Value Setting</p>
 
-                        <div v-if="variableEdit == 'ver'">
-                            <v-select v-model="valueEdit" :items="dataVersi" label="Pilih Versi" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'layout'">
-                            <v-select v-model="valueEdit" :items="dataLayout" label="Pilih Layout" item-text="nama_layout" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'background' || variableEdit == 'background_masjid' ">
+                        <div v-if="groupEdit == 'image'">
                             <img v-bind:src="'<?= base_url() ?>' + valueEdit" width="150" class="mb-2" />
-                            <v-file-input v-model="image" show-size label="Image Upload" id="file" class="mb-2" accept=".jpg, .jpeg, .png" prepend-icon="mdi-camera" @change="onFileChange" @click:clear="onFileClear" :loading="loading2" outlined dense></v-file-input>
+                            <v-file-input v-model="image" show-size label="Browse file" id="file" class="mb-2" accept=".jpg, .jpeg, .png" prepend-icon="mdi-camera" @change="onFileChange" @click:clear="onFileClear" :loading="loading2"></v-file-input>
                             <v-img :src="imagePreview" max-width="100">
                                 <v-overlay v-model="overlay" absolute :opacity="0.1">
                                     <v-btn small class="ma-2" color="success" dark>
@@ -81,43 +69,6 @@
                             </v-img>
                         </div>
 
-                        <div v-else-if="variableEdit == 'video_muted' || variableEdit == 'video_youtube'">
-                            <v-select v-model="valueEdit" :items="dataYesNo" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'video_plugin'">
-                            <v-select v-model="valueEdit" :items="dataPlugin" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'fontsize_nama' || variableEdit == 'fontsize_alamat'">
-                            <v-select v-model="valueEdit" :items="dataFontSize" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'fontweight_nama'">
-                            <v-select v-model="valueEdit" :items="dataFontWeight" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'bgcolor_jam' || variableEdit == 'bgcolor_newsticker'">
-                            <v-text-field type="color" v-model="valueEdit" :error-messages="value_settingError" outlined>
-                            </v-text-field>
-                        </div>
-                   
-                        <div v-else-if="variableEdit == 'jadwal_sholat'">
-                            <v-select v-model="valueEdit" :items="dataSholat" label="Pilih Jadwal Sholat" item-text="text" item-value="value" :error-messages="value_settingError" outlined>
-                            </v-select>
-                            <v-alert type="info" text>
-                                <strong>Informasi!</strong> API jadwal sholat yang digunakan adalah milik pihak ketiga yaitu website https://api.myquran.com (MyQuran.com). Klik <a href="https://api.myquran.com/v1/sholat/kota/semua" class="" target="_blank" alt="api.myquran.com">Disini</a> untuk melihat status API sedang bisa diakses atau tidak (Error 500 dsb), jika Error 500 maka tampilan Display Jadwal Sholat akan Error.
-                            </v-alert>
-                        </div>
-
-                        <div v-else-if="variableEdit == 'developer'">
-                            <v-text-field v-model="valueEdit" :error-messages="value_settingError" outlined disabled></v-text-field>
-                        </div>
-
                         <div v-else>
                             <v-textarea v-model="valueEdit" :error-messages="value_settingError" rows="3" outlined></v-textarea>
                         </div>
@@ -126,14 +77,14 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <div v-if="variableEdit == 'background'">
-                        <v-btn large @click="modalEditClose" elevation="0">
-                            Tutup
+                    <div v-if="groupEdit == 'image'">
+                        <v-btn large @click="modalEditClose" elevation="1">
+                            <?= lang('App.close'); ?>
                         </v-btn>
                     </div>
                     <div v-else>
                         <v-btn large color="primary" @click="updateSetting" :loading="loading2" elevation="1">
-                            <v-icon>mdi-content-save</v-icon> Simpan
+                            <v-icon>mdi-content-save</v-icon> <?= lang('App.save'); ?>
                         </v-btn>
                     </div>
                 </v-card-actions>
@@ -155,6 +106,7 @@
 
 <?php $this->section("js") ?>
 <script>
+    // Base64-to-Blob Digunakan dalam method Upload
     function b64toBlob(b64Data, contentType, sliceSize) {
         contentType = contentType || '';
         sliceSize = sliceSize || 512;
@@ -181,6 +133,8 @@
         return blob;
     }
 
+    // Mendapatkan Token JWT
+    // Menambahkan Auth Bearer Token yang didapatkan sebelumnya
     const token = JSON.parse(localStorage.getItem('access_token'));
     const options = {
         headers: {
@@ -189,6 +143,10 @@
         }
     };
 
+    // Deklarasi errorKeys
+    var errorKeys = []
+
+    // Initial Data
     dataVue = {
         ...dataVue,
         modalEdit: false,
@@ -223,96 +181,17 @@
         image: null,
         imagePreview: null,
         overlay: false,
-        dataVersi: [{
-            text: 'ALL IN ONE',
-            value: 'AIO'
-        }, ],
-        dataYesNo: [{
-            text: 'Ya',
-            value: 'yes'
-        }, {
-            text: 'Tidak',
-            value: 'no'
-        }],
-        dataLayout: [],
-        dataKota: [],
-        kota: "",
-        dataProvinsi: [],
-        provinsi: "",
-        dataSholat: [{
-            text: 'REST API MyQuran.com https://api.myquran.com',
-            value: 'api'
-        }, {
-            text: 'Excel (Upload Manual)',
-            value: 'excel'
-        }],
-        dataPlugin: [{
-            text: 'Plyr.io',
-            value: 'Plyr.io'
-        }],
-        dataFontSize: [{
-            text: 'H1 - Paling Besar',
-            value: 'h1'
-        },{
-            text: 'H2 - Besar',
-            value: 'h2'
-        },{
-            text: 'H3 - Sedang',
-            value: 'h3'
-        },{
-            text: 'H4 - Kecil',
-            value: 'h4'
-        },{
-            text: 'H5 - Lebih Kecil',
-            value: 'h5'
-        },{
-            text: 'H6 - Paling Kecil',
-            value: 'h6'
-        }],
-        dataFontWeight: [{
-            text: 'FW Light',
-            value: 'fw-light'
-        },{
-            text: 'FW Normal',
-            value: 'fw-normal'
-        },{
-            text: 'FW Semibold',
-            value: 'fw-semibold'
-        },{
-            text: 'FW Bold',
-            value: 'fw-bold'
-        }],
-        dataBgColor: [{
-            text: 'Primary (Biru)',
-            value: 'text-bg-primary'
-        }, {
-            text: 'Secondary (Abu-abu)',
-            value: 'text-bg-secondary'
-        }, {
-            text: 'Success (Hijau)',
-            value: 'text-bg-success'
-        }, {
-            text: 'Warning (Kuning)',
-            value: 'text-bg-warning'
-        }, {
-            text: 'Danger (Merah)',
-            value: 'text-bg-danger'
-        }, {
-            text: 'Light (Putih)',
-            value: 'text-bg-light'
-        }, {
-            text: 'Dark (Hitam)',
-            value: 'text-bg-dark'
-        }],
     }
 
-    var errorKeys = []
-
+    // Vue Created
+    // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
         axios.defaults.headers['Authorization'] = 'Bearer ' + token;
         this.getSetting();
     }
 
+    // Vue Methods
+    // Methods: Metode-metode yang kemudian digabung ke dalam Vue instance
     computedVue = {
         ...computedVue,
         dataSettingWithIndex() {
@@ -324,13 +203,17 @@
         },
     }
 
+    // Vue Watch
+    // Watch: Sebuah objek dimana keys adalah expresi-expresi untuk memantau dan values adalah callback-nya (fungsi yang dipanggil setelah suatu fungsi lain selesai dieksekusi).
     watchVue = {
         ...watchVue,
-
     }
 
+    // Vue Methods
+    // Methods: Metode-metode yang kemudian digabung ke dalam Vue instance
     methodsVue = {
         ...methodsVue,
+        // File Upload
         onFileChange() {
             const reader = new FileReader()
             reader.readAsDataURL(this.image)

@@ -1,5 +1,49 @@
 # Changelog
 
+## [v4.3.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.5) (2023-05-21)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.4...v4.3.5)
+
+### SECURITY
+
+* *Remote Code Execution Vulnerability in Validation Placeholders* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-m6m8-6gq8-c9fj) for more information.
+* fix: Session::stop() does not destroy session by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7503
+
+### Fixed Bugs
+
+* docs: remove incorrect @property in ResponseTrait by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7495
+* fix: validation error when a closure is used in combination with permit_empty or if_exist rules by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7492
+* fix: standardize behavior of `make:cell` and `Cells` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7481
+* fix: PostgreSQL getVersion() logic by @marekmosna in https://github.com/codeigniter4/CodeIgniter4/pull/7488
+* fix: PostgreSQL getVersion() output by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7509
+
+### Enhancements
+
+* feat: user guide dark mode by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7463
+
+### Refactoring
+
+* refactor: Entity variable by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7499
+
+## [v4.3.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.4) (2023-04-27)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.3...v4.3.4)
+
+### Breaking Changes
+
+* fix: redirect status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7445
+* fix: [SQLite3][Postgres][SQLSRV][OCI8] Forge::modifyColumn() changes NULL constraint incorrectly by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7371
+
+### Fixed Bugs
+
+* fix: view cell cannot locate the auto-generated view file by @sammyskills in https://github.com/codeigniter4/CodeIgniter4/pull/7392
+* fix: CURLRequest - clear response headers between requests by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7398
+* fix: [Auto Routing Improved] spark routes shows invalid routes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7419
+* fix: remove $insertID in make:model template by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7443
+* fix: add missing 'make:cell' in app/Config/Generators.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7458
+
+### Refactoring
+
+* refactor: Security::getPostedToken() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7377
+
 ## [v4.3.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.3) (2023-03-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.2...v4.3.3)
 

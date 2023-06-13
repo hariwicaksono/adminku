@@ -16,6 +16,11 @@
 
 <?php $this->section("js") ?>
 <script>
+    dataVue = {
+        ...dataVue,
+        
+    }
+
     computedVue = {
         ...computedVue,
     }
@@ -25,12 +30,8 @@
     }
 
     watchVue = {
+        ...watchVue,
 
-    }
-
-    dataVue = {
-        ...dataVue,
-        
     }
     
     methodsVue = {

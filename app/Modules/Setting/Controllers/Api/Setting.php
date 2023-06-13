@@ -15,14 +15,24 @@ class Setting extends BaseControllerApi
 		//memanggil Model
 	}
 
-    public function general()
+    public function index()
     {
-        return $this->respond(["status" => true, "message" => "Success", "data" => $this->model->where('group_setting', 'general')->findAll()], 200);
-    }
-
-    public function app()
-    {
-        return $this->respond(["status" => true, "message" => "Success", "data" => $this->model->where('group_setting', 'app')->findAll()], 200);
+        $data = $this->model->findAll();
+        if (!empty($data)) {
+            $response = [
+                "status" => true,
+                "message" => lang('App.getSuccess'),
+                "data" => $data
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => false,
+                'message' => lang('App.noData'),
+                'data' => []
+            ];
+            return $this->respond($response, 200);
+        }
     }
 
     public function update($id = NULL)
@@ -63,17 +73,17 @@ class Setting extends BaseControllerApi
 
     public function upload()
     {
-        $id = $this->request->getVar('id');
+        $id = $this->request->getVar('id_setting');
         $image = $this->request->getFile('image');
         $fileName = $image->getRandomName();
         if ($image !== "") {
-            $path = "images/";
+            $path = "assets/images/";
             $moved = $image->move($path, $fileName);
             if ($moved) {
-                $simpan = $this->model->update($id, [
+                $save = $this->model->update($id, [
                     'value_setting' => $path . $fileName
                 ]);
-                if ($simpan) {
+                if ($save) {
                     return $this->respond(["status" => true, "message" => lang('App.imgSuccess'), "data" => [$path . $fileName]], 200);
                 } else {
                     return $this->respond(["status" => false, "message" => lang('App.imgFailed'), "data" => []], 200);

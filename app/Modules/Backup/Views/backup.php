@@ -4,7 +4,7 @@
     <h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
-            <v-btn large color="indigo" dark @click="saveBackup" elevation="1">
+            <v-btn large color="primary" dark @click="saveBackup" elevation="1">
                 <v-icon>mdi-database-plus</v-icon> Backup Now
             </v-btn>
             <v-spacer></v-spacer>

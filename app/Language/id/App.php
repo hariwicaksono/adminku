@@ -22,6 +22,9 @@ return [
     'loadingWait' => 'Memuat, silahkan tunggu...',
     'settings' => 'Pengaturan',
     'theme' => 'Tema',
+    'application' => 'Aplikasi',
+    'date' => 'Tanggal',
+    'do' => 'Melakukan',
 
     //Auth Login Register
     'signIn' => 'Masuk',
@@ -76,6 +79,7 @@ return [
     'videoDeleted' => 'Video berhasil dihapus',
 
     //User
+    'users' => 'Pengguna',
     'editUser' => 'Ubah User',
     'listUser' => 'Daftar User',
     'newPassword' => 'Buat Password Baru',

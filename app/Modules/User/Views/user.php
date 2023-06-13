@@ -4,8 +4,8 @@
     <h1 class="font-weight-medium mb-2"><?= $title; ?></h1>
     <v-card>
         <v-card-title>
-            <v-btn color="indigo" dark @click="modalAddOpen" large elevation="1">
-                <v-icon>mdi-account</v-icon> <?= lang('App.add') ?>
+            <v-btn color="primary" dark @click="modalAddOpen" large elevation="1">
+                <v-icon>mdi-plus</v-icon> <?= lang('App.add') ?>
             </v-btn>
             <v-spacer></v-spacer>
             <v-text-field v-model="search" v-on:keydown.enter="handleSubmit" @click:clear="handleSubmit" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
@@ -19,12 +19,11 @@
                     <td>{{item.username}}</td>
                     <td>
                         <span v-if="item.username == 'admin'">
-                            <v-select v-model="item.user_type" name="user_type" :items="roles" item-text="label" item-value="value" label="Select" single-line disabled></v-select>
+                            <v-select v-model="item.id_group" name="group" :items="groups" item-text="nama_group" item-value="id_group" label="Select" single-line disabled></v-select>
                         </span>
                         <span v-else>
-                            <v-select v-model="item.user_type" name="user_type" :items="roles" item-text="label" item-value="value" label="Select" single-line @change="setRole(item)"></v-select>
+                            <v-select v-model="item.id_group" name="group" :items="groups" item-text="nama_group" item-value="id_group" label="Select" single-line @change="setGroup(item)"></v-select>
                         </span>
-
                     </td>
                     <td>
                         <span v-if="item.username == 'admin'">
@@ -73,6 +72,8 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form v-model="valid" ref="form">
+                        <v-select v-model="idGroup" name="role" :items="groups" item-text="nama_group" item-value="id_group" label="Select Group *" :error-messages="id_groupError" outlined></v-select>
+
                         <v-text-field v-model="email" :rules="[rules.email]" label="E-mail" :error-messages="emailError" outlined></v-text-field>
 
                         <v-text-field v-model="userName" label="Username" maxlength="20" :error-messages="usernameError" outlined required></v-text-field>
@@ -232,8 +233,8 @@
             text: 'Username',
             value: 'username'
         }, {
-            text: 'Role',
-            value: 'user_type'
+            text: 'Group',
+            value: ''
         }, {
             text: '<?= lang("App.active") ?>',
             value: 'is_active'
@@ -278,12 +279,16 @@
         passwordError: "",
         user_typeError: "",
         is_activeError: "",
+        groups: [],
+        idGroup: "",
+        id_groupError: ""
     }
 
     // Vue Created
     // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
         this.getUsers();
+        this.getGroups();
     }
 
     // Vue Computed
@@ -469,6 +474,7 @@
                     username: this.userName,
                     fullname: this.fullname,
                     password: this.password,
+                    id_group: this.idGroup
                 }, options)
                 .then(res => {
                     // handle success
@@ -482,6 +488,7 @@
                         this.email = "";
                         this.fullname = "";
                         this.password = "";
+                        this.idGroup = "";
                         this.modalAdd = false;
                         this.$refs.form.resetValidation();
                     } else {
@@ -722,6 +729,66 @@
                     // handle error
                     console.log(err);
                     this.loading = false
+                })
+        },
+
+        // Get Group
+        getGroups: function() {
+            this.loading = true;
+            axios.get('<?= base_url(); ?>api/groups', options)
+                .then(res => {
+                    // handle success
+                    this.loading = false;
+                    var data = res.data;
+                    if (data.status == true) {
+                        //this.snackbar = true;
+                        //this.snackbarMessage = data.message;
+                        this.groups = data.data;
+                    } else {
+                        this.snackbar = true;
+                        this.snackbarMessage = data.message;
+                        this.groups = data.data;
+                    }
+                })
+                .catch(err => {
+                    // handle error
+                    console.log(err);
+                    var error = err.response
+                    if (error.data.expired == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = error.data.message;
+                        setTimeout(() => window.location.href = error.data.data.url, 1000);
+                    }
+                })
+        },
+
+        // Set Group
+        setGroup: function(item) {
+            this.loading = true;
+            this.userIdEdit = item.id_login;
+            this.idGroup = item.id_group;
+            axios.put(`<?= base_url(); ?>api/user/setgroup/${this.userIdEdit}`, {
+                    id_group: this.idGroup,
+                }, options)
+                .then(res => {
+                    // handle success
+                    this.loading = false;
+                    var data = res.data;
+                    if (data.status == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = data.message;
+                        this.getUsers();
+                    }
+                })
+                .catch(err => {
+                    // handle error
+                    console.log(err);
+                    var error = err.response
+                    if (error.data.expired == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = error.data.message;
+                        setTimeout(() => window.location.href = error.data.data.url, 1000);
+                    }
                 })
         },
     }

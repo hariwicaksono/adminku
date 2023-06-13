@@ -4,6 +4,7 @@ use App\Libraries\Settings;
 
 $setting = new Settings();
 $appname = $setting->info['app_name'];
+$logo = $setting->info['img_logo'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@ $appname = $setting->info['app_name'];
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title><?= $title; ?> | <?= $appname; ?></title>
     <meta name="description" content="<?= $title; ?>">
-    <link rel="shortcut icon" href="<?= base_url('favicon.ico'); ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url() . $logo; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" type="text/css" rel="stylesheet" />
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" type="text/css" rel="stylesheet" />
@@ -25,7 +26,7 @@ $appname = $setting->info['app_name'];
     <!-- ========================= preloader start ========================= -->
     <div class="preloader">
         <div class="loader">
-            <div class="loader-logo"><img src="<?= base_url('assets/images/logo.png') ?>" alt="Preloader" width="64" style="margin-top: 5px;"></div>
+            <div class="loader-logo"><img src="<?= base_url() . $logo; ?>" alt="Preloader" width="64" style="margin-top: 5px;"></div>
             <div class="spinner">
                 <div class="spinner-container">
                     <div class="spinner-rotator">

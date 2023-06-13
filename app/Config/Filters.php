@@ -10,6 +10,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\JWTAuthenticationFilter;
 use App\Filters\AuthFilter;
+use App\Filters\PermissionBased;
 
 class Filters extends BaseConfig
 {
@@ -24,7 +25,8 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'jwtauth'  => JWTAuthenticationFilter::class,
-		'auth'     => AuthFilter::class,
+        'auth'     => AuthFilter::class,
+        'permit'     => PermissionBased::class
     ];
 
     /**

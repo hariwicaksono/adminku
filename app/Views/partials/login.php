@@ -59,9 +59,10 @@
         },
         submitLogin() {
             this.loading = true;
-            axios.post(`<?= base_url(); ?>/auth/login`, {
+            axios.post(`<?= base_url(); ?>auth/login`, {
                     email: this.loginEmail,
                     password: this.loginPassword,
+                    remember: this.remember
                 })
                 .then(res => {
                     // handle success

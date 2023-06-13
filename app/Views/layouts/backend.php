@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 
+use App\Libraries\Permission;
 use App\Libraries\Settings;
+
+$permission = new Permission();
+$user_permission = $permission->init();
 
 $setting = new Settings();
 $appname = $setting->info['app_name'];
+$logo = $setting->info['img_logo'];
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title><?= $title ?> - <?= $appname ?></title>
-    <link rel="shortcut icon" href="<?= base_url('favicon.ico'); ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url() . $logo; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" rel="stylesheet">
@@ -42,7 +47,7 @@ $appname = $setting->info['app_name'];
     <!-- ========================= preloader start ========================= -->
     <div class="preloader">
         <div class="loader">
-            <div class="loader-logo"><img src="<?= base_url('assets/images/logo.png'); ?>" alt="Preloader" width="64" style="margin-top: 5px !important"></div>
+            <div class="loader-logo"><img src="<?= base_url() . $logo; ?>" alt="Preloader" width="64" style="margin-top: 5px !important"></div>
             <div class="spinner">
                 <div class="spinner-container">
                     <div class="spinner-rotator">
@@ -75,7 +80,7 @@ $appname = $setting->info['app_name'];
                         <v-list>
                             <v-list-item class="d-flex justify-center">
                                 <v-list-item-avatar size="100">
-                                    <v-img src="<?= base_url('assets/images/default.png'); ?>" ></v-img>
+                                    <v-img src="<?= base_url('assets/images/default.png'); ?>"></v-img>
                                 </v-list-item-avatar>
                             </v-list-item>
                             <v-list-item link>
@@ -139,38 +144,71 @@ $appname = $setting->info['app_name'];
                         </v-list-item-content>
                     </v-list-item>
 
-                    <?php if (session()->get('user_type') == 1) : ?>
-                        <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?> <?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pengaturan" title="Pengaturan">
-                            <v-list-item-icon>
-                                <v-icon>mdi-cog</v-icon>
-                            </v-list-item-icon>
+                    <?php //if (in_array('menuUser', $user_permission)) : ?>
+                    <v-list-group color="white" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
+                        <template v-slot:activator>
                             <v-list-item-content>
-                                <v-list-item-title>Pengaturan</v-list-item-title>
+                                <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
                             </v-list-item-content>
-                        </v-list-item>
+                        </template>
 
-                        <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?> <?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Daftar User" title="Daftar User">
-                            <v-list-item-icon>
-                                <v-icon>mdi-account-multiple</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>Pengguna</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                        <?php //if (in_array('viewUser', $user_permission)) : ?>
+                            <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.users'); ?>" alt="<?= lang('App.users'); ?>">
+                                <v-list-item-icon>
+                                    <v-icon>mdi-account</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        <?php //endif; ?>
 
-                        <v-list-item link href="<?= base_url('backup'); ?>" <?php if ($uri->getSegment(1) == "backup") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Backup Database" title="Backup Database">
-                            <v-list-item-icon>
-                                <v-icon>mdi-database</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>Backup DB</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    <?php endif; ?>
+                        <?php //if (in_array('viewGroup', $user_permission)) : ?>
+                            <v-list-item link href="<?= base_url('group'); ?>" <?php if ($uri->getSegment(1) == "group") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Group" alt="Group">
+                                <v-list-item-icon>
+                                    <v-icon>mdi-shield-check</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Group</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        <?php //endif; ?>
+                    </v-list-group>
+                    <?php //endif; ?>
 
-                    <?php if ((session()->get('user_type') == 2) || (session()->get('user_type') == 3)) : ?>
+                    <?php if (in_array('menuSetting', $user_permission)) : ?>
+                            <v-list-group color="white" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
+                                <template v-slot:activator>
+                                    <v-list-item-content>
+                                        <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
+                                    </v-list-item-content>
+                                </template>
 
-                    <?php endif; ?>
+                                <?php if (in_array('viewSetting', $user_permission)) : ?>
+                                    <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.application'); ?>" alt="<?= lang('App.application'); ?>">
+                                        <v-list-item-icon>
+                                            <v-icon>mdi-cog</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-content>
+                                            <v-list-item-title><?= lang('App.application'); ?></v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                <?php endif; ?>
+
+                                <?php if (in_array('viewBackup', $user_permission)) : ?>
+                                    <v-list-item link href="<?= base_url('backup'); ?>" <?php if ($uri->getSegment(1) == "backup") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Backup Database" alt="Backup Database">
+                                        <v-list-item-icon>
+                                            <v-icon>mdi-database</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-content>
+                                            <v-list-item-title>Backup DB</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                <?php endif; ?>
+                            </v-list-group>
+                        <?php endif; ?>
+
+
                 </v-list>
 
                 <template v-slot:append>

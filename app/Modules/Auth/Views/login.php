@@ -4,6 +4,11 @@
     <v-container class="grey lighten-2 px-4 py-0 fill-height" fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm8 md8>
+                <?php if (session()->getFlashdata('success')) { ?>
+                    <v-alert type="success" dismissible v-model="alert">
+                        <?= session()->getFlashdata('success') ?>
+                    </v-alert>
+                <?php } ?>
                 <v-card>
                     <v-card-text>
                         <v-row>
@@ -42,8 +47,10 @@
     computedVue = {
         ...computedVue,
     }
+
     dataVue = {
         ...dataVue,
+        alert: false,
         show1: false,
         email: "",
         emailError: "",
@@ -51,6 +58,15 @@
         passwordError: "",
         remember: true,
     }
+
+    // Vue Created
+    createdVue = function() {
+        this.alert = true;
+        setTimeout(() => {
+            this.alert = false
+        }, 5000)
+    }
+
     methodsVue = {
         ...methodsVue,
         submit() {
@@ -58,6 +74,7 @@
             axios.post('<?= base_url() ?>auth/login', {
                     email: this.email,
                     password: this.password,
+                    remember: this.remember
                 })
                 .then(res => {
                     // handle success

@@ -4,6 +4,8 @@ namespace App\Modules\Auth\Controllers\Api;
 
 use App\Controllers\BaseControllerApi;
 use App\Modules\Auth\Models\UserModel;
+use App\Modules\Group\Models\GroupUserModel;
+use App\Modules\Log\Models\LogModel;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
@@ -13,6 +15,14 @@ class Auth extends BaseControllerApi
 {
     protected $format       = 'json';
     protected $modelName    = UserModel::class;
+    protected $log;
+    protected $group;
+
+    public function __construct()
+    {
+        $this->log = new LogModel();
+        $this->group = new GroupUserModel();
+    }
 
     /**
      * Register a new user
@@ -99,7 +109,7 @@ class Auth extends BaseControllerApi
             );
         }
 
-        return $this->getJWTForUser($input['email']);
+        return $this->getJWTForUser($input['email'], $input['remember']);
     }
 
     /**
@@ -219,6 +229,7 @@ class Auth extends BaseControllerApi
 
     private function getJWTForUser(
         string $emailAddress,
+        bool $remember,
         int $responseCode = ResponseInterface::HTTP_OK
     ) {
         try {
@@ -227,27 +238,49 @@ class Auth extends BaseControllerApi
 
             helper('jwt');
 
+            $group = $this->group->getGroupById($user['id_user']);
+
             $setSession = [
                 'id' => $user['id_user'],
                 'email' => $user['email'],
-                'fullname' => $user['fullname'],
                 'username' => $user['username'],
-                'user_type' => $user['user_type'],
-                'is_active' => $user['is_active'],
+                'fullname' => $user['fullname'],
+                'role' => $user['user_type'],
+                'active' => $user['is_active'],
+                'group' => $group['nama_group'],
                 'logged_in' => true
             ];
-
             $this->session->set($setSession);
 
-            setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 7200, "/", null, null, true);
-
+            if ($remember == true) {
+                // 8 Jam
+                setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 28800, "/", null, null, true);
+            } else {
+                // 2 Jam
+                setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 7200, "/", null, null, true);
+            }
+           
+            // Update last_logged_in
             helper('app');
             $lastLogin = [
                 'last_logged_in' => date('Y-m-d H:i:s'),
                 'ip_address' => getIPAddress()
             ];
-
             $this->model->update($user['id_user'], $lastLogin);
+
+            // Save Log
+            // User Agent Class
+            $agent = $this->request->getUserAgent();
+            if ($agent->isBrowser()) {
+                $currentAgent = $agent->getPlatform() . '/' . $agent->getBrowser() . ' ' . $agent->getVersion();
+            } elseif ($agent->isRobot()) {
+                $currentAgent = $agent->getRobot();
+            } elseif ($agent->isMobile()) {
+                $currentAgent = $agent->getMobile();
+            } else {
+                $currentAgent = 'Unidentified User Agent';
+            }
+            $this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Login at: ' . date('Y-m-d H:i:s') . ' on device/s: ' . $currentAgent, 'id_user' => session('id')]);
 
             return $this->getResponse(
                 [

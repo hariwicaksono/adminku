@@ -4,13 +4,20 @@ namespace App\Modules\Auth\Controllers;
 
 use App\Controllers\BaseController;
 use App\Modules\Auth\Models\UserModel;
+use App\Modules\Log\Models\LogModel;
 
 class Auth extends BaseController
 {
+	protected $log;
+
+	public function __construct()
+	{
+		$this->log = new LogModel();
+	}
+
 	public function login()
 	{
-		if ($this->session->logged_in == true && $this->session->user_type == 1) {return redirect()->to('/dashboard');} 
-		if ($this->session->logged_in == true && $this->session->user_type == 2) {return redirect()->to('/dashboard');}
+		if ($this->session->logged_in == true) {return redirect()->to('/dashboard');} 
 		
 		return view('App\Modules\Auth\Views/login', [
 			'title' => 'Login',
@@ -19,8 +26,7 @@ class Auth extends BaseController
 
 	public function register()
 	{
-		if ($this->session->logged_in == true && $this->session->user_type == 1) {return redirect()->to('/dashboard');} 
-		if ($this->session->logged_in == true && $this->session->user_type == 2) {return redirect()->to('/dashboard');}
+		if ($this->session->logged_in == true) {return redirect()->to('/dashboard');} 
 
 		return view('App\Modules\Auth\Views/register', [
 			'title' => 'Register',
@@ -86,8 +92,14 @@ class Auth extends BaseController
 
 	public function logout()
 	{
-		$this->session->destroy();
-		$this->session->setFlashdata('success', 'Berhasil Logout');
+		// Data Session
+		$data = ['id', 'email', 'username', 'fullname', 'role', 'active', 'group', 'logged_in'];
+		// Save Log
+		$this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Logout at: ' . date('Y-m-d H:i:s'), 'id_user' => session('id') ]);
+		// Hapus session data
+		$this->session->remove($data);
+		$this->session->setFlashdata('success', 'You have successfully logged out');
+		// Hapus Cookie access_token
 		if (isset($_COOKIE['access_token'])) {
 			unset($_COOKIE['access_token']);
 			setcookie('access_token', '', time() - 3600, '/'); // empty value and old timestamp
