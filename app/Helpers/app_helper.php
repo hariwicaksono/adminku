@@ -23,3 +23,21 @@ function getIPAddress()
 
     return $ipaddress;
 }
+
+function getUserAgent()
+{
+    // User Agent Class
+    $request = \Config\Services::request();
+    $agent = $request->getUserAgent();
+    if ($agent->isBrowser()) {
+        $currentAgent = $agent->getPlatform() . '/' . $agent->getBrowser() . ' ' . $agent->getVersion();
+    } elseif ($agent->isRobot()) {
+        $currentAgent = $agent->getRobot();
+    } elseif ($agent->isMobile()) {
+        $currentAgent = $agent->getMobile();
+    } else {
+        $currentAgent = 'Unidentified User Agent';
+    }
+
+    return $currentAgent;
+}

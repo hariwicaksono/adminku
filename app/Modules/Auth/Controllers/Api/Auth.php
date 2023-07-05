@@ -20,6 +20,7 @@ class Auth extends BaseControllerApi
 
     public function __construct()
     {
+        helper('app');
         $this->log = new LogModel();
         $this->group = new GroupUserModel();
     }
@@ -261,7 +262,6 @@ class Auth extends BaseControllerApi
             }
            
             // Update last_logged_in
-            helper('app');
             $lastLogin = [
                 'last_logged_in' => date('Y-m-d H:i:s'),
                 'ip_address' => getIPAddress()
@@ -269,18 +269,7 @@ class Auth extends BaseControllerApi
             $this->model->update($user['id_user'], $lastLogin);
 
             // Save Log
-            // User Agent Class
-            $agent = $this->request->getUserAgent();
-            if ($agent->isBrowser()) {
-                $currentAgent = $agent->getPlatform() . '/' . $agent->getBrowser() . ' ' . $agent->getVersion();
-            } elseif ($agent->isRobot()) {
-                $currentAgent = $agent->getRobot();
-            } elseif ($agent->isMobile()) {
-                $currentAgent = $agent->getMobile();
-            } else {
-                $currentAgent = 'Unidentified User Agent';
-            }
-            $this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Login at: ' . date('Y-m-d H:i:s') . ' on device/s: ' . $currentAgent, 'id_user' => session('id')]);
+            $this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Login at: ' . date('Y-m-d H:i:s') . ' on device/s: ' . getUserAgent(), 'id_user' => session('id')]);
 
             return $this->getResponse(
                 [

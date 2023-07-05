@@ -6,6 +6,7 @@ use CodeIgniter\Database\Seeder;
 use App\Modules\Auth\Models\UserModel;
 use App\Modules\Group\Models\GroupModel;
 use App\Modules\Group\Models\GroupUserModel;
+use App\Modules\Page\Models\PageModel;
 
 class InitSeeder extends Seeder
 {
@@ -56,5 +57,43 @@ class InitSeeder extends Seeder
         ];
         $user = new GroupUserModel();
         $user->save($dataGroupUser);
+
+        $dataPages = [
+            [
+                'page_title' => 'Syarat dan Ketentuan',
+                'page_title_en' => 'Terms and Conditions',
+                'page_body' => '',
+                'page_body_en' => '',
+                'active' => 1,
+                'slug' => 'terms',
+                'id_user' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => null
+            ],
+            [
+                'page_title' => 'Kebijakan Privasi',
+                'page_title_en' => 'Privacy Policy',
+                'page_body' => '',
+                'page_body_en' => '',
+                'active' => 1,
+                'slug' => 'privacy',
+                'id_user' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => null
+            ],
+            [
+                'page_title' => 'Tentang Kami',
+                'page_title_en' => 'About Us',
+                'page_body' => '',
+                'page_body_en' => '',
+                'active' => 1,
+                'slug' => 'about',
+                'id_user' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => null
+            ]
+        ];
+        $pages = new PageModel();
+        $pages->insertBatch($dataPages);
     }
 }

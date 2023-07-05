@@ -51,7 +51,7 @@
                     <v-form ref="form" v-model="valid">
                         <v-alert v-if="notifType != ''" dismissible dense outlined :type="notifType">{{notifMessage}}</v-alert>
                         <p class="mb-2 text-subtitle-1">Deskripsi Setting</p>
-                        <v-text-field v-model="deskripsiEdit" :error-messages="description_settingError" outlined disabled></v-text-field>
+                        <v-textarea v-model="deskripsiEdit" rows="3" :error-messages="description_settingError" outlined disabled></v-textare>
                         <p class="mb-2 text-subtitle-1">Value Setting</p>
 
                         <div v-if="groupEdit == 'image'">

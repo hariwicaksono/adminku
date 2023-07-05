@@ -25,6 +25,7 @@ return [
     'application' => 'Application',
     'date' => 'Date',
     'do' => 'Do',
+    'aboutUs' => 'About Us',
  
     //Auth Login Register
     'signIn' => 'Sign in',

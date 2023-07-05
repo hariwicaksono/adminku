@@ -10,6 +10,6 @@ class Lang extends BaseController
 	{
 		$lang = $this->request->uri->getSegments()[1];
 		$this->session->set("lang", $lang);
-		return redirect()->to(base_url());
+		return redirect()->back()->with('success', 'Language successfully changed to ' . $lang);
 	}
 }

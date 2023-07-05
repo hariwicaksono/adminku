@@ -4,10 +4,10 @@
     <v-container>
         <v-row align="center" justify="center" class="mt-5">
             <v-col class="text-center" cols="12">
-                <h1 class="text-h4 font-weight-normal">
+                <h1 class="text-h3 font-weight-regular">
                     Starter Project CodeIgniter 4
                 </h1>
-                <h5 class="text-subtitle-1 font-weight-normal">Starter Project ini menggunakan CodeIgniter 4, Vue.js 2 dan Vuetify.js 2</h5>
+                <h2 class="font-weight-regular">Starter Project ini menggunakan CodeIgniter 4, Vue.js 2 dan Vuetify.js 2</h2>
             </v-col>
         </v-row>
     </v-container>

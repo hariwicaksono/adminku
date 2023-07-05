@@ -54,6 +54,46 @@
                             </tr>
 
                             <tr>
+                                <td colspan="5">PAGES</td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="menuPages" value="menuPages" <?php if ($permissions) { ?><?php if (in_array('menuPages', $permissions)) { ?><?= "checked"; ?><?php } ?><?php } ?>><label for="menuPages"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-h6">Pages</td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="viewPages" value="viewPages" <?php if ($permissions) { ?> <?php if (in_array('viewPages', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="viewPages"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="updatePages" value="updatePages" <?php if ($permissions) { ?> <?php if (in_array('updatePages', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="updatePages"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+
+                            <tr>
                                 <td colspan="5"><?= strtoupper(lang('App.users')); ?> SISTEM</td>
                                 <td>
                                     <div class="v-input__control">

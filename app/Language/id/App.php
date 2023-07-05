@@ -25,6 +25,7 @@ return [
     'application' => 'Aplikasi',
     'date' => 'Tanggal',
     'do' => 'Melakukan',
+    'aboutUs' => 'Tentang Kami',
 
     //Auth Login Register
     'signIn' => 'Masuk',

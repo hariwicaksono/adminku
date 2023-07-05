@@ -23,6 +23,9 @@ $logo = $setting->info['img_logo'];
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/vuetify.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/styles.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/quill.core.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/quill.snow.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/quill.bubble.css') ?>" rel="stylesheet">
 
     <style>
         input[type="color"] {
@@ -135,78 +138,95 @@ $logo = $setting->info['img_logo'];
                 <v-list nav>
                     <?php $uri = new \CodeIgniter\HTTP\URI(current_url()); ?>
 
-                    <v-list-item link href="<?= base_url('dashboard'); ?>" <?php if ($uri->getSegment(1) == "dashboard") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Dashboard" title="Dashboard">
-                        <v-list-item-icon>
-                            <v-icon>mdi-home</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Dashboard</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <?php //if (in_array('menuUser', $user_permission)) : ?>
-                    <v-list-group color="white" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <?php //if (in_array('viewUser', $user_permission)) : ?>
-                            <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.users'); ?>" alt="<?= lang('App.users'); ?>">
+                    <?php if (in_array('menuDashboard', $user_permission)) : ?>
+                        <?php if (in_array('viewDashboard', $user_permission)) : ?>
+                            <v-list-item link href="<?= base_url('dashboard'); ?>" <?php if ($uri->getSegment(1) == "dashboard") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Dashboard" title="Dashboard">
                                 <v-list-item-icon>
-                                    <v-icon>mdi-account</v-icon>
+                                    <v-icon>mdi-home</v-icon>
                                 </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Dashboard</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php if (in_array('menuPages', $user_permission)) : ?>
+                        <?php if (in_array('viewPages', $user_permission)) : ?>
+                            <v-list-item link href="<?= base_url('pages'); ?>" <?php if ($uri->getSegment(1) == "pages") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pages" title="Pages">
+                                <v-list-item-icon>
+                                    <v-icon>mdi-file-document</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Pages</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php if (in_array('menuUser', $user_permission)) : ?>
+                        <v-list-group color="white" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
+                            <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
                                 </v-list-item-content>
-                            </v-list-item>
-                        <?php //endif; ?>
+                            </template>
 
-                        <?php //if (in_array('viewGroup', $user_permission)) : ?>
-                            <v-list-item link href="<?= base_url('group'); ?>" <?php if ($uri->getSegment(1) == "group") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Group" alt="Group">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-shield-check</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>Group</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        <?php //endif; ?>
-                    </v-list-group>
-                    <?php //endif; ?>
+                            <?php if (in_array('viewUser', $user_permission)) : ?>
+                                <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.users'); ?>" alt="<?= lang('App.users'); ?>">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-account</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <?php endif; ?>
+
+                            <?php if (in_array('viewGroup', $user_permission)) : ?>
+                                <v-list-item link href="<?= base_url('group'); ?>" <?php if ($uri->getSegment(1) == "group") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Group" alt="Group">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-shield-check</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>Group</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <?php endif; ?>
+                        </v-list-group>
+                    <?php endif; ?>
 
                     <?php if (in_array('menuSetting', $user_permission)) : ?>
-                            <v-list-group color="white" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
-                                <template v-slot:activator>
+                        <v-list-group color="white" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+
+                            <?php if (in_array('viewSetting', $user_permission)) : ?>
+                                <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.application'); ?>" alt="<?= lang('App.application'); ?>">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-cog</v-icon>
+                                    </v-list-item-icon>
                                     <v-list-item-content>
-                                        <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
+                                        <v-list-item-title><?= lang('App.application'); ?></v-list-item-title>
                                     </v-list-item-content>
-                                </template>
+                                </v-list-item>
+                            <?php endif; ?>
 
-                                <?php if (in_array('viewSetting', $user_permission)) : ?>
-                                    <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.application'); ?>" alt="<?= lang('App.application'); ?>">
-                                        <v-list-item-icon>
-                                            <v-icon>mdi-cog</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-content>
-                                            <v-list-item-title><?= lang('App.application'); ?></v-list-item-title>
-                                        </v-list-item-content>
-                                    </v-list-item>
-                                <?php endif; ?>
-
-                                <?php if (in_array('viewBackup', $user_permission)) : ?>
-                                    <v-list-item link href="<?= base_url('backup'); ?>" <?php if ($uri->getSegment(1) == "backup") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Backup Database" alt="Backup Database">
-                                        <v-list-item-icon>
-                                            <v-icon>mdi-database</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-content>
-                                            <v-list-item-title>Backup DB</v-list-item-title>
-                                        </v-list-item-content>
-                                    </v-list-item>
-                                <?php endif; ?>
-                            </v-list-group>
-                        <?php endif; ?>
+                            <?php if (in_array('viewBackup', $user_permission)) : ?>
+                                <v-list-item link href="<?= base_url('backup'); ?>" <?php if ($uri->getSegment(1) == "backup") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Backup Database" alt="Backup Database">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-database</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>Backup DB</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <?php endif; ?>
+                        </v-list-group>
+                    <?php endif; ?>
 
 
                 </v-list>
@@ -289,6 +309,8 @@ $logo = $setting->info['img_logo'];
     <script src="<?= base_url('assets/js/vuetify.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/axios.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/quill.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vue-quill-editor.js') ?>" type="text/javascript"></script>
 
     <script>
         var vue = null;
@@ -369,6 +391,31 @@ $logo = $setting->info['img_logo'];
                 zero: v => v > 0 || "<?= lang('App.isZero'); ?>",
                 varchar: v => (v || '').length <= 255 || 'Maks 255 Karakter'
             },
+            editorOption: {
+                theme: 'snow',
+                modules: {
+                    'toolbar': [
+                        [{
+                            'header': [1, 2, 3, 4, 5, 6, false]
+                        }],
+                        [{
+                            'font': []
+                        }],
+                        ['bold', 'italic', 'underline'], // toggled buttons
+                        ['blockquote', 'code-block'],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }],
+                        [{
+                            'align': []
+                        }],
+                        ['link', 'image'],
+                        ['clean']
+                    ],
+                },
+            },
         }
         var methodsVue = {
             toggleTheme() {
@@ -376,6 +423,7 @@ $logo = $setting->info['img_logo'];
                 localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
             }
         }
+        Vue.use(VueQuillEditor);
     </script>
     <?= $this->renderSection('js') ?>
     <script>

@@ -13,7 +13,7 @@ $logo = $setting->info['img_logo'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title><?= $title; ?> | <?= $appname; ?></title>
+    <title><?= $title; ?> - <?= $appname; ?></title>
     <meta name="description" content="<?= $title; ?>">
     <link rel="shortcut icon" href="<?= base_url() . $logo; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" rel="stylesheet" />
@@ -46,10 +46,10 @@ $logo = $setting->info['img_logo'];
         <v-app>
             <v-app-bar app color="primary" dark elevation="2">
                 <v-btn href="<?= base_url() ?>" text>
-                    <v-toolbar-title style="cursor: pointer"><?= $appname;?></v-toolbar-title>
+                    <v-toolbar-title style="cursor: pointer"><?= $appname; ?></v-toolbar-title>
                 </v-btn>
-                <v-btn text href="<?= base_url('/') ?>">
-                    Home
+                <v-btn text href="<?= base_url('/about') ?>">
+                    <?= lang('App.aboutUs'); ?>
                 </v-btn>
                 <v-spacer></v-spacer>
                 <?php if (empty(session()->get('username'))) : ?>
@@ -124,7 +124,7 @@ $logo = $setting->info['img_logo'];
                         <v-icon>mdi-theme-light-dark</v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <?= lang('App.theme');?> {{themeText}}
+                        <?= lang('App.theme'); ?> {{themeText}}
                     </v-list-item-content>
                     <v-list-item-action>
                         <v-switch v-model="dark" inset @click="toggleTheme"></v-switch>
@@ -140,7 +140,7 @@ $logo = $setting->info['img_logo'];
                     </v-list-item-content>
                     <v-list-item-action>
                         <v-btn-toggle>
-                            <v-btn text small link href="<?=  base_url('lang/id'); ?>">
+                            <v-btn text small link href="<?= base_url('lang/id'); ?>">
                                 ID
                             </v-btn>
                             <v-btn text small link href="<?= base_url('lang/en'); ?>">
@@ -157,6 +157,10 @@ $logo = $setting->info['img_logo'];
             </v-main>
 
             <p class="mx-auto pt-5 text-center subtitle-2">
+                <v-btn small v-for="link in links" :key="link" text rounded class="my-2" link :href="link.link">
+                    {{ link.text }}
+                </v-btn>
+                <br />
                 &copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appname; ?> <?= APP_VERSION ?>
             </p>
 
@@ -246,6 +250,15 @@ $logo = $setting->info['img_logo'];
                 zero: v => v > 0 || "<?= lang('App.isZero'); ?>",
                 varchar: v => (v || '').length <= 255 || 'Maks 255 Karakter'
             },
+            links: [{
+                    text: 'Syarat & Ketentuan',
+                    link: '<?= base_url('terms'); ?>'
+                },
+                {
+                    text: 'Kebijakan Privasi',
+                    link: '<?= base_url('privacy'); ?>'
+                },
+            ],
         }
         var methodsVue = {
             toggleTheme() {

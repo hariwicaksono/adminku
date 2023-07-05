@@ -104,7 +104,8 @@ $base_url = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.
 defined('BASE_URL') || define('BASE_URL', $base_url);
 
 // Custom
-$version = 'v'.'1.30';
+// Release: 2022
+$version = 'v'.'1.32';
 defined('COMPANY_NAME') || define('COMPANY_NAME', 'Your Company');
 defined('APP_NAME') || define('APP_NAME', 'Adminku CI4');
 defined('APP_VERSION') || define('APP_VERSION', $version);
