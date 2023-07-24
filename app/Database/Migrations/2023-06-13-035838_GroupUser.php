@@ -9,17 +9,17 @@ class GroupUser extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_group_user' => [
+            'group_user_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
-            'id_user' => [
+            'user_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
-            'id_group' => [
+            'group_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
             ],
@@ -32,9 +32,9 @@ class GroupUser extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_group_user');
-        $this->forge->addForeignKey('id_user', 'users', 'id_user', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_group', 'groups', 'id_group');
+        $this->forge->addPrimaryKey('group_user_id');
+        $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('group_id', 'groups', 'group_id');
         $this->forge->createTable('groups_user');
     }
 

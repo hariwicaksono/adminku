@@ -14,7 +14,7 @@
         <v-data-table :headers="dataTable" :items="dataBackup" :items-per-page="10" :loading="loading" :search="search" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
-                    <td>{{item.id_backup}}</td>
+                    <td>{{item.backup_id}}</td>
                     <td>{{item.file_name}}</td>
                     <td>{{item.file_path}}</td>
                     <td>{{item.created_at}}</td>
@@ -38,19 +38,15 @@
         <v-dialog v-model="modalDelete" persistent max-width="600px">
             <v-card class="pa-2">
                 <v-card-title>
-                    <v-icon color="error" class="mr-2" x-large>mdi-alert-octagon</v-icon> Konfirmasi Hapus
+                    <v-icon color="error" class="mr-2" x-large>mdi-alert-octagon</v-icon> <?= lang('App.confirmDelete'); ?>
                 </v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                    <div class="mt-5 py-4">
-                        <h2 class="font-weight-regular">Apakah anda yakin ingin menghapus?</h2>
-                    </div>
+                <v-card-text class="my-5">
+                    <h2 class="font-weight-medium"><?= lang('App.delConfirm') ?></h2>
                 </v-card-text>
-                <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="modalDelete = false" elevation="0" large>Tutup</v-btn>
-                    <v-btn color="red" dark @click="deleteData" :loading="loading" elevation="0" large>Hapus</v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deleteData" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -118,7 +114,7 @@
         dataBackup: [],
         dataTable: [{
                 text: '#',
-                value: 'id_backup'
+                value: 'backup_id'
             }, {
                 text: 'File Name',
                 value: 'file_name'
@@ -172,6 +168,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -201,6 +198,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -239,6 +237,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading2 = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -277,6 +276,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;

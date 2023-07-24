@@ -9,7 +9,7 @@ class Page extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_page' => [
+            'page_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'auto_increment' => true,
@@ -36,7 +36,7 @@ class Page extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'id_user' => [
+            'user_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -50,7 +50,7 @@ class Page extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_page');
+        $this->forge->addPrimaryKey('page_id');
         $this->forge->createTable('pages');
     }
 

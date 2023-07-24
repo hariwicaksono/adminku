@@ -12,12 +12,12 @@
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.index}}</td>
-                    <td>{{item.variable_setting}}</td>
-                    <td>{{item.value_setting}}</td>
-                    <td><i>{{item.description_setting}}</i></td>
+                    <td>{{item.setting_variable}}</td>
+                    <td>{{item.setting_value}}</td>
+                    <td><i>{{item.setting_description}}</i></td>
                     <td>{{item.updated_at}}</td>
                     <td>
-                        <div v-if="item.variable_setting == 'img_background' || item.variable_setting == 'img_logo'">
+                        <div v-if="item.setting_variable == 'img_background' || item.setting_variable == 'img_logo'">
                             <v-btn color="primary" @click="editItem(item)" title="Edit" alt="Edit" icon>
                                 <v-icon>mdi-camera</v-icon>
                             </v-btn>
@@ -51,9 +51,9 @@
                     <v-form ref="form" v-model="valid">
                         <v-alert v-if="notifType != ''" dismissible dense outlined :type="notifType">{{notifMessage}}</v-alert>
                         <p class="mb-2 text-subtitle-1">Deskripsi Setting</p>
-                        <v-textarea v-model="deskripsiEdit" rows="3" :error-messages="description_settingError" outlined disabled></v-textare>
-                        <p class="mb-2 text-subtitle-1">Value Setting</p>
+                        <v-textarea v-model="deskripsiEdit" rows="3" :error-messages="setting_descriptionError" outlined disabled></v-textarea>
 
+                        <p class="mb-2 text-subtitle-1">Value Setting</p>
                         <div v-if="groupEdit == 'image'">
                             <img v-bind:src="'<?= base_url() ?>' + valueEdit" width="150" class="mb-2" />
                             <v-file-input v-model="image" show-size label="Browse file" id="file" class="mb-2" accept=".jpg, .jpeg, .png" prepend-icon="mdi-camera" @change="onFileChange" @click:clear="onFileClear" :loading="loading2"></v-file-input>
@@ -68,9 +68,12 @@
                                 </v-overlay>
                             </v-img>
                         </div>
-
+                        <div v-else-if="variableEdit == 'navbar_color' || variableEdit == 'sidebar_color'">
+                            <v-select v-model="valueEdit" :items="dataTheme" item-text="text" item-value="value" :error-messages="setting_valueError" outlined>
+                            </v-select>
+                        </div>
                         <div v-else>
-                            <v-textarea v-model="valueEdit" :error-messages="value_settingError" rows="3" outlined></v-textarea>
+                            <v-textarea v-model="valueEdit" :error-messages="setting_valueError" rows="3" outlined></v-textarea>
                         </div>
                     </v-form>
                 </v-card-text>
@@ -153,16 +156,16 @@
         settingData: [],
         dataTable: [{
             text: '#',
-            value: 'id_setting'
+            value: 'setting_id'
         }, {
             text: 'Variable',
-            value: 'variable_setting'
+            value: 'setting_variable'
         }, {
             text: 'Value',
-            value: 'value_setting'
+            value: 'setting_value'
         }, {
             text: 'Deskripsi',
-            value: 'description_setting'
+            value: 'setting_description'
         }, {
             text: 'Tgl Update',
             value: 'updated_at'
@@ -176,11 +179,72 @@
         variableEdit: "",
         deskripsiEdit: "",
         valueEdit: "",
-        description_settingError: "",
-        value_settingError: "",
+        setting_descriptionError: "",
+        setting_valueError: "",
         image: null,
         imagePreview: null,
         overlay: false,
+        dataTheme: [{
+            text: 'Primary',
+            value: 'primary'
+        }, {
+            text: 'Secondary',
+            value: 'secondary'
+        }, {
+            text: 'Accent',
+            value: 'accent'
+        }, {
+            text: 'Success',
+            value: 'success'
+        }, {
+            text: 'Warning',
+            value: 'warning'
+        }, {
+            text: 'Error',
+            value: 'error'
+        }, {
+            text: 'Blue',
+            value: 'blue'
+        }, {
+            text: 'Green',
+            value: 'green'
+        }, {
+            text: 'Yellow',
+            value: 'yellow'
+        }, {
+            text: 'Red',
+            value: 'red'
+        }, {
+            text: 'Indigo',
+            value: 'indigo'
+        }, {
+            text: 'Pink',
+            value: 'pink'
+        }, {
+            text: 'Purple',
+            value: 'purple'
+        }, {
+            text: 'Orange',
+            value: 'orange'
+        }, {
+            text: 'Cyan',
+            value: 'cyan'
+        }, {
+            text: 'Teal',
+            value: 'teal'
+        }, {
+            text: 'Grey',
+            value: 'grey'
+        }, {
+            text: 'Dark',
+            value: 'dark'
+        }, {
+            text: 'White',
+            value: 'white'
+        }, {
+            text: 'Black',
+            value: 'black'
+        }, ],
     }
 
     // Vue Created
@@ -238,7 +302,7 @@
             // Convert it to a blob to upload
             var blob = b64toBlob(realData, contentType);
             formData.append('image', blob);
-            formData.append('id_setting', this.settingId);
+            formData.append('setting_id', this.settingId);
             this.loading2 = true;
             axios.post(`<?= base_url() ?>api/setting/upload`, formData)
                 .then(res => {
@@ -260,6 +324,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading2 = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -290,6 +355,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -303,11 +369,11 @@
         editItem: function(item) {
             this.modalEdit = true;
             this.notifType = "";
-            this.settingId = item.id_setting;
-            this.groupEdit = item.group_setting;
-            this.variableEdit = item.variable_setting;
-            this.deskripsiEdit = item.description_setting;
-            this.valueEdit = item.value_setting;
+            this.settingId = item.setting_id;
+            this.groupEdit = item.setting_group;
+            this.variableEdit = item.setting_variable;
+            this.deskripsiEdit = item.setting_description;
+            this.valueEdit = item.setting_value;
         },
 
         modalEditClose: function() {
@@ -322,8 +388,8 @@
         updateSetting: function() {
             this.loading2 = true;
             axios.put(`<?= base_url() ?>api/setting/update/${this.settingId}`, {
-                    description_setting: this.deskripsiEdit,
-                    value_setting: this.valueEdit
+                    setting_description: this.deskripsiEdit,
+                    setting_value: this.valueEdit
                 })
                 .then(res => {
                     // handle success
@@ -354,6 +420,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading2 = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;

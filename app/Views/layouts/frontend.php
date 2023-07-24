@@ -3,8 +3,10 @@
 use App\Libraries\Settings;
 
 $setting = new Settings();
-$appname = $setting->info['app_name'];
+$appName = $setting->info['app_name'];
 $logo = $setting->info['img_logo'];
+$background = $setting->info['img_background'];
+$navbarColor = $setting->info['navbar_color'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,7 @@ $logo = $setting->info['img_logo'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title><?= $title; ?> - <?= $appname; ?></title>
+    <title><?= $title; ?> - <?= $appName; ?></title>
     <meta name="description" content="<?= $title; ?>">
     <link rel="shortcut icon" href="<?= base_url() . $logo; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" rel="stylesheet" />
@@ -44,9 +46,9 @@ $logo = $setting->info['img_logo'];
     <!-- preloader end -->
     <div id="app">
         <v-app>
-            <v-app-bar app color="primary" dark elevation="2">
+            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> elevation="2">
                 <v-btn href="<?= base_url() ?>" text>
-                    <v-toolbar-title style="cursor: pointer"><?= $appname; ?></v-toolbar-title>
+                    <v-toolbar-title style="cursor: pointer"><?= $appName; ?></v-toolbar-title>
                 </v-btn>
                 <v-btn text href="<?= base_url('/about') ?>">
                     <?= lang('App.aboutUs'); ?>
@@ -75,7 +77,7 @@ $logo = $setting->info['img_logo'];
                             <v-list-item link>
                                 <v-list-item-content>
                                     <v-list-item-title class="text-h6">
-                                        Hallo, <?= session()->get('fullname') ?>
+                                        Hai, <?= session()->get('fullname') ?>
                                     </v-list-item-title>
                                     <v-list-item-subtitle><?= session()->get('email') ?></v-list-item-subtitle>
                                 </v-list-item-content>
@@ -161,7 +163,7 @@ $logo = $setting->info['img_logo'];
                     {{ link.text }}
                 </v-btn>
                 <br />
-                &copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appname; ?> <?= APP_VERSION ?>
+                &copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?> - <?= $appName; ?> <?= APP_VERSION ?>
             </p>
 
             <?= $this->include('App\Views\partials/login'); ?>
@@ -181,6 +183,9 @@ $logo = $setting->info['img_logo'];
     <script src="<?= base_url('assets/js/vuetify.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/axios.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vuejs-paginate.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vue-masonry-plugin-window.js') ?>"></script>
+    <script src="<?= base_url('assets/js/anime.min.js') ?>" type="text/javascript"></script>
 
     <script>
         var computedVue = {
@@ -232,6 +237,11 @@ $logo = $setting->info['img_logo'];
             loading3: false,
             loading4: false,
             loading5: false,
+            loading6: false,
+            loading7: false,
+            loading8: false,
+            loading9: false,
+            loading10: false,
             valid: true,
             notifMessage: '',
             notifType: '',
@@ -266,6 +276,9 @@ $logo = $setting->info['img_logo'];
                 localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
             },
         }
+        var VueMasonryPlugin = window["vue-masonry-plugin"].VueMasonryPlugin;
+        Vue.use(VueMasonryPlugin);
+        Vue.component('paginate', VuejsPaginate);
     </script>
     <!-- Include script khusus dari views partials/login -->
     <?= $this->renderSection('js_auth') ?>

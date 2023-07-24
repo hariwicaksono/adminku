@@ -262,6 +262,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -276,7 +277,7 @@
         editItem: function(item) {
             this.modalEdit = true;
             this.notifType = "";
-            this.pageId = item.id_page;
+            this.pageId = item.page_id;
             this.pageTitle = item.page_title;
             this.pageTitleEn = item.page_title_en;
             this.pageBody = item.page_body;
@@ -328,6 +329,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading2 = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -340,7 +342,7 @@
         // Set Item Active Page
         setActive: function(item) {
             this.loading = true;
-            this.pageId = item.id_page;
+            this.pageId = item.page_id;
             this.active = item.active;
             axios.put(`<?= base_url() ?>api/page/setactive/${this.pageId}`, {
                     active: this.active,
@@ -357,7 +359,8 @@
                 })
                 .catch(err => {
                     // handle error
-                    console.log(err.response);
+                    console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;

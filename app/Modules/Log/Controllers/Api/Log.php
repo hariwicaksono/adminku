@@ -40,7 +40,10 @@ class Log extends BaseControllerApi
 
     public function show($id = null)
     {
-        $data = $this->model->find($id);
+        $input = $this->request->getVar();
+        $start = $input['tgl_start'];
+        $end = $input['tgl_end'];
+        $data = $this->model->where('user_id', $id)->where("DATE(created_at) BETWEEN '$start' AND '$end'", null, false)->orderBy('created_at', 'DESC')->findAll();
         if (!empty($data)) {
             $response = [
                 "status" => true,

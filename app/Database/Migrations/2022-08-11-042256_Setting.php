@@ -9,24 +9,24 @@ class Setting extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_setting' => [
+            'setting_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'group_setting' => [
+            'setting_group' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'variable_setting' => [
+            'setting_variable' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'value_setting' => [
+            'setting_value' => [
                 'type'           => 'TEXT',
             ],
-            'description_setting' => [
+            'setting_description' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
@@ -35,7 +35,7 @@ class Setting extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_setting');
+        $this->forge->addPrimaryKey('setting_id');
         $this->forge->createTable('settings');
     }
 

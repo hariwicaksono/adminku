@@ -9,7 +9,7 @@
         <v-card-text>
             <?= form_open('/group/update/' . $id) ?>
 
-            <v-text-field type="text" name="nama_group" value="<?= $group['nama_group']; ?>" label="Nama Group" outlined></v-text-field>
+            <v-text-field type="text" name="group_name" value="<?= $group['group_name']; ?>" label="Nama Group" outlined></v-text-field>
 
             <div class="v-data-table theme--light">
                 <div class="v-data-table__wrapper">

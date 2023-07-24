@@ -8,21 +8,21 @@
                 <v-icon>mdi-plus</v-icon> <?= lang('App.add') ?>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-text-field v-model="search" v-on:keydown.enter="handleSubmit" @click:clear="handleSubmit" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
+            <v-text-field v-model="search" v-on:keydown.enter="handleSearch" @click:clear="handleSearch" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
             </v-text-field>
         </v-card-title>
         <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
             <template v-slot:item="{ item }">
                 <tr>
-                    <td>{{item.id_user}}</td>
+                    <td>{{item.user_id}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.username}}</td>
                     <td>
                         <span v-if="item.username == 'admin'">
-                            <v-select v-model="item.id_group" name="group" :items="groups" item-text="nama_group" item-value="id_group" label="Select" single-line disabled></v-select>
+                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line disabled></v-select>
                         </span>
                         <span v-else>
-                            <v-select v-model="item.id_group" name="group" :items="groups" item-text="nama_group" item-value="id_group" label="Select" single-line @change="setGroup(item)"></v-select>
+                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line @change="setGroup(item)"></v-select>
                         </span>
                     </td>
                     <td>
@@ -36,6 +36,9 @@
                     <td>
                         <v-btn color="primary" class="mr-3" @click="editItem(item)" title="Edit" alt="Edit" icon>
                             <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
+                        <v-btn icon color="indigo" @click="openModalLog(item)" class="mr-3" title="Activity Log" alt="Activity Log">
+                            <v-icon>mdi-clipboard-text-clock</v-icon>
                         </v-btn>
                         <v-btn color="grey darken-2" @click="changePassword(item)" class="mr-3" title="Password" alt="Password" icon>
                             <v-icon>mdi-key-variant</v-icon>
@@ -72,7 +75,7 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form v-model="valid" ref="form">
-                        <v-select v-model="idGroup" name="role" :items="groups" item-text="nama_group" item-value="id_group" label="Select Group *" :error-messages="id_groupError" outlined></v-select>
+                        <v-select v-model="idGroup" name="role" :items="groups" item-text="group_name" item-value="group_id" label="Select Group *" :error-messages="group_idError" outlined></v-select>
 
                         <v-text-field v-model="email" :rules="[rules.email]" label="E-mail" :error-messages="emailError" outlined></v-text-field>
 
@@ -167,24 +170,75 @@
 </template>
 <!-- End Modal -->
 
+<!-- Modal User Log -->
+<template>
+    <v-row justify="center">
+        <v-dialog v-model="modalLog" scrollable persistent max-width="900px">
+            <v-card>
+                <v-card-title>User Log Activity
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="closeModalLog">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-card-text class="my-5">
+                    <p class="mb-1"><strong>Filter:</strong></p>
+                    <div class="mb-3">
+                        <a @click="hariini" title="Hari Ini" alt="Hari Ini">Hari Ini</a> &bull;
+                        <a @click="tujuhHari" title="7 Hari Kemarin" alt="7 Hari Kemarin">7 Hari Kemarin</a> &bull;
+                        <a @click="bulanIni" title="Bulan Ini" alt="Bulan Ini">Bulan Ini</a> &bull;
+                        <a @click="tahunIni" title="Tahun Ini" alt="Tahun Ini">Tahun Ini</a> &bull;
+                        <a @click="tahunLalu" title="Tahun Lalu" alt="Tahun Lalu">Tahun Lalu</a> &bull;
+                        <a @click="reset" title="Reset" alt="Reset">Reset</a>
+                    </div>
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="startDate" type="date"></v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-text-field v-model="endDate" type="date"></v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-btn large color="primary" text outlined @click="handleSubmit" :loading="loading">Filter</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-data-table :headers="tbUserLog" :items="dataUserLog" :items-per-page="5" class="elevation-1" :loading="loading1" dense>
+                        <template v-slot:item="{ item }">
+                            <tr>
+                                <td>{{item.keterangan}}</td>
+                                <td>{{item.created_at}}</td>
+                            </tr>
+                        </template>
+                    </v-data-table>
+
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn large @click="closeModalLog" elevation="0"><?= lang("App.close") ?></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </v-row>
+</template>
+<!-- End Modal User Log -->
+
 <!-- Modal Delete -->
 <template>
     <v-row justify="center">
         <v-dialog v-model="modalDelete" persistent max-width="600px">
             <v-card class="pa-2">
                 <v-card-title>
-                    <v-icon color="error" class="mr-2" x-large>mdi-alert-octagon</v-icon> Konfirmasi Hapus
+                    <v-icon color="error" class="mr-2" x-large>mdi-alert-octagon</v-icon> Konfirmasi <?= lang("App.delete"); ?>
                 </v-card-title>
-                <v-card-text>
-                    <div class="mt-4">
-                        <h2 class="font-weight-medium"><?= lang('App.delConfirm') ?></h2>
-                    </div>
+                <v-card-text class="my-5">
+                    <h2 class="font-weight-medium"><?= lang('App.delConfirm') ?></h2>
                 </v-card-text>
-                <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
-                    <v-btn color="primary" dark large @click="deleteUser" :loading="loading"><?= lang("App.yes") ?></v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deleteUser" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -221,11 +275,11 @@
         ...dataVue,
         search: "",
         menu: false,
-        startDate: "",
-        endDate: "",
+        startDate: "<?= $awalTahun; ?>",
+        endDate: "<?= $akhirTahun; ?>",
         headers: [{
             text: '# ',
-            value: 'id_user'
+            value: 'user_id'
         }, {
             text: 'E-mail',
             value: 'email'
@@ -281,7 +335,16 @@
         is_activeError: "",
         groups: [],
         idGroup: "",
-        id_groupError: ""
+        group_idError: "",
+        modalLog: false,
+        dataUserLog: [],
+        tbUserLog: [{
+            text: 'Keterangan',
+            value: 'keterangan'
+        }, {
+            text: 'Date',
+            value: 'created_at'
+        }, ],
     }
 
     // Vue Created
@@ -403,8 +466,8 @@
 
         // Filter Date
         reset: function() {
-            this.startDate = "";
-            this.endDate = "";
+            this.startDate = "<?= $awalTahun; ?>";
+            this.endDate = "<?= $akhirTahun; ?>";
         },
         tujuhHari: function() {
             this.startDate = "<?= $tujuhHari; ?>";
@@ -422,18 +485,19 @@
             this.startDate = "<?= $awalTahun; ?>";
             this.endDate = "<?= $akhirTahun; ?>";
         },
+        tahunLalu: function() {
+            this.startDate = "<?= $awalTahunLalu; ?>";
+            this.endDate = "<?= $akhirTahunLalu; ?>";
+        },
+
+        // Handle Search Filter
+        handleSearch: function() {
+            this.getUsers();
+        },
 
         // Handle Submit Filter
         handleSubmit: function() {
-            //if (this.startDate != '' && this.endDate != '') {
-            //this.getUsersFiltered();
-            //this.menu = false;
-            //} else {
-            this.getUsers();
-            this.startDate = "";
-            this.endDate = "";
-            this.menu = false;
-            //}
+            this.userLog();
         },
 
         // Get User
@@ -452,11 +516,13 @@
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
                         this.dataUsers = data.data;
+                        this.data = data.data;
                     }
                 })
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -474,7 +540,7 @@
                     username: this.userName,
                     fullname: this.fullname,
                     password: this.password,
-                    id_group: this.idGroup
+                    group_id: this.idGroup
                 }, options)
                 .then(res => {
                     // handle success
@@ -509,6 +575,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -523,7 +592,7 @@
         editItem: function(user) {
             this.modalEdit = true;
             this.show = false;
-            this.userIdEdit = user.id_user;
+            this.userIdEdit = user.user_id;
             this.userNameEdit = user.username;
             this.emailEdit = user.email;
             this.fullnameEdit = user.fullname;
@@ -569,6 +638,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -582,7 +654,7 @@
         // Get Item Delete
         deleteItem: function(item) {
             this.modalDelete = true;
-            this.userIdDelete = item.id_user;
+            this.userIdDelete = item.user_id;
             this.userNameDelete = item.username;
         },
 
@@ -607,6 +679,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -620,7 +695,7 @@
         // Set Item Active
         setActive: function(item) {
             this.loading = true;
-            this.userIdEdit = item.id_user;
+            this.userIdEdit = item.user_id;
             this.active = item.active;
             axios.put(`<?= base_url(); ?>api/user/setActive/${this.userIdEdit}`, {
                     is_active: this.is_active,
@@ -637,6 +712,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -650,7 +728,7 @@
         // Set Role
         setRole: function(item) {
             this.loading = true;
-            this.userIdEdit = item.id_user;
+            this.userIdEdit = item.user_id;
             this.user_type = item.user_type;
             axios.put(`<?= base_url(); ?>api/user/setRole/${this.userIdEdit}`, {
                     user_type: this.user_type,
@@ -667,6 +745,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -680,7 +761,7 @@
         // Change Password
         changePassword: function(user) {
             this.modalPassword = true;
-            this.userIdEdit = user.id_user;
+            this.userIdEdit = user.user_id;
             this.userNameEdit = user.username;
             this.emailEdit = user.email;
             this.fullnameEdit = user.fullname;
@@ -727,8 +808,10 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
-                    this.loading = false
                 })
         },
 
@@ -753,6 +836,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
+                    this.loading = false
                     var error = err.response
                     if (error.data.expired == true) {
                         this.snackbar = true;
@@ -765,10 +849,10 @@
         // Set Group
         setGroup: function(item) {
             this.loading = true;
-            this.userIdEdit = item.id_login;
-            this.idGroup = item.id_group;
+            this.userIdEdit = item.user_id;
+            this.idGroup = item.group_id;
             axios.put(`<?= base_url(); ?>api/user/setgroup/${this.userIdEdit}`, {
-                    id_group: this.idGroup,
+                    group_id: this.idGroup,
                 }, options)
                 .then(res => {
                     // handle success
@@ -782,6 +866,9 @@
                 })
                 .catch(err => {
                     // handle error
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.snackbarMessage = err;
                     console.log(err);
                     var error = err.response
                     if (error.data.expired == true) {
@@ -790,6 +877,49 @@
                         setTimeout(() => window.location.href = error.data.data.url, 1000);
                     }
                 })
+        },
+
+        // Get User Log
+        openModalLog: function(user) {
+            this.modalLog = true;
+            this.userIdEdit = user.user_id;
+            this.userLog();
+        },
+
+        userLog: function() {
+            this.loading1 = true;
+            axios.get(`<?= base_url(); ?>api/log/${this.userIdEdit}?tgl_start=${this.startDate}&tgl_end=${this.endDate}`, options)
+                .then(res => {
+                    // handle success
+                    this.loading1 = false;
+                    var data = res.data;
+                    if (data.status == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = data.message;
+                        this.dataUserLog = data.data;
+                    } else {
+                        this.snackbar = true;
+                        this.snackbarMessage = data.message;
+                        this.dataUserLog = data.data;
+                    }
+                })
+                .catch(err => {
+                    // handle error
+                    console.log(err);
+                    this.loading1 = false
+                    var error = err.response
+                    if (error.data.expired == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = error.data.message;
+                        setTimeout(() => window.location.href = error.data.data.url, 1000);
+                    }
+                })
+        },
+
+        closeModalLog: function() {
+            this.modalLog = false;
+            this.dataUserLog = [];
+            this.reset();
         },
     }
 </script>

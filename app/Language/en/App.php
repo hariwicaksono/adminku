@@ -60,8 +60,10 @@ return [
     //Data
     'active' => 'Active',
     'action' => 'Action',
-    'add' => 'Tambah',
+    'add' => 'Add',
     'edit' => 'Edit',
+    'delete' => 'Delete',
+    'confirmDelete' => 'Delete Confirmation',
     'delConfirm' => 'Are you sure you want to delete this?',
     'saveSuccess' => 'Successfully save data',
     'saveFailed' => 'Failed to save',

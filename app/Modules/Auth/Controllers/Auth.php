@@ -95,7 +95,7 @@ class Auth extends BaseController
 		// Data Session
 		$data = ['id', 'email', 'username', 'fullname', 'role', 'active', 'group', 'logged_in'];
 		// Save Log
-		$this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Logout at: ' . date('Y-m-d H:i:s'), 'id_user' => session('id') ]);
+		$this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Logout at: ' . date('Y-m-d H:i:s'), 'user_id' => session('id') ]);
 		// Hapus session data
 		$this->session->remove($data);
 		$this->session->setFlashdata('success', 'You have successfully logged out');

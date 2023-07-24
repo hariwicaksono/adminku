@@ -38,7 +38,7 @@ class Setting extends BaseControllerApi
     public function update($id = NULL)
     {
         $rules = [
-            'value_setting' => [
+            'setting_value' => [
                 'rules'  => 'required',
                 'errors' => []
             ],
@@ -47,7 +47,7 @@ class Setting extends BaseControllerApi
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
             $data = [
-                'value_setting' => $json->value_setting,
+                'setting_value' => $json->setting_value,
             ];
         } else {
             $data = $this->request->getRawInput();
@@ -73,7 +73,7 @@ class Setting extends BaseControllerApi
 
     public function upload()
     {
-        $id = $this->request->getVar('id_setting');
+        $id = $this->request->getVar('setting_id');
         $image = $this->request->getFile('image');
         $fileName = $image->getRandomName();
         if ($image !== "") {
@@ -81,7 +81,7 @@ class Setting extends BaseControllerApi
             $moved = $image->move($path, $fileName);
             if ($moved) {
                 $save = $this->model->update($id, [
-                    'value_setting' => $path . $fileName
+                    'setting_value' => $path . $fileName
                 ]);
                 if ($save) {
                     return $this->respond(["status" => true, "message" => lang('App.imgSuccess'), "data" => [$path . $fileName]], 200);
@@ -104,12 +104,12 @@ class Setting extends BaseControllerApi
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
             $data = [
-                'value_setting' => $json->value_setting,
+                'setting_value' => $json->setting_value,
             ];
         } else {
             $input = $this->request->getRawInput();
             $data = [
-                'value_setting' => $input['value_setting']
+                'setting_value' => $input['setting_value']
             ];
         }
 

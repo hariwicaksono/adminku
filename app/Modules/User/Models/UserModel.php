@@ -9,7 +9,7 @@ class UserModel extends Model
 {
     protected $DBGroup              = 'default';
     protected $table                = 'users';
-    protected $primaryKey           = 'id_user';
+    protected $primaryKey           = 'user_id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
     protected $returnType           = 'array';
@@ -80,8 +80,8 @@ class UserModel extends Model
 
     public function getUsers() 
 	{
-        $this->select("{$this->table}.*, groups_user.id_group");
-        $this->join("groups_user", "groups_user.id_user = {$this->table}.id_user", "left");
+        $this->select("{$this->table}.*, groups_user.group_id");
+        $this->join("groups_user", "groups_user.user_id = {$this->table}.user_id", "left");
         return $this->findAll();
 	}
 }

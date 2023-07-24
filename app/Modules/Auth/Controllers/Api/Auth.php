@@ -143,7 +143,7 @@ class Auth extends BaseControllerApi
         ];
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_user'];
+        $user_id = $user['user_id'];
         $user_data = [
             'token' => $token,
         ];
@@ -203,7 +203,7 @@ class Auth extends BaseControllerApi
         }
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_user'];
+        $user_id = $user['user_id'];
         $user_data = [
             'password' => $input['password'],
         ];
@@ -239,16 +239,16 @@ class Auth extends BaseControllerApi
 
             helper('jwt');
 
-            $group = $this->group->getGroupById($user['id_user']);
+            $group = $this->group->getGroupById($user['user_id']);
 
             $setSession = [
-                'id' => $user['id_user'],
+                'id' => $user['user_id'],
                 'email' => $user['email'],
                 'username' => $user['username'],
                 'fullname' => $user['fullname'],
                 'role' => $user['user_type'],
                 'active' => $user['is_active'],
-                'group' => $group['nama_group'],
+                'group' => $group['group_name'],
                 'logged_in' => true
             ];
             $this->session->set($setSession);
@@ -266,10 +266,10 @@ class Auth extends BaseControllerApi
                 'last_logged_in' => date('Y-m-d H:i:s'),
                 'ip_address' => getIPAddress()
             ];
-            $this->model->update($user['id_user'], $lastLogin);
+            $this->model->update($user['user_id'], $lastLogin);
 
             // Save Log
-            $this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Login at: ' . date('Y-m-d H:i:s') . ' on device/s: ' . getUserAgent(), 'id_user' => session('id')]);
+            $this->log->save(['keterangan' => session('fullname') . ' (' . session('email') . ') ' . strtolower(lang('App.do')) . ' Login at: ' . date('Y-m-d H:i:s') . ' on device/s: ' . getUserAgent(), 'user_id' => session('id')]);
 
             return $this->getResponse(
                 [

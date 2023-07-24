@@ -27,6 +27,8 @@ class User extends BaseController
             'akhirBulan' => date('Y-m-t', strtotime(Time::now())),
 			'awalTahun' => date('Y-', strtotime(Time::now())) . '01-01',
             'akhirTahun' => date('Y-', strtotime(Time::now())) . '12-31',
+			'awalTahunLalu' => date('Y-', strtotime('-1 year', strtotime(Time::now()))) . '01-01',
+            'akhirTahunLalu' => date('Y-', strtotime('-1 year', strtotime(Time::now()))) . '12-31',
 		]);
 	}
 

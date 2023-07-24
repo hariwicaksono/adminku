@@ -62,6 +62,8 @@ return [
     'action' => 'Aksi',
     'add' => 'Tambah',
     'edit' => 'Edit',
+    'delete' => 'Hapus',
+    'confirmDelete' => 'Konfirmasi Hapus',
     'delConfirm' => 'Anda yakin ingin menghapus data ini?',
     'saveSuccess' => 'Berhasil menyimpan data',
     'saveFailed' => 'Gagal menyimpan',

@@ -8,7 +8,7 @@ class PageModel extends Model
 {
     protected $DBGroup              = 'default';
     protected $table                = 'pages';
-    protected $primaryKey           = 'id_page';
+    protected $primaryKey           = 'page_id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
     protected $returnType           = 'array';

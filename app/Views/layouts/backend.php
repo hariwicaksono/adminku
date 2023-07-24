@@ -7,8 +7,11 @@ $permission = new Permission();
 $user_permission = $permission->init();
 
 $setting = new Settings();
-$appname = $setting->info['app_name'];
+$appName = $setting->info['app_name'];
 $logo = $setting->info['img_logo'];
+$background = $setting->info['img_background'];
+$navbarColor = $setting->info['navbar_color'];
+$sidebarColor = $setting->info['sidebar_color'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +20,8 @@ $logo = $setting->info['img_logo'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title><?= $title ?> - <?= $appname ?></title>
+    <title><?= $title ?> - <?= $appName ?></title>
+    <meta name="description" content="<?= $appName; ?>">
     <link rel="shortcut icon" href="<?= base_url() . $logo; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="<?= base_url('assets/css/materialdesignicons.min.css') ?>" rel="stylesheet">
@@ -68,7 +72,7 @@ $logo = $setting->info['img_logo'];
     <!-- preloader end -->
     <div id="app">
         <v-app>
-            <v-app-bar app color="white" light elevation="2">
+            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> elevation="2">
                 <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu"></v-app-bar-nav-icon>
                 <v-toolbar-title></v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -89,7 +93,7 @@ $logo = $setting->info['img_logo'];
                             <v-list-item link>
                                 <v-list-item-content>
                                     <v-list-item-title class="text-h6">
-                                        Hallo, <?= session()->get('fullname') ?>
+                                        Hai, <?= session()->get('fullname') ?>
                                     </v-list-item-title>
                                     <v-list-item-subtitle><?= session()->get('email') ?></v-list-item-subtitle>
                                 </v-list-item-content>
@@ -121,15 +125,15 @@ $logo = $setting->info['img_logo'];
                 </v-btn>
             </v-app-bar>
 
-            <v-navigation-drawer color="blue darken-3" dark v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
-                <v-list color="blue darken-3" dense>
+            <v-navigation-drawer color="<?= $sidebarColor; ?>" <?= ($sidebarColor == 'white' ? 'light':'dark'); ?> v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
+                <v-list color="<?= $sidebarColor; ?>" dense>
                     <v-list-item>
                         <v-list-item-action>
                             <v-icon @click.stop="toggleMini = !toggleMini">mdi-chevron-left</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title class="text-h6">
-                                <?= $appname; ?>
+                            <v-list-item-title class="text-h6 py-1">
+                                <?= $appName; ?>
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
@@ -165,7 +169,7 @@ $logo = $setting->info['img_logo'];
                     <?php endif; ?>
 
                     <?php if (in_array('menuUser', $user_permission)) : ?>
-                        <v-list-group color="white" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark':'white'); ?>" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
@@ -197,7 +201,7 @@ $logo = $setting->info['img_logo'];
                     <?php endif; ?>
 
                     <?php if (in_array('menuSetting', $user_permission)) : ?>
-                        <v-list-group color="white" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark':'white'); ?>" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
@@ -238,7 +242,7 @@ $logo = $setting->info['img_logo'];
                             <v-list-item-icon style="font-size:12px;" v-if="toggleMini">
                                 &copy; {{ new Date().getFullYear() }}
                             </v-list-item-icon>
-                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?>. <?= $appname; ?> <?= APP_VERSION ?></v-list-item-content>
+                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?>. <?= $appName; ?> <?= APP_VERSION ?></v-list-item-content>
                         </v-list-item>
                     </div>
                 </template>
@@ -311,6 +315,18 @@ $logo = $setting->info['img_logo'];
     <script src="<?= base_url('assets/js/main.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/quill.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vue-quill-editor.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vuejs-paginate.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vue-masonry-plugin-window.js') ?>"></script>
+    <script src="<?= base_url('assets/js/anime.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/Chart.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vue-chartjs.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/dayjs.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/dayjs-locale-id.js') ?>"></script>
+
+    <script>
+        dayjs.locale('id');
+        dayjs().locale('id').format();
+    </script>
 
     <script>
         var vue = null;
@@ -370,6 +386,11 @@ $logo = $setting->info['img_logo'];
             loading3: false,
             loading4: false,
             loading5: false,
+            loading6: false,
+            loading7: false,
+            loading8: false,
+            loading9: false,
+            loading10: false,
             valid: true,
             notifMessage: '',
             notifType: '',
@@ -424,6 +445,9 @@ $logo = $setting->info['img_logo'];
             }
         }
         Vue.use(VueQuillEditor);
+        var VueMasonryPlugin = window["vue-masonry-plugin"].VueMasonryPlugin;
+        Vue.use(VueMasonryPlugin);
+        Vue.component('paginate', VuejsPaginate);
     </script>
     <?= $this->renderSection('js') ?>
     <script>

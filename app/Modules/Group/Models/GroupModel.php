@@ -8,7 +8,7 @@ class GroupModel extends Model
 {
     protected $DBGroup              = 'default';
     protected $table                = 'groups';
-    protected $primaryKey           = 'id_group';
+    protected $primaryKey           = 'group_id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
     protected $returnType           = 'array';
@@ -42,9 +42,9 @@ class GroupModel extends Model
 
     public function getGroupById($user_id) 
 	{
-        $this->select("{$this->table}.*, groups_user.id_group_user, groups_user.id_user");
-        $this->join("groups_user", "groups_user.id_group = {$this->table}.id_group", "left");
-        $this->where("groups_user.id_user", $user_id);
+        $this->select("{$this->table}.*, groups_user.group_user_id, groups_user.user_id");
+        $this->join("groups_user", "groups_user.group_id = {$this->table}.group_id", "left");
+        $this->where("groups_user.user_id", $user_id);
         return $this->get()->getRowArray();
 	}
 }

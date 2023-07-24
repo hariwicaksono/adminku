@@ -9,7 +9,7 @@ class Log extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_log' => [
+            'log_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -19,7 +19,7 @@ class Log extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'id_user' => [
+            'user_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -33,7 +33,7 @@ class Log extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_log');
+        $this->forge->addPrimaryKey('log_id');
         $this->forge->createTable('logs');
     }
 

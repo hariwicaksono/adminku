@@ -17,11 +17,11 @@
             </template>
             <template v-slot:item="{ item }">
                 <tr>
-                    <td width="100">{{item.id_group}}</td>
-                    <td><a class="text-subtitle-1 font-weight-medium" :href="'<?= base_url('group/edit/'); ?>' + item.id_group">{{item.nama_group}}</a></td>
+                    <td width="100">{{item.group_id}}</td>
+                    <td><a class="text-subtitle-1 font-weight-medium" :href="'<?= base_url('group/edit/'); ?>' + item.group_id">{{item.group_name}}</a></td>
                     <td>{{item.updated_at}}</td>
                     <td>
-                        <v-btn icon color="primary" class="mr-2" :href="'<?= base_url('group/edit/'); ?>' + item.id_group" title="Edit" alt="Edit">
+                        <v-btn icon color="primary" class="mr-2" :href="'<?= base_url('group/edit/'); ?>' + item.group_id" title="Edit" alt="Edit">
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
                         <v-btn icon color="error" @click="deleteItem(item)" title="Delete" alt="Delete">
@@ -48,7 +48,7 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form v-model="valid" ref="form">
-                        <v-text-field type="text" v-model="namaGroup" label="Nama Group" :error-messages="nama_groupError" outlined></v-text-field>
+                        <v-text-field type="text" v-model="namaGroup" label="Nama Group" :error-messages="group_nameError" outlined></v-text-field>
                     </v-form>
                 </v-card-text>
                 <v-divider></v-divider>
@@ -72,15 +72,13 @@
                 <v-card-title>
                     <v-icon color="error" class="mr-2" x-large>mdi-alert-octagon</v-icon> <?= lang('App.confirmDelete'); ?>
                 </v-card-title>
-                <v-card-text>
-                    <div class="mt-5 py-5">
-                        <h2 class="font-weight-regular"><?= lang('App.delConfirm'); ?></h2>
-                    </div>
+                <v-card-text class="my-5">
+                    <h2 class="font-weight-medium"><?= lang('App.delConfirm') ?></h2>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="modalDelete = false" large elevation="1"><?= lang('App.close'); ?></v-btn>
-                    <v-btn color="red" dark @click="deleteGroup" :loading="loading" elevation="1" large><?= lang('App.delete'); ?></v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deleteGroup" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -104,7 +102,7 @@
 
 <?php $this->section("js") ?>
 <script>
-   /*  function unserialize(data) {
+    /*  function unserialize(data) {
         var that = this,
             utf8Overhead = function(chr) {
                 // http://phpjs.org/functions/unserialize:571#comment_95906
@@ -285,10 +283,10 @@
         options: {},
         dataTable: [{
             text: '#',
-            value: 'id_group'
+            value: 'group_id'
         }, {
             text: 'Group',
-            value: 'nama_group'
+            value: 'group_name'
         }, {
             text: '<?= lang('App.date'); ?> Update',
             value: 'updated_at'
@@ -299,7 +297,7 @@
         }, ],
         idGroup: "",
         namaGroup: "",
-        nama_groupError: "",
+        group_nameError: "",
         permission: [],
 
     }
@@ -454,7 +452,7 @@
         saveGroup: function() {
             this.loading3 = true;
             axios.post('<?= base_url(); ?>api/group/save', {
-                    nama_group: this.namaGroup
+                    group_name: this.namaGroup
                 }, options)
                 .then(res => {
                     // handle success
@@ -496,12 +494,12 @@
                 })
         },
 
-       
+
 
         // Get Item Delete
         deleteItem: function(item) {
             this.modalDelete = true;
-            this.idGroup = item.id_group;
+            this.idGroup = item.group_id;
         },
 
         // Delete

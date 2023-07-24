@@ -9,12 +9,12 @@ class Group extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_group' => [
+            'group_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
-            'nama_group' => [
+            'group_name' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
@@ -30,7 +30,7 @@ class Group extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_group');
+        $this->forge->addPrimaryKey('group_id');
         $this->forge->createTable('groups');
     }
 

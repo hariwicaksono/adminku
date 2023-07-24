@@ -32,7 +32,7 @@ class Group extends BaseController
     {
         $group = $this->group->find($id);
         return view('App\Modules\Group\Views/group_edit', [
-            'title' => 'Edit Group: ' . $group['nama_group'],
+            'title' => 'Edit Group: ' . $group['group_name'],
             'id' => $id,
             'group' => $group,
             'permissions' => unserialize($group['permission'])
@@ -44,7 +44,7 @@ class Group extends BaseController
 		$permission = serialize($this->request->getPost('permission'));
 	            
         $data = array(
-            'nama_group' => $this->request->getPost('nama_group'),
+            'group_name' => $this->request->getPost('group_name'),
             'permission' => $permission,
             'updated_at' => date('Y-m-d H:i:s')
         );

@@ -1,22 +1,21 @@
-<?php 
+<?php
 
 namespace App\Libraries;
 
-class Settings{
-	
-	var $info=array();
+class Settings
+{
 
-	public function __construct() 
+	var $info = array();
+
+	public function __construct()
 	{
 		$DB = \Config\Database::connect();
 		$site = $DB->table('settings');
-		
-		foreach($site->get()->getResult() as $set){
-			$key=$set->variable_setting;
-			$value=$set->value_setting;
-			$this->info[$key]=$value;
-		}
-		
-	}
 
+		foreach ($site->get()->getResult() as $set) {
+			$key = $set->setting_variable;
+			$value = $set->setting_value;
+			$this->info[$key] = $value;
+		}
+	}
 }

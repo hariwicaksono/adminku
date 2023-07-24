@@ -47,7 +47,7 @@ class Group extends BaseControllerApi
     public function create()
     {
         $rules = [
-            'nama_group' => [
+            'group_name' => [
                 'rules'  => 'required',
                 'errors' => []
             ],
@@ -55,14 +55,14 @@ class Group extends BaseControllerApi
 
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
-            $namaGroup = $json->nama_group;
+            $namaGroup = $json->group_name;
             $data = [
-                'nama_group' => $namaGroup,
+                'group_name' => $namaGroup,
             ];
         } else {
-            $namaGroup = $this->request->getPost('nama_group');
+            $namaGroup = $this->request->getPost('group_name');
             $data = [
-                'nama_group' => $namaGroup,
+                'group_name' => $namaGroup,
             ];
         }
 

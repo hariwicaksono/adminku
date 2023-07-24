@@ -9,7 +9,7 @@ class Backup extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_backup' => [
+            'backup_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -30,7 +30,7 @@ class Backup extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('id_backup');
+        $this->forge->addPrimaryKey('backup_id');
         $this->forge->createTable('backups');
     }
 

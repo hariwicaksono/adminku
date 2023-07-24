@@ -64,7 +64,7 @@ class User extends BaseControllerApi
                 'rules'  => 'required',
                 'errors' => []
             ],
-            'id_group' => [
+            'group_id' => [
                 'rules'  => 'required',
                 'errors' => []
             ],
@@ -72,7 +72,7 @@ class User extends BaseControllerApi
 
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
-            $idGroup = $json->id_group;
+            $idGroup = $json->group_id;
             $data = [
                 'email' => $json->email,
                 'fullname' => $json->fullname,
@@ -81,7 +81,7 @@ class User extends BaseControllerApi
                 'is_active' => 1
             ];
         } else {
-            $idGroup = $this->request->getPost('id_group');
+            $idGroup = $this->request->getPost('group_id');
             $data = [
                 'email' => $this->request->getPost('email'),
                 'fullname' => $this->request->getPost('fullname'),
@@ -103,8 +103,8 @@ class User extends BaseControllerApi
             $idUser =  $this->model->getInsertID();
 
             $dataGroup = [
-                'id_login' => $idUser,
-                'id_group' => $idGroup
+                'user_id' => $idUser,
+                'group_id' => $idGroup
             ];
             $this->group->save($dataGroup);
 
@@ -148,16 +148,13 @@ class User extends BaseControllerApi
             ];
             return $this->respond($response, 200);
         } else {
-
-            $simpan = $this->model->update($id, $data);
-            if ($simpan) {
-                $response = [
-                    'status' => true,
-                    'message' => lang('App.updSuccess'),
-                    'data' => [],
-                ];
-                return $this->respond($response, 200);
-            }
+            $this->model->update($id, $data);
+            $response = [
+                'status' => true,
+                'message' => lang('App.updSuccess'),
+                'data' => [],
+            ];
+            return $this->respond($response, 200);
         }
     }
 
@@ -278,7 +275,7 @@ class User extends BaseControllerApi
         }
 
         $user = $this->model->where(['email' => $input['email']])->first();
-        $user_id = $user['id_user'];
+        $user_id = $user['user_id'];
         $user_data = [
             'password' => $input['password'],
         ];
@@ -305,21 +302,21 @@ class User extends BaseControllerApi
 
     public function setGroup($id = NULL)
     {
-        $loginGroup = $this->group->where('id_user', $id)->first();
-        $loginGroupId = $loginGroup['id_group_user'];
+        $loginGroup = $this->group->where('user_id', $id)->first();
+        $loginGroupId = $loginGroup['group_user_id'];
         //var_dump($loginGroup);die;
 
         if ($this->request->getJSON()) {
             $json = $this->request->getJSON();
             $data = [
-                'id_login' => $id,
-                'id_group' => $json->id_group
+                'user_id' => $id,
+                'group_id' => $json->group_id
             ];
         } else {
             $input = $this->request->getRawInput();
             $data = [
-                'id_login' => $id,
-                'id_group' => $input['id_group']
+                'user_id' => $id,
+                'group_id' => $input['group_id']
             ];
         }
 
