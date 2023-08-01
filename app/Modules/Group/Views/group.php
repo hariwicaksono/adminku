@@ -465,6 +465,7 @@
                         this.namaGroup = "";
                         this.modalAdd = false;
                         this.$refs.form.resetValidation();
+                        setTimeout(() => window.location.href = data.data.url, 1000);
                     } else {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;

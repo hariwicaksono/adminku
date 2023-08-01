@@ -75,6 +75,7 @@ class Group extends BaseControllerApi
             return $this->respond($response, 200);
         } else {
             $this->model->save($data);
+            $lastId = $this->model->getInsertID();
 
             //Save Log
             $this->log->save(['keterangan' => session('nama') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Save Group: ' . $namaGroup]);
@@ -82,7 +83,7 @@ class Group extends BaseControllerApi
             $response = [
                 'status' => true,
                 'message' => lang('App.saveSuccess'),
-                'data' => [],
+                'data' => ['url' => base_url('/group/edit/') . $lastId],
             ];
             return $this->respond($response, 200);
         }

@@ -3,10 +3,6 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-use App\Modules\Auth\Models\UserModel;
-use App\Modules\Group\Models\GroupModel;
-use App\Modules\Group\Models\GroupUserModel;
-use App\Modules\Page\Models\PageModel;
 
 class InitSeeder extends Seeder
 {
@@ -21,8 +17,7 @@ class InitSeeder extends Seeder
             'is_active' => 1,
             'created_at' => date('Y-m-d H:i:s')
         ];
-        $user = new UserModel();
-        $user->save($dataUser);
+        $this->db->table('users')->insert($dataUser);
 
         $dataSetting = [
             [
@@ -94,8 +89,7 @@ class InitSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => null
         ];
-        $user = new GroupModel();
-        $user->save($dataGroup);
+        $this->db->table('groups')->insert($dataGroup);
 
         $dataGroupUser = [
             'user_id' => 1,
@@ -103,8 +97,7 @@ class InitSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => null
         ];
-        $user = new GroupUserModel();
-        $user->save($dataGroupUser);
+        $this->db->table('groups_user')->insert($dataGroupUser);
 
         $dataPages = [
             [
@@ -141,7 +134,6 @@ class InitSeeder extends Seeder
                 'updated_at' => null
             ]
         ];
-        $pages = new PageModel();
-        $pages->insertBatch($dataPages);
+        $this->db->table('pages')->insertBatch($dataPages);
     }
 }

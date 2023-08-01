@@ -246,7 +246,7 @@ class Auth extends BaseControllerApi
                 'email' => $user['email'],
                 'username' => $user['username'],
                 'fullname' => $user['fullname'],
-                'role' => $user['user_type'],
+                'role' => $group['group_id'],
                 'active' => $user['is_active'],
                 'group' => $group['group_name'],
                 'logged_in' => true

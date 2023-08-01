@@ -9,19 +9,18 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Format;
+namespace Tests\Support\View\OtherCells;
 
 /**
- * Formatter interface
+ * Two classes with the same short name.
+ *
+ * - Tests\Support\View\SampleClass
+ * - Tests\Support\View\OtherCells\SampleClass
  */
-interface FormatterInterface
+class SampleClass
 {
-    /**
-     * Takes the given data and formats it.
-     *
-     * @param array|object|string $data
-     *
-     * @return false|string
-     */
-    public function format($data);
+    public function hello()
+    {
+        return 'Good-bye!';
+    }
 }
