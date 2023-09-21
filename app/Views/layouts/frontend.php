@@ -225,6 +225,7 @@ $navbarColor = $setting->info['navbar_color'];
                 );
             }
         }
+        var updatedVue = function() {}
         var watchVue = {}
         var dataVue = {
             sidebarMenu: true,
@@ -292,6 +293,7 @@ $navbarColor = $setting->info['navbar_color'];
             data: dataVue,
             mounted: mountedVue,
             created: createdVue,
+            updated: updatedVue,
             watch: watchVue,
             methods: methodsVue
         })

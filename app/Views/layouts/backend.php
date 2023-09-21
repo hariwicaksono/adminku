@@ -372,6 +372,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                 );
             }
         }
+        var updatedVue = function() {}
         var watchVue = {}
         var dataVue = {
             sidebarMenu: true,
@@ -458,6 +459,7 @@ $sidebarColor = $setting->info['sidebar_color'];
             data: dataVue,
             mounted: mountedVue,
             created: createdVue,
+            updated: updatedVue,
             watch: watchVue,
             methods: methodsVue,
         })

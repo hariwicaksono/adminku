@@ -9,10 +9,10 @@
         </v-card-title>
         <v-card-text>
             <v-form ref="formLogin" v-model="valid">
-                <p class="mb-2 black--text">Email</p>
+                <p class="mb-2">Email</p>
                 <v-text-field v-model="loginEmail" :rules="[rules.email]" label="<?= lang('App.labelEmail'); ?>" :error-messages="emailError" outlined></v-text-field>
 
-                <p class="mb-2 black--text">Password</p>
+                <p class="mb-2">Password</p>
                 <v-text-field v-model="loginPassword" :append-icon="show?'mdi-eye':'mdi-eye-off'" :rules="[rules.min]" :type="show ? 'text' : 'password'" name="input-10-1" label="<?= lang('App.labelPassword'); ?>" hint="At least 8 characters" :error-messages="passwordError" counter @click:append="show = !show" outlined></v-text-field>
                 <v-layout justify-space-between>
                     <v-checkbox v-model="remember" label="<?= lang('App.rememberMe'); ?>" class="mt-0"></v-checkbox>
