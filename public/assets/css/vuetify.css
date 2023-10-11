@@ -28570,7 +28570,7 @@ html.overflow-y-hidden {
   position: relative;
   text-align: center;
   text-decoration: none;
-  text-transform: "uppercase";
+  text-transform: uppercase;
   transition: none;
   -webkit-user-select: none;
      -moz-user-select: none;

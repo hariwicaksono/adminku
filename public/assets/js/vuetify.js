@@ -24449,7 +24449,9 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_14__["default"])(_
 
       if (!this.isMenuActive) {
         requestAnimationFrame(function () {
-          return _this.getContent().scrollTop = 0;
+          var content = _this.getContent();
+
+          if (content) content.scrollTop = 0;
         });
       } else {
         if (this.lastItem > this.computedItems.length) return;
@@ -35158,7 +35160,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.7.0";
+  Vuetify.version = "2.7.1";
   Vuetify.config = {
     silent: false
   };

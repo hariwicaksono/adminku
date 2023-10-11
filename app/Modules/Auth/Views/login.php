@@ -12,15 +12,15 @@
                 <v-card>
                     <v-card-text>
                         <v-row>
-                            <v-col md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+                            <v-col cols="12" md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
-                            <v-col md="7" class="pa-10">
+                            <v-col cols="12" md="7" class="pa-8">
                                 <h1 class="font-weight-medium text-center mb-5">Login</h1>
                                 <v-form v-model="valid" ref="form">
-                                    <p class="mb-2 black--text">Email</p>
+                                    <p class="mb-2">Email</p>
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>
 
-                                    <p class="mb-2 black--text">Password</p>
+                                    <p class="mb-2">Password</p>
                                     <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.min]" :type="show1 ? 'text' : 'password'" label="<?= lang('App.labelPassword') ?>" hint="<?= lang('App.minChar') ?>" @click:append="show1 = !show1" :error-messages="passwordError" counter outlined></v-text-field>
 
                                     <v-layout justify-space-between>

@@ -50,13 +50,10 @@ $navbarColor = $setting->info['navbar_color'];
                 <v-btn href="<?= base_url() ?>" text>
                     <v-toolbar-title style="cursor: pointer"><?= $appName; ?></v-toolbar-title>
                 </v-btn>
-                <v-btn text href="<?= base_url('/about') ?>">
-                    <?= lang('App.aboutUs'); ?>
-                </v-btn>
                 <v-spacer></v-spacer>
                 <?php if (empty(session()->get('username'))) : ?>
                     <v-btn text @click="modalAuthOpen">
-                        <v-icon>mdi-login-variant</v-icon> Login
+                        <v-icon>mdi-login-variant</v-icon> <span class="d-none d-sm-flex">Login</span>
                     </v-btn>
                 <?php endif; ?>
 
@@ -262,10 +259,12 @@ $navbarColor = $setting->info['navbar_color'];
                 varchar: v => (v || '').length <= 255 || 'Maks 255 Karakter'
             },
             links: [{
+                    text: '<?= lang('App.aboutUs'); ?>',
+                    link: '<?= base_url('about'); ?>'
+                }, {
                     text: 'Syarat & Ketentuan',
                     link: '<?= base_url('terms'); ?>'
-                },
-                {
+                }, {
                     text: 'Kebijakan Privasi',
                     link: '<?= base_url('privacy'); ?>'
                 },
