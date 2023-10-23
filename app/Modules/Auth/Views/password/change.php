@@ -1,12 +1,12 @@
 <?php $this->extend("layouts/frontend"); ?>
 <?php $this->section("content"); ?>
 <template>
-    <v-container class="px-4 py-0 fill-height mt-n10" fluid>
+    <v-container class="grey lighten-2 px-4 py-0 fill-height mt-n10" fill-height fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm6 md6>
-                <v-card elevation="2" outlined>
-                    <v-card-text class="pa-10">
-                        <h1 class="font-weight-medium text-center mb-10"><?= lang('App.newPassword') ?></h1>
+                <v-card>
+                    <v-card-text class="pa-7">
+                        <h1 class="text-center mb-7"><?= lang('App.newPassword') ?></h1>
                         <v-alert v-if="notifType != ''" dense :type="notifType">{{notifMessage}}</v-alert>
                         <v-form v-model="valid" ref="form">
                             <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" label="Password" hint="<?= lang('App.minChar') ?>" counter @click:append="show1 = !show1" outlined dense :disabled="submitted"></v-text-field>

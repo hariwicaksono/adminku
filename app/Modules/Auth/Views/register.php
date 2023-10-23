@@ -1,12 +1,12 @@
 <?php $this->extend("layouts/frontend"); ?>
 <?php $this->section("content"); ?>
 <template>
-    <v-container class="px-4 py-0 fill-height mt-n5" fluid>
+    <v-container class="grey lighten-2 px-4 py-0 fill-height mt-n5" fill-height fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm6 md6>
-                <v-card elevation="2" outlined>
-                    <v-card-text class="pa-10">
-                        <h1 class="font-weight-medium text-center mb-10"><?= lang('App.register') ?></h1>
+                <v-card>
+                    <v-card-text class="pa-7">
+                        <h1 class="text-center mb-7"><?= lang('App.register') ?></h1>
                         <v-alert v-if="notifType != ''" dense :type="notifType">{{notifMessage}}</v-alert>
                         <v-form v-model="valid" ref="form">
                             <v-text-field v-model="email" :rules="[rules.required, rules.email]" label="E-mail" outlined required :disabled="submitted"></v-text-field>

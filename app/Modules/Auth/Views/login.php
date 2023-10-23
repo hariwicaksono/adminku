@@ -14,8 +14,8 @@
                         <v-row>
                             <v-col cols="12" md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
-                            <v-col cols="12" md="7" class="pa-8">
-                                <h1 class="font-weight-medium text-center mb-5">Login</h1>
+                            <v-col cols="12" md="7" class="pa-7">
+                                <h1 class="text-center mb-7">Login</h1>
                                 <v-form v-model="valid" ref="form">
                                     <p class="mb-2">Email</p>
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>
