@@ -79,7 +79,7 @@ $navbarColor = $setting->info['navbar_color'];
                                     <v-list-item-subtitle><?= session()->get('email') ?></v-list-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-subheader>Login: &nbsp;<v-chip color="primary" small><?= session()->get('user_type') == 1 ? 'admin' : 'user'; ?></v-chip>
+                            <v-subheader>Login: &nbsp;<v-chip color="primary" small><?= session()->get('group'); ?></v-chip>
                             </v-subheader>
                             <v-list-item link href="<?= base_url(); ?><?= session()->get('user_type') == 1 ? 'dashboard' : 'dashboard'; ?>">
                                 <v-list-item-icon>

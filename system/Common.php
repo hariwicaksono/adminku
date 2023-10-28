@@ -481,7 +481,7 @@ if (! function_exists('force_https')) {
         int $duration = 31_536_000,
         ?RequestInterface $request = null,
         ?ResponseInterface $response = null
-    ) {
+    ): void {
         $request ??= Services::request();
 
         if (! $request instanceof IncomingRequest) {
@@ -499,7 +499,7 @@ if (! function_exists('force_https')) {
         // If the session status is active, we should regenerate
         // the session ID for safety sake.
         if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE) {
-            Services::session(null, true)->regenerate(); // @codeCoverageIgnore
+            Services::session()->regenerate(); // @codeCoverageIgnore
         }
 
         $baseURL = config(App::class)->baseURL;
@@ -579,7 +579,7 @@ if (! function_exists('function_usable')) {
 if (! function_exists('helper')) {
     /**
      * Loads a helper file into memory. Supports namespaced helpers,
-     * both in and out of the 'helpers' directory of a namespaced directory.
+     * both in and out of the 'Helpers' directory of a namespaced directory.
      *
      * Will load ALL helpers of the matching name, in the following order:
      *   1. app/Helpers
@@ -590,7 +590,7 @@ if (! function_exists('helper')) {
      *
      * @throws FileNotFoundException
      */
-    function helper($filenames)
+    function helper($filenames): void
     {
         static $loaded = [];
 
@@ -1138,6 +1138,8 @@ if (! function_exists('timer')) {
      * If callable is passed, it measures time of callable and
      * returns its return value if any.
      * Otherwise will start or stop the timer intelligently.
+     *
+     * @phpstan-param (callable(): mixed)|null $callable
      *
      * @return Timer
      */

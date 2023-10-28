@@ -17,6 +17,8 @@ use CodeIgniter\Database\BaseResult;
  * HTML Table Generating Class
  *
  * Lets you create tables manually or from database result objects, or arrays.
+ *
+ * @see \CodeIgniter\View\TableTest
  */
 class Table
 {
@@ -263,7 +265,7 @@ class Table
         // If there is no $args[0], skip this and treat as an associative array
         // This can happen if there is only a single key, for example this is passed to table->generate
         // array(array('foo'=>'bar'))
-        if (isset($args[0]) && count($args) === 1 && is_array($args[0]) && ! isset($args[0]['data'])) {
+        if (isset($args[0]) && count($args) === 1 && is_array($args[0])) {
             $args = $args[0];
         }
 
