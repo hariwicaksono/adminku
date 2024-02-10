@@ -1,8 +1,10 @@
 <?php
-
+// Memanggil library
 use App\Libraries\Permission;
 use App\Libraries\Settings;
+use App\Libraries\Language;
 
+$language = new Language();
 $permission = new Permission();
 $user_permission = $permission->init();
 
@@ -72,7 +74,7 @@ $sidebarColor = $setting->info['sidebar_color'];
     <!-- preloader end -->
     <div id="app">
         <v-app>
-            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> elevation="2">
+            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $navbarColor; ?>'" elevation="2">
                 <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu"></v-app-bar-nav-icon>
                 <v-toolbar-title></v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -125,8 +127,8 @@ $sidebarColor = $setting->info['sidebar_color'];
                 </v-btn>
             </v-app-bar>
 
-            <v-navigation-drawer color="<?= $sidebarColor; ?>" <?= ($sidebarColor == 'white' ? 'light':'dark'); ?> v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
-                <v-list color="<?= $sidebarColor; ?>" dense>
+            <v-navigation-drawer color="<?= $sidebarColor; ?>" <?= ($sidebarColor == 'white' ? 'light':'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $sidebarColor; ?>'" v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
+                <v-list color="<?= $sidebarColor; ?>" :color="$vuetify.theme.dark ? '':'<?= $sidebarColor; ?>'" dense>
                     <v-list-item>
                         <v-list-item-action>
                             <v-icon @click.stop="toggleMini = !toggleMini">mdi-chevron-left</v-icon>
@@ -443,7 +445,14 @@ $sidebarColor = $setting->info['sidebar_color'];
             toggleTheme() {
                 this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
                 localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
-            }
+            },
+            formatNumber(number) {
+                const formattedNumber = new Intl.NumberFormat('<?= $language->siteLang; ?>', {
+                    notation: 'compact',
+                    compactDisplay: 'short',
+                }).format(number);
+                return formattedNumber;
+            },
         }
         Vue.use(VueQuillEditor);
         var VueMasonryPlugin = window["vue-masonry-plugin"].VueMasonryPlugin;

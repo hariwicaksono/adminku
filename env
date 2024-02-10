@@ -39,7 +39,7 @@
 # database.default.port = 3306
 
 # database.tests.hostname = localhost
-# database.tests.database = ci4
+# database.tests.database = ci4_test
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
@@ -115,8 +115,20 @@
 # security.cookieName = 'csrf_cookie_name'
 # security.expires = 7200
 # security.regenerate = true
-# security.redirect = true
+# security.redirect = false
 # security.samesite = 'Lax'
+
+#--------------------------------------------------------------------
+# SESSION
+#--------------------------------------------------------------------
+
+# session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.cookieName = 'ci_session'
+# session.expiration = 7200
+# session.savePath = null
+# session.matchIP = false
+# session.timeToUpdate = 300
+# session.regenerateDestroy = false
 
 #--------------------------------------------------------------------
 # LOGGER
@@ -128,4 +140,4 @@
 # CURLRequest
 #--------------------------------------------------------------------
 
-# curlrequest.shareOptions = true
+# curlrequest.shareOptions = false

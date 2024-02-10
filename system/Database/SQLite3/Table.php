@@ -12,7 +12,7 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use stdclass;
+use stdClass;
 
 /**
  * Class Table
@@ -28,8 +28,7 @@ class Table
     /**
      * All of the fields this table represents.
      *
-     * @var array
-     * @phpstan-var array<string, array<string, bool|int|string|null>>
+     * @var array<string, array<string, bool|int|string|null>> [name => attributes]
      */
     protected $fields = [];
 
@@ -114,7 +113,7 @@ class Table
         // if primary key index exists twice then remove psuedo index name 'primary'.
         $primaryIndexes = array_filter($this->keys, static fn ($index) => $index['type'] === 'primary');
 
-        if (! empty($primaryIndexes) && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
+        if ($primaryIndexes !== [] && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
             unset($this->keys['primary']);
         }
 
@@ -157,7 +156,7 @@ class Table
     /**
      * Drops columns from the table.
      *
-     * @param array|string $columns
+     * @param list<string>|string $columns Column names to drop.
      *
      * @return Table
      */
@@ -178,14 +177,15 @@ class Table
     }
 
     /**
-     * Modifies a field, including changing data type,
-     * renaming, etc.
+     * Modifies a field, including changing data type, renaming, etc.
+     *
+     * @param list<array<string, bool|int|string|null>> $fieldsToModify
      *
      * @return Table
      */
-    public function modifyColumn(array $fields)
+    public function modifyColumn(array $fieldsToModify)
     {
-        foreach ($fields as $field) {
+        foreach ($fieldsToModify as $field) {
             $oldName = $field['name'];
             unset($field['name']);
 

@@ -46,7 +46,7 @@ $navbarColor = $setting->info['navbar_color'];
     <!-- preloader end -->
     <div id="app">
         <v-app>
-            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> elevation="2">
+            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $navbarColor; ?>'" elevation="2">
                 <v-btn href="<?= base_url() ?>" text>
                     <v-toolbar-title style="cursor: pointer"><?= $appName; ?></v-toolbar-title>
                 </v-btn>
