@@ -39,4 +39,10 @@ class BackupModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getTodayBackups()
+    {
+        $this->where('DATE(created_at) =', date('Y-m-d'));
+        return $this->findAll();
+    }
 }

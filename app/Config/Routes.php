@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('sitemap.xml', 'Home::sitemap');
 $routes->get('/restricted', 'Restricted::index', ['filter' => 'auth']);
 
 /**
