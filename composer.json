@@ -42,7 +42,7 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.19.2",
+        "rector/rector": "1.0.1",
         "vimeo/psalm": "^5.0"
     },
     "replace": {
@@ -97,7 +97,7 @@
             "dev-develop": "4.x-dev"
         }
     },
-    "scripts": {
+     "scripts": {
         "post-update-cmd": [
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
