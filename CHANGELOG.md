@@ -1,5 +1,55 @@
 # Changelog
 
+## [v4.4.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.8) (2024-04-07)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.7...v4.4.8)
+
+### Fixed Bugs
+
+* fix: [ImageMagickHandler] early terminate processing of invalid library path by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8680
+* docs: fix PHPDoc types in BaseModel by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8679
+* fix: the error view is determined by Exception code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8689
+* fix: `Pager::only([])` does not work by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8702
+* refactor: remove unneeded code in SQLite3\Table and fix PHPDoc types in Database by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8703
+* docs: fix return type in BaseResult by @Pebryan354 in https://github.com/codeigniter4/CodeIgniter4/pull/8709
+
+### Refactoring
+
+* refactor: simplify ImageMagickHandler::getVersion() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8681
+* refactor: [Rector] Apply ExplicitBoolCompareRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8704
+
+## [v4.4.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.7) (2024-03-29)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.6...v4.4.7)
+
+### SECURITY
+
+* **Language:** *Language class DoS Vulnerability* was fixed. See the
+  [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-39fp-mqmm-gxj6)
+  for more information.
+* **URI Security:** The feature to check if URIs do not contain not permitted
+  strings has been added. This check is equivalent to the URI Security found in
+  CodeIgniter 3. This is enabled by default, but upgraded users need to add
+  a setting to enable it.
+* **Filters:** A bug where URI paths processed by Filters were not URL-decoded
+  has been fixed.
+
+### Breaking Changes
+* fix: Time::difference() DST bug by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8661
+
+### Fixed Bugs
+* fix: [Validation] FileRules cause error if getimagesize() returns false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8592
+* fix: isWriteType() to recognize CTE; always excluding RETURNING by @markconnellypro in https://github.com/codeigniter4/CodeIgniter4/pull/8599
+* fix: duplicate Cache-Control header with Session by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8601
+* fix: [DebugBar] scroll to top by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/8595
+* fix: Model::shouldUpdate() logic by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8614
+* fix: esc() for 'raw' context by @Cleric-K in https://github.com/codeigniter4/CodeIgniter4/pull/8633
+* docs: fix incorrect CURLRequest allow_redirects description by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8653
+* fix: Model::set() does not accept object by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8670
+
+### Refactoring
+* refactor: replace PHP_VERSION by PHP_VERSION_ID by @justbyitself in https://github.com/codeigniter4/CodeIgniter4/pull/8618
+* refactor: apply early return pattern by @justbyitself in https://github.com/codeigniter4/CodeIgniter4/pull/8621
+* refactor: move footer info to top in error_exception.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8626
+
 ## [v4.4.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.6) (2024-02-24)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.5...v4.4.6)
 

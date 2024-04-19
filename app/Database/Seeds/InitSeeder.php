@@ -11,7 +11,7 @@ class InitSeeder extends Seeder
         $dataUser = [
             'email' => 'admin@test.com',
             'username' => 'admin',
-            'password' => '12345678',
+            'password' => password_hash('12345678', PASSWORD_BCRYPT),
             'fullname' => 'Administrator',
             'user_type' => 1,
             'is_active' => 1,
