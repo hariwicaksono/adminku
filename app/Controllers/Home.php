@@ -18,7 +18,7 @@ class Home extends BaseController
 		$this->page = new PageModel();
 	}
 
-	public function index()
+	public function index(): string
 	{
 		return view('home', [
 			'title' => 'Home',

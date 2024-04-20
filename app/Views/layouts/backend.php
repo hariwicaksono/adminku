@@ -244,7 +244,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                             <v-list-item-icon style="font-size:12px;" v-if="toggleMini">
                                 &copy; {{ new Date().getFullYear() }}
                             </v-list-item-icon>
-                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= COMPANY_NAME ?>. <?= $appName; ?> <?= APP_VERSION ?></v-list-item-content>
+                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= env('appCompany') ?>. <?= $appName; ?> <?= env('appVersion') ?></v-list-item-content>
                         </v-list-item>
                     </div>
                 </template>

@@ -102,11 +102,3 @@ define('EVENT_PRIORITY_HIGH', 10);
 $server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost:8080';
 $base_url = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$server_name.str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']) : 'http://'.$server_name.str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 defined('BASE_URL') || define('BASE_URL', $base_url);
-
-// Custom
-// Release: 2022
-$version = 'v'.'1.33';
-defined('COMPANY_NAME') || define('COMPANY_NAME', 'Your Company');
-defined('COMPANY_WEBSITE') || define('COMPANY_WEBSITE', 'https://domain.id');
-defined('APP_NAME') || define('APP_NAME', 'Adminku CI4');
-defined('APP_VERSION') || define('APP_VERSION', $version);
