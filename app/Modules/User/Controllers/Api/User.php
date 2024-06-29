@@ -108,6 +108,9 @@ class User extends BaseControllerApi
             ];
             $this->group->save($dataGroup);
 
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Save User ID: ' . $idUser, 'user_id' => session('id')]);
+
             $response = [
                 'status' => true,
                 'message' => lang('App.saveSuccess'),
@@ -149,6 +152,10 @@ class User extends BaseControllerApi
             return $this->respond($response, 200);
         } else {
             $this->model->update($id, $data);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update User ID: ' . $id, 'user_id' => session('id')]);
+
             $response = [
                 'status' => true,
                 'message' => lang('App.updSuccess'),
@@ -171,6 +178,10 @@ class User extends BaseControllerApi
 
         if ($hapus) {
             $this->model->delete($id);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Delete User ID: ' . $id, 'user_id' => session('id')]);
+
             $response = [
                 'status' => true,
                 'message' => lang('App.delSuccess'),
@@ -204,6 +215,9 @@ class User extends BaseControllerApi
         if ($data > 0) {
             $this->model->update($id, $data);
 
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update User ID: ' . $id, 'user_id' => session('id')]);
+
             $response = [
                 'status' => true,
                 'message' => lang('App.updSuccess'),
@@ -236,6 +250,9 @@ class User extends BaseControllerApi
 
         if ($data > 0) {
             $this->model->update($id, $data);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update User ID: ' . $id, 'user_id' => session('id')]);
 
             $response = [
                 'status' => true,
@@ -322,6 +339,9 @@ class User extends BaseControllerApi
 
         if ($data > 0) {
             $this->group->update($loginGroupId, $data);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update User ID: ' . $id, 'user_id' => session('id')]);
 
             $response = [
                 'status' => true,

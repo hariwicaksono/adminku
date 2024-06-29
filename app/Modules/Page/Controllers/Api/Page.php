@@ -4,15 +4,18 @@ namespace App\Modules\Page\Controllers\Api;
 
 use App\Controllers\BaseControllerApi;
 use App\Modules\Page\Models\PageModel;
+use App\Modules\Log\Models\LogModel;
 
 class Page extends BaseControllerApi
 {
     protected $format       = 'json';
     protected $modelName    = PageModel::class;
+    protected $log;
 
     public function __construct()
 	{
 		//memanggil Model
+        $this->log = new LogModel();
 	}
 
     public function index()
@@ -76,6 +79,10 @@ class Page extends BaseControllerApi
             return $this->respond($response, 200);
         } else {
             $this->model->update($id, $data);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update Page ID: ' . $id, 'user_id' => session('id')]);
+
             $response = [
                 'status' => true,
                 'message' => lang('App.updSuccess'),
@@ -101,6 +108,9 @@ class Page extends BaseControllerApi
 
         if ($data > 0) {
             $this->model->update($id, $data);
+
+            //Save Log
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update Page ID: ' . $id, 'user_id' => session('id')]);
 
             $response = [
                 'status' => true,

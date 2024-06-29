@@ -14,8 +14,8 @@
                         <v-row>
                             <v-col cols="12" md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
-                            <v-col cols="12" md="7" class="pa-7">
-                                <h1 class="text-center mb-7">Login</h1>
+                            <v-col cols="12" md="7" class="pa-8">
+                                <h1 class="text-h4 font-weight-medium mb-10">Login</h1>
                                 <v-form v-model="valid" ref="form">
                                     <p class="mb-2">Email</p>
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>
@@ -29,7 +29,7 @@
                                         <a href="<?= base_url('/password/reset') ?>"><?= lang('App.forgotPass') ?></a>
                                     </v-layout>
 
-                                    <v-btn large block @click="submit" color="primary" :loading="loading" elevation="1"><?= lang('App.signIn'); ?></v-btn>
+                                    <v-btn x-large block @click="submit" color="primary" :loading="loading" elevation="1"><?= lang('App.signIn'); ?></v-btn>
                                 </v-form>
                             </v-col>
                         </v-row>

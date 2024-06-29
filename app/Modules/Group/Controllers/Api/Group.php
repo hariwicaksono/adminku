@@ -78,7 +78,7 @@ class Group extends BaseControllerApi
             $lastId = $this->model->getInsertID();
 
             //Save Log
-            $this->log->save(['keterangan' => session('nama') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Save Group: ' . $namaGroup]);
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Save Group: ' . $namaGroup, 'user_id' => session('id')]);
 
             $response = [
                 'status' => true,
@@ -104,7 +104,7 @@ class Group extends BaseControllerApi
             $this->model->delete($id);
 
             //Save Log
-            $this->log->save(['keterangan' => session('nama') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Delete Group: ' . $id]);
+            $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Delete Group: ' . $id, 'user_id' => session('id')]);
 
             $response = [
                 'status' => true,

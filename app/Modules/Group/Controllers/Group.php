@@ -6,17 +6,20 @@ use App\Controllers\BaseController;
 use App\Modules\Group\Models\GroupModel;
 use CodeIgniter\I18n\Time;
 use App\Libraries\Settings;
+use App\Modules\Log\Models\LogModel;
 
 class Group extends BaseController
 {
     protected $group;
     protected $setting;
+    protected $log;
 
     public function __construct()
     {
         //memanggil function di model
         $this->group = new GroupModel();
         $this->setting = new Settings();
+        $this->log = new LogModel();
     }
 
     public function index()
@@ -50,6 +53,10 @@ class Group extends BaseController
         );
 
 		$this->group->update($id, $data);
+
+        //Save Log
+        $this->log->save(['keterangan' => session('fullname') . '(' . session('email') . ') ' . strtolower(lang('App.do')) . ' Update Group ID: ' . $id, 'user_id' => session('id')]);
+
 		$this->session->setFlashdata('success', 'Data Berhasil Di Update.');
 		return redirect()->to('/group');
     }
