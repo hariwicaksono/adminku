@@ -54,6 +54,82 @@
                             </tr>
 
                             <tr>
+                                <td class="text-h6">Gaji</td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="viewGaji" value="viewGaji" <?php if ($permissions) { ?> <?php if (in_array('viewGaji', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="viewGaji"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="createGaji" value="createGaji" <?php if ($permissions) { ?> <?php if (in_array('createGaji', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="createGaji"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="updateGaji" value="updateGaji" <?php if ($permissions) { ?> <?php if (in_array('updateGaji', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="updateGaji"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="deleteGaji" value="deleteGaji" <?php if ($permissions) { ?><?php if (in_array('deleteGaji', $permissions)) { ?><?= "checked"; ?><?php } ?><?php } ?>><label for="deleteGaji"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-h6">Golongan</td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="viewGolongan" value="viewGolongan" <?php if ($permissions) { ?> <?php if (in_array('viewGolongan', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="viewGolongan"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="createGolongan" value="createGolongan" <?php if ($permissions) { ?> <?php if (in_array('createGolongan', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="createGolongan"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="updateGolongan" value="updateGolongan" <?php if ($permissions) { ?> <?php if (in_array('updateGolongan', $permissions)) { ?> <?= "checked"; ?> <?php } ?> <?php } ?>>
+                                            <label for="updateGolongan"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="v-input__control">
+                                        <div class="v-input__slot">
+                                            <input class="v-input--selection-controls__input" type="checkbox" name="permission[]" id="deleteGolongan" value="deleteGolongan" <?php if ($permissions) { ?><?php if (in_array('deleteGolongan', $permissions)) { ?><?= "checked"; ?><?php } ?><?php } ?>><label for="deleteGolongan"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+
+                            <tr>
                                 <td colspan="5">PAGES</td>
                                 <td>
                                     <div class="v-input__control">
@@ -295,25 +371,25 @@
     // Initial Data
     dataVue = {
         ...dataVue,
-        
+
     }
 
     // Vue Created
     // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
-        
+
     }
 
     watchVue = {
         ...watchVue,
-        
+
     }
 
     // Vue Methods
     // Methods: Metode-metode yang kemudian digabung ke dalam Vue instance
     methodsVue = {
         ...methodsVue,
-        
+
 
     }
 </script>

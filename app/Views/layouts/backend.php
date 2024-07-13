@@ -74,7 +74,7 @@ $sidebarColor = $setting->info['sidebar_color'];
     <!-- preloader end -->
     <div id="app">
         <v-app>
-            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light':'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $navbarColor; ?>'" elevation="2">
+            <v-app-bar app color="<?= $navbarColor; ?>" <?= ($navbarColor == 'white' ? 'light' : 'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $navbarColor; ?>'" elevation="2">
                 <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu"></v-app-bar-nav-icon>
                 <v-toolbar-title></v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -127,7 +127,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                 </v-btn>
             </v-app-bar>
 
-            <v-navigation-drawer color="<?= $sidebarColor; ?>" <?= ($sidebarColor == 'white' ? 'light':'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $sidebarColor; ?>'" v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
+            <v-navigation-drawer color="<?= $sidebarColor; ?>" <?= ($sidebarColor == 'white' ? 'light' : 'dark'); ?> :color="$vuetify.theme.dark ? '':'<?= $sidebarColor; ?>'" v-model="sidebarMenu" app floating :permanent="sidebarMenu" :mini-variant.sync="mini" v-if="!isMobile" class="elevation-3">
                 <v-list color="<?= $sidebarColor; ?>" :color="$vuetify.theme.dark ? '':'<?= $sidebarColor; ?>'" dense>
                     <v-list-item>
                         <v-list-item-action>
@@ -157,6 +157,28 @@ $sidebarColor = $setting->info['sidebar_color'];
                         <?php endif; ?>
                     <?php endif; ?>
 
+                    <?php if (in_array('viewGaji', $user_permission)) : ?>
+                        <v-list-item link href="<?= base_url('gaji'); ?>" <?php if ($uri->getSegment(1) == "gaji") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Daftar Gaji" title="Daftar Gaji">
+                            <v-list-item-icon>
+                                <v-icon>mdi-cash-multiple</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>Daftar Gaji</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    <?php endif; ?>
+
+                    <?php if (in_array('viewGolongan', $user_permission)) : ?>
+                        <v-list-item link href="<?= base_url('golongan'); ?>" <?php if ($uri->getSegment(1) == "golongan") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Golongan" alt="Golongan">
+                            <v-list-item-icon>
+                                <v-icon>mdi-file-document-outline</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>Golongan</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    <?php endif; ?>
+
                     <?php if (in_array('menuPages', $user_permission)) : ?>
                         <?php if (in_array('viewPages', $user_permission)) : ?>
                             <v-list-item link href="<?= base_url('pages'); ?>" <?php if ($uri->getSegment(1) == "pages") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pages" title="Pages">
@@ -171,7 +193,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                     <?php endif; ?>
 
                     <?php if (in_array('menuUser', $user_permission)) : ?>
-                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark':'white'); ?>" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
@@ -203,7 +225,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                     <?php endif; ?>
 
                     <?php if (in_array('menuSetting', $user_permission)) : ?>
-                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark':'white'); ?>" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>

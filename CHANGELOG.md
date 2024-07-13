@@ -1,5 +1,53 @@
 # Changelog
 
+## [v4.5.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.3) (2024-06-25)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.2...v4.5.3)
+
+### Fixed Bugs
+
+* fix: `RedisHandler::deleteMatching()` not deleting matching keys if cache prefix is used by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8952
+* fix: TypeError in DefinedRouteCollector::collect() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8957
+* fix: `migrate:rollback -b` does not work due to TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8958
+* fix: [Validation] `if_exist` does not work with array data by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8959
+* chore: add `Config` namespace to appstarter autoload.psr4 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8963
+* fix: `spark routes` may show BadRequestException when a route has a regexp by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8974
+* docs: fix incorrect description for route group filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8978
+* fix: return and param types of BaseConnection by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8983
+* fix: precedence of command classes with the same `$name` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8898
+* fix: [OCI8] if conditions to build DSN by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8986
+* fix: [Auto Routing Improved] Default Method Fallback does not work with `$translateUriToCamelCase` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8980
+* fix: `command()` may execute `rewrite.php` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8995
+
+### Refactoring
+
+* refactor: BaseBuilder::orderBy() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8970
+* refactor: using phpunit 10 assertObjectHasNotProperty() and assertObjectHasProperty() by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8991
+
+## [v4.5.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.2) (2024-06-10)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.1...v4.5.2)
+
+### Fixed Bugs
+
+* chore: fix phpunit.xml.dist for appstarter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8785
+* fix: update `preload.php` for 4.5 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8805
+* fix: [ErrorException] Undefined array key in `spark phpini:check` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8804
+* fix: incorrect Security exception message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8818
+* fix: [QueryBuilder] TypeError in join() with BETWEEN by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8792
+* fix: [SQLSRV] Query Builder always sets `"<database>"."<schema>".` to the table name. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/8786
+* fix: remove unused undefined param $raw in MockCache::save() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8847
+* fix: FileCollection pseudo-regex by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8868
+* fix: [Model] casting may throw InvalidArgumentException: Invalid parameter: nullable by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8870
+* fix: [Model] casting causes TypeError when finding no record by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8871
+* fix: correct property default values in Email by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8855
+* fix: CLI::promptByMultipleKeys() and prompt() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8873
+* fix: [Postgres] show missing error message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8913
+* fix: TypeError in  number_to_amount()  by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8932
+* fix: Model::find() returns incorrect data with casting by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8933
+
+### Refactoring
+
+* refactor: remove unused path parameter on PhpStreamWrapper::stream_open() by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8926
+
 ## [v4.5.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.1) (2024-04-14)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.0...v4.5.1)
 
