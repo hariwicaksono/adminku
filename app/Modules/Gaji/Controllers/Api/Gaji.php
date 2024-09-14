@@ -159,13 +159,6 @@ class Gaji extends BaseControllerApi
     {
         $hapus = $this->model->find($id);
 
-        //Default role 1 jangan dihapus
-        if ($id == '1') :
-            $response = ['status' => false, 'message' => lang('App.delFailed'), 'data' => []];
-            return $this->respond($response, 200);
-        endif;
-        //
-
         if ($hapus) {
             $this->model->delete($id);
 
