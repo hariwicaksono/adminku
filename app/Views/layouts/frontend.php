@@ -160,7 +160,7 @@ $navbarColor = $setting->info['navbar_color'];
                     {{ link.text }}
                 </v-btn>
                 <br />
-                &copy; {{ new Date().getFullYear() }} <?= env('appCompany') ?> - <?= $appName; ?> <?= env('appVersion') ?>.<br />Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.
+                &copy; {{ new Date().getFullYear() }} <a href="<?= env('appWebsite'); ?>" target="_blank"><?= env('appCompany') ?></a> - <?= $appName; ?> <?= env('appVersion') ?>.<br />Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.
             </p>
 
             <?= $this->include('App\Views\partials/login'); ?>
