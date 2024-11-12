@@ -176,10 +176,10 @@ $navbarColor = $setting->info['navbar_color'];
         </v-app>
     </div>
 
+    <script src="<?= base_url('assets/js/preloader.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vue.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vuetify.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/axios.min.js') ?>" type="text/javascript"></script>
-    <script src="<?= base_url('assets/js/main.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vuejs-paginate.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vue-masonry-plugin-window.js') ?>"></script>
     <script src="<?= base_url('assets/js/anime.min.js') ?>" type="text/javascript"></script>
