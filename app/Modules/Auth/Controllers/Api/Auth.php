@@ -34,7 +34,7 @@ class Auth extends BaseControllerApi
     {
         $rules = [
             'username' => 'required',
-            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[user.email]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[8]|max_length[255]'
         ];
 
@@ -121,7 +121,7 @@ class Auth extends BaseControllerApi
     public function resetPassword()
     {
         $rules = [
-            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_not_unique[user.email]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_not_unique[users.email]',
         ];
 
         $input = $this->getRequestInput();
