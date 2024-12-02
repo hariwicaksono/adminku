@@ -78,6 +78,7 @@ class User extends BaseControllerApi
                 'fullname' => $json->fullname,
                 'username' => $json->username,
                 'password' => $json->password,
+                'user_type' => $json->group_id,
                 'is_active' => 1
             ];
         } else {
@@ -87,6 +88,7 @@ class User extends BaseControllerApi
                 'fullname' => $this->request->getPost('fullname'),
                 'username' => $this->request->getPost('username'),
                 'password' => $this->request->getPost('password'),
+                'user_type' => $this->request->getPost('user_type'),
                 'is_active' => 1
             ];
         }

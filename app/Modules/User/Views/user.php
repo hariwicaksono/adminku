@@ -22,7 +22,7 @@
                             <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line disabled></v-select>
                         </span>
                         <span v-else>
-                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line @change="setGroup(item)"></v-select>
+                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line @change="setGroup(item)" :disabled="item.user_id == <?= session('id'); ?>"></v-select>
                         </span>
                     </td>
                     <td>
@@ -30,7 +30,7 @@
                             <v-switch v-model="item.is_active" name="is_active" false-value="0" true-value="1" color="success" disabled></v-switch>
                         </span>
                         <span v-else>
-                            <v-switch v-model="item.is_active" name="is_active" false-value="0" true-value="1" color="success" @click="setActive(item)"></v-switch>
+                            <v-switch v-model="item.is_active" name="is_active" false-value="0" true-value="1" color="success" @click="setActive(item)" :disabled="item.user_id == <?= session('id'); ?>"></v-switch>
                         </span>
                     </td>
                     <td>
@@ -49,7 +49,7 @@
                             </v-btn>
                         </span>
                         <span v-else>
-                            <v-btn color="error" @click="deleteItem(item)" title="Delete" alt="Delete" icon>
+                            <v-btn color="error" @click="deleteItem(item)" title="Delete" alt="Delete" icon :disabled="item.user_id == <?= session('id'); ?>">
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>
                         </span>

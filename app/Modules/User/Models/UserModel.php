@@ -82,6 +82,9 @@ class UserModel extends Model
 	{
         $this->select("{$this->table}.*, groups_user.group_id");
         $this->join("groups_user", "groups_user.user_id = {$this->table}.user_id", "left");
+        if (session('role') != 1) :
+            $this->where("{$this->table}.user_id", session('id'));
+        endif;
         return $this->findAll();
 	}
 }
