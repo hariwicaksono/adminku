@@ -237,7 +237,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="font-weight-medium" text large @click="deleteUser" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn text large @click="deleteUser" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
                     <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>

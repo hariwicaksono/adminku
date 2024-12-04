@@ -19,7 +19,8 @@
                     <v-spacer></v-spacer>
                     <a class="subtitle-2" href="<?= base_url('/password/reset') ?>"><?= lang('App.forgotPass') ?></a>
                 </v-layout>
-                <v-btn color="primary" large :loading="loading" @click="submitLogin" elevation="1" block><?= lang('App.signIn'); ?></v-btn>
+                <v-btn color="primary" large :loading="loading" @click="submitLogin" elevation="1" block class="mb-4"><?= lang('App.signIn'); ?></v-btn>
+                Belum Punya Akun? <a class="subtitle-2" href="<?= base_url('/register') ?>"><?= lang('App.register') ?></a>
             </v-form>
         </v-card-text>
     </v-card>

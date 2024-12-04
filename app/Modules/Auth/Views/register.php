@@ -1,7 +1,7 @@
 <?php $this->extend("layouts/frontend"); ?>
 <?php $this->section("content"); ?>
 <template>
-    <v-container class="grey lighten-2 px-4 py-0 fill-height mt-n5" fill-height fluid>
+    <v-container class="grey lighten-2 px-4 py-0 fill-height" fill-height fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm6 md6>
                 <v-card>

@@ -55,10 +55,21 @@ class Auth extends BaseControllerApi
             'email' => $input['email'],
             'username' => $input['username'],
             'password' => $input['password'],
+            'fullname' => $input['username'],
+            'user_type' => 2,
+            'is_active' => 0,
             'token' => $token
         ];
+        $save = $this->model->save($data);
+        $idUser = $this->model->getInsertID();
 
-        if ($this->model->save($data)) {
+        $dataGroup = [
+            'user_id' => $idUser,
+            'group_id' => 2
+        ];
+        $this->group->save($dataGroup);
+
+        if ($save) {
             helper('email');
             sendEmail("Verifikasi Akun", $input['email'], view('App\Modules\Auth\Views\email/verify', $data));
             return $this->getResponse(
