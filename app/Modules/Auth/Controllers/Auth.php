@@ -5,13 +5,16 @@ namespace App\Modules\Auth\Controllers;
 use App\Controllers\BaseController;
 use App\Modules\Auth\Models\UserModel;
 use App\Modules\Log\Models\LogModel;
+use App\Libraries\Settings;
 
 class Auth extends BaseController
 {
+	protected $setting;
 	protected $log;
 
 	public function __construct()
 	{
+		$this->setting = new Settings();
 		$this->log = new LogModel();
 	}
 
@@ -21,6 +24,7 @@ class Auth extends BaseController
 		
 		return view('App\Modules\Auth\Views/login', [
 			'title' => 'Login',
+			'img_background' => $this->setting->info['img_background'],
 		]);
 	}
 

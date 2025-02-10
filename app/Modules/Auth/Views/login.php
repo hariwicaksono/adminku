@@ -1,7 +1,7 @@
 <?php $this->extend("layouts/frontend"); ?>
 <?php $this->section("content"); ?>
 <template>
-    <v-container class="px-4 py-0 fill-height" fluid>
+    <v-container class="grey lighten-2 px-4 py-0 fill-height" fill-height fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm8 md8>
                 <?php if (session()->getFlashdata('success')) { ?>
@@ -12,7 +12,7 @@
                 <v-card>
                     <v-card-text>
                         <v-row>
-                            <v-col cols="12" md="5" style="background-image: url('https://picsum.photos/510/300?random') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+                            <v-col cols="12" md="5" style="background-image: url('<?= base_url() . $img_background; ?>') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
                             <v-col cols="12" md="7" class="pa-8">
                                 <h1 class="text-h4 font-weight-medium mb-10">Login</h1>
