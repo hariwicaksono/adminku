@@ -80,10 +80,24 @@ class Setting extends BaseControllerApi
 
     public function upload()
     {
-        $id = $this->request->getVar('setting_id');
+        //Maksimal ukuran 51200 KB = 50 MB
+        $rules = [
+            'image' => [
+                'rules'  => 'uploaded[image]|max_size[image,51200]|is_image[image]',
+                'errors' => []
+            ],
+        ];
+        $id = $this->request->getVar('id');
         $image = $this->request->getFile('image');
         $fileName = $image->getRandomName();
-        if ($image !== "") {
+        if (! $this->validateData([], $rules)) {
+            $response = [
+                'status' => false,
+                'message' => lang('App.imgFailed'),
+                'data' => $this->validator->getErrors(),
+            ];
+            return $this->respond($response, 200);
+        } else {
             $path = "assets/images/";
             $moved = $image->move($path, $fileName);
             if ($moved) {
@@ -96,14 +110,7 @@ class Setting extends BaseControllerApi
                     return $this->respond(["status" => false, "message" => lang('App.imgFailed'), "data" => []], 200);
                 }
             }
-        } else {
-            $response = [
-                'status' => false,
-                'message' => lang('App.uploadFailed'),
-                'data' => []
-            ];
-            return $this->respond($response, 200);
-        }
+        } 
     }
 
     public function setChange($id = NULL)

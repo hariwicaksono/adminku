@@ -302,7 +302,7 @@
             // Convert it to a blob to upload
             var blob = b64toBlob(realData, contentType);
             formData.append('image', blob);
-            formData.append('setting_id', this.settingId);
+            formData.append('id', this.settingId);
             this.loading2 = true;
             axios.post(`<?= base_url() ?>api/setting/upload`, formData)
                 .then(res => {
