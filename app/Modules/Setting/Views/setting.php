@@ -324,8 +324,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading2 = false
-                    var error = err.response
+                    this.loading2 = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -355,8 +355,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -420,8 +420,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading2 = false
-                    var error = err.response
+                    this.loading2 = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

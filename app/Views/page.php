@@ -92,7 +92,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

@@ -11,7 +11,7 @@
             <v-text-field v-model="search" v-on:keydown.enter="handleSearch" @click:clear="handleSearch" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
             </v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
+        <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.golongan_id}}</td>
@@ -51,7 +51,7 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="saveGolongan" :loading="loading">
+                    <v-btn large color="primary" @click="saveGolongan" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.save') ?>
                     </v-btn>
                 </v-card-actions>
@@ -81,7 +81,7 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="updateGolongan" :loading="loading">
+                    <v-btn large color="primary" @click="updateGolongan" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.update') ?>
                     </v-btn>
                 </v-card-actions>
@@ -104,7 +104,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="font-weight-medium" text large @click="deleteGolongan" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deleteGolongan" :loading="loading1"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
                     <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
@@ -314,7 +314,7 @@
                     // handle error
                     console.log(err);
                     this.loading = false
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -325,13 +325,13 @@
 
         // Save Golongan
         saveGolongan: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.post('<?= base_url(); ?>api/golongan/save', {
                     golongan_nama: this.golonganNama,
                 }, options)
                 .then(res => {
                     // handle success
-                    this.loading = false
+                    this.loading1 = false
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -358,11 +358,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -385,13 +385,13 @@
 
         //Update Golongan
         updateGolongan: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.put(`<?= base_url(); ?>api/golongan/update/${this.golonganIdEdit}`, {
                     golongan_nama: this.golonganNamaEdit,
                 }, options)
                 .then(res => {
                     // handle success
-                    this.loading = false;
+                    this.loading1 = false;
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -417,11 +417,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -438,11 +438,11 @@
 
         // Delete Golongan
         deleteGolongan: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.delete(`<?= base_url(); ?>api/golongan/delete/${this.golonganIdDelete}`, options)
                 .then(res => {
                     // handle success
-                    this.loading = false;
+                    this.loading1 = false;
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -457,11 +457,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

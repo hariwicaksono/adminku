@@ -116,7 +116,10 @@ class Golongan extends BaseControllerApi
                 'golongan_nama' => $json->golongan_nama,
             ];
         } else {
-            $data = $this->request->getRawInput();
+            $input = $this->request->getRawInput();
+            $data = [
+                'golongan_nama' => $input['golongan_nama'],
+            ];
         }
 
         if (!$this->validate($rules)) {

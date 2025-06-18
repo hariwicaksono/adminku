@@ -150,7 +150,7 @@
         // Get Backup
         getBackup: function() {
             this.loading = true;
-            axios.get('<?= base_url() ?>/api/backup', options)
+            axios.get('<?= base_url() ?>api/backup', options)
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -168,8 +168,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -181,7 +181,7 @@
         // Save Data
         saveBackup: function() {
             this.loading = true;
-            axios.post(`<?= base_url() ?>/api/backup/save`, {}, options)
+            axios.post(`<?= base_url() ?>api/backup/save`, {}, options)
                 .then(res => {
                     // handle success
                     this.loading = false
@@ -198,8 +198,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -211,8 +211,8 @@
         // Download
         downloadItem: function(item) {
             this.loading2 = true;
-            this.idBackup = item.id;
-            axios.post(`<?= base_url() ?>/api/backup/download`, {
+            this.idBackup = item.backup_id;
+            axios.post(`<?= base_url() ?>api/backup/download`, {
                     id: this.idBackup
                 }, options)
                 .then(res => {
@@ -237,8 +237,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading2 = false
-                    var error = err.response
+                    this.loading2 = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -251,13 +251,13 @@
         // Get Item Delete
         deleteItem: function(item) {
             this.modalDelete = true;
-            this.idBackup = item.id;
+            this.idBackup = item.backup_id;
         },
 
         // Delete
         deleteData: function() {
             this.loading = true;
-            axios.delete(`<?= base_url() ?>/api/backup/delete/${this.idBackup}`, options)
+            axios.delete(`<?= base_url() ?>api/backup/delete/${this.idBackup}`, options)
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -276,8 +276,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

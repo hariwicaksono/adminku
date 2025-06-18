@@ -96,7 +96,7 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
+                    this.loading = false;
                 })
         },
     }

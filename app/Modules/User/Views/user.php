@@ -522,8 +522,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -579,7 +579,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -642,7 +642,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -683,7 +683,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -716,7 +716,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -749,7 +749,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -812,6 +812,12 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
+                    var error = err.response;
+                    if (error.data.expired == true) {
+                        this.snackbar = true;
+                        this.snackbarMessage = error.data.message;
+                        setTimeout(() => window.location.href = error.data.data.url, 1000);
+                    }
                 })
         },
 
@@ -836,8 +842,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading = false
-                    var error = err.response
+                    this.loading = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -870,7 +876,7 @@
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -906,8 +912,8 @@
                 .catch(err => {
                     // handle error
                     console.log(err);
-                    this.loading1 = false
-                    var error = err.response
+                    this.loading1 = false;
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

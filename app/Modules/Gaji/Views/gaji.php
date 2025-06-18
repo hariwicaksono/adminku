@@ -11,7 +11,7 @@
             <v-text-field v-model="search" v-on:keydown.enter="handleSearch" @click:clear="handleSearch" append-icon="mdi-magnify" label="<?= lang("App.search") ?>" single-line hide-details clearable>
             </v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>" dense>
+        <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{item.gaji_id}}</td>
@@ -59,7 +59,7 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="saveGaji" :loading="loading">
+                    <v-btn large color="primary" @click="saveGaji" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.save') ?>
                     </v-btn>
                 </v-card-actions>
@@ -95,7 +95,7 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="updateGaji" :loading="loading">
+                    <v-btn large color="primary" @click="updateGaji" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.update') ?>
                     </v-btn>
                 </v-card-actions>
@@ -118,7 +118,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="font-weight-medium" text large @click="deleteGaji" :loading="loading"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deleteGaji" :loading="loading1"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
                     <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
@@ -370,7 +370,7 @@
                     // handle error
                     console.log(err);
                     this.loading = false
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -403,7 +403,7 @@
                     // handle error
                     console.log(err);
                     this.loading = false
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -435,7 +435,7 @@
                     // handle error
                     console.log(err);
                     this.loading = false
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -446,7 +446,7 @@
 
         // Save Gaji
         saveGaji: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.post('<?= base_url(); ?>api/gaji/save', {
                     golongan_id: this.golonganId,
                     gaji_golongan: this.gajiGolongan,
@@ -455,7 +455,7 @@
                 }, options)
                 .then(res => {
                     // handle success
-                    this.loading = false
+                    this.loading1 = false
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -485,11 +485,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -515,7 +515,7 @@
 
         //Update Gaji
         updateGaji: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.put(`<?= base_url(); ?>api/gaji/update/${this.gajiIdEdit}`, {
                     golongan_id: this.golonganIdEdit,
                     gaji_golongan: this.gajiGolonganEdit,
@@ -524,7 +524,7 @@
                 }, options)
                 .then(res => {
                     // handle success
-                    this.loading = false;
+                    this.loading1 = false;
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -550,11 +550,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;
@@ -571,11 +571,11 @@
 
         // Delete Gaji
         deleteGaji: function() {
-            this.loading = true;
+            this.loading1 = true;
             axios.delete(`<?= base_url(); ?>api/gaji/delete/${this.gajiIdDelete}`, options)
                 .then(res => {
                     // handle success
-                    this.loading = false;
+                    this.loading1 = false;
                     var data = res.data;
                     if (data.status == true) {
                         this.snackbar = true;
@@ -590,11 +590,11 @@
                 })
                 .catch(err => {
                     // handle error
-                    this.loading = false;
+                    this.loading1 = false;
                     this.snackbar = true;
                     this.snackbarMessage = err;
                     console.log(err);
-                    var error = err.response
+                    var error = err.response;
                     if (error.data.expired == true) {
                         this.snackbar = true;
                         this.snackbarMessage = error.data.message;

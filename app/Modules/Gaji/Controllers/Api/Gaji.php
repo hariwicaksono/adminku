@@ -68,7 +68,6 @@ class Gaji extends BaseControllerApi
                 'gaji_pokok' => $json->gaji_pokok
             ];
         } else {
-            $idGroup = $this->request->getPost('group_id');
             $data = [
                 'golongan_id' => $this->request->getPost('golongan_id'),
                 'gaji_golongan' => $this->request->getPost('gaji_golongan'),
@@ -130,7 +129,13 @@ class Gaji extends BaseControllerApi
                 'gaji_pokok' => $json->gaji_pokok
             ];
         } else {
-            $data = $this->request->getRawInput();
+            $input = $this->request->getRawInput();
+            $data = [
+                'golongan_id' => $input['golongan_id'],
+                'gaji_golongan' => $input['gaji_golongan'],
+                'gaji_masa_kerja' => $input['gaji_masa_kerja'],
+                'gaji_pokok' => $input['gaji_pokok'],
+            ];
         }
 
         if (!$this->validate($rules)) {

@@ -20,16 +20,17 @@ class Backup extends BaseControllerApi
     public function create()
     {
         try {
-            $tanggal = date('Ymd-His');
-            $path = 'backups/';
-            $namaFile = 'backup-' . $tanggal . '.sql';
-            $pathFile = $path;
+            $db = \Config\Database::connect();
+            $dbname = $db->database;
+            $path = WRITEPATH . 'uploads/backups/';
 
+            //Y0lk\SQLDumper\SQLDumper 
+            $tanggal = date('dmy-His');
+            $filename = $dbname . '-' . $tanggal . '.sql';
             $hostName = env('database.default.hostname');
             $databaseName = env('database.default.database');
             $userName = env('database.default.username');
             $password = env('database.default.password');
-
             //Init the dumper with your DB info
             $dumper = new SQLDumper($hostName, $databaseName, $userName, $password);
             //Set all tables to dump without data and without DROP statement
@@ -40,11 +41,11 @@ class Backup extends BaseControllerApi
             //$dumper->groupDrops(true);
             //This will group INSERT statements and put them at the end of the dump
             //$dumper->groupInserts(true);
-            $dumper->save($pathFile . $namaFile);
+            $dumper->save($path . $filename);
 
             $data = array(
-                'file_name' => $namaFile,
-                'file_path' => $path . $namaFile,
+                'file_name' => $filename,
+                'file_path' => $path . $filename,
                 'created_at' => date('Y-m-d H:i:s')
             );
 
@@ -71,7 +72,7 @@ class Backup extends BaseControllerApi
         $hapus = $this->model->find($id);
         $filepath = $hapus['file_path'];
         if ($hapus) {
-			unlink($filepath);
+            unlink($filepath);
             $this->model->delete($id);
             $response = [
                 'status' => true,
@@ -102,12 +103,12 @@ class Backup extends BaseControllerApi
         $name = $backup['file_name'];
         $path = $backup['file_path'];
         $fileName = $name;
-        $filePath = base_url($path);
+        $filePath = file_get_contents($path);
 
         $response = [
             'status' => true,
             'message' => lang('App.getSuccess'),
-            'data' => ['filename' => $fileName,'url' => $filePath],
+            'data' => ['filename' => $fileName, 'url' => $filePath],
         ];
         return $this->respond($response, 200);
     }
