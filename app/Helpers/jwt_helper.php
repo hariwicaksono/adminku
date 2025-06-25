@@ -86,8 +86,26 @@ function getSignedJWTForUser(string $email)
         'iat' => $issuedAtTime,
         'exp' => $tokenExpiration,
     ];
-
     $secretKey = privateKey();
     $jwt = JWT::encode($payload, $secretKey, 'RS256');
     return $jwt;
+}
+
+function createJWT(string $email, $expMinutes = 15)
+{
+    $issuedAtTime = time();
+    $tokenExpiration = $issuedAtTime + ($expMinutes * 60);
+    $payload = [
+        'email' => $email,
+        'iat' => $issuedAtTime,
+        'exp' => $tokenExpiration,
+    ];
+    $secretKey = privateKey();
+    return JWT::encode($payload, $secretKey, 'HS256');
+}
+
+function decodeJWT($token)
+{
+    $secretKey = privateKey();
+    return JWT::decode($token, new Key($secretKey, 'HS256'));
 }
