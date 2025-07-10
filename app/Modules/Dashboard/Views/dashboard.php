@@ -28,7 +28,7 @@
         <v-card-title class="text-h4 font-weight-medium mb-3"><?= $title; ?></v-card-title>
         <v-card-text>
             <h5 class="text-h5 font-weight-bold mb-3">Pendahuluan</h5>
-            <p class="text-subtitle-1">Aplikasi Web <?= env('appName'); ?> <?= env('appVersion') ?> dibuat menggunakan CodeIgniter 4 dan Vue.js 2. Teknologi yang digunakan: PHP 8.1, MySQL, CodeIgniter 4 (<?= CodeIgniter\CodeIgniter::CI_VERSION; ?>) Standar &amp; REST API, Vue.js v2, Vuetify.js v2.6, Axios, Material Design Icons.</p>
+            <p class="text-subtitle-1">Aplikasi Web <?= env('appName'); ?> <?= env('appVersion') ?> dibuat menggunakan CodeIgniter 4 dan Vue.js 2. Tech stack yang digunakan: PHP 8.1, MySQL, CodeIgniter 4 (<?= CodeIgniter\CodeIgniter::CI_VERSION; ?>) Standar &amp; REST API, Vue.js v2, Vuetify.js v2.6, Axios, Material Design Icons.</p>
             <p>Aplikasi Web <?= env('appName'); ?> adalah Produk dari RUMAH ITSHOP Purwokerto yaitu milik dari <?= env('appCompany'); ?> yang terdaftar di AHU Online dari KEMENKUMHAM RI dan memiliki Legalitas NOMOR INDUK BERUSAHA</p>
             <p>Kunjungi Link Toko Online Official kami:
             <ul>
