@@ -29,13 +29,13 @@
         <v-card-text>
             <h5 class="text-h5 font-weight-bold mb-3">Pendahuluan</h5>
             <p class="text-subtitle-1">Aplikasi Web <?= env('appName'); ?> <?= env('appVersion') ?> dibuat menggunakan CodeIgniter 4 dan Vue.js 2. Tech stack yang digunakan: PHP 8.1, MySQL, CodeIgniter 4 (<?= CodeIgniter\CodeIgniter::CI_VERSION; ?>) Standar &amp; REST API, Vue.js v2, Vuetify.js v2.6, Axios, Material Design Icons.</p>
-            <p>Aplikasi Web <?= env('appName'); ?> adalah Produk dari RUMAH ITSHOP Purwokerto yaitu milik dari <?= env('appCompany'); ?> yang terdaftar di AHU Online dari KEMENKUMHAM RI dan memiliki Legalitas NOMOR INDUK BERUSAHA</p>
+            <p>Aplikasi Web <?= env('appName'); ?> adalah Produk dari ITSHOP Purwokerto yaitu milik dari <?= env('appCompany'); ?> yang terdaftar di AHU Online dari KEMENKUMHAM RI dan memiliki Legalitas NOMOR INDUK BERUSAHA</p>
             <p>Kunjungi Link Toko Online Official kami:
             <ul>
                 <li><a href="https://itshop.biz.id" target="_blank">www.itshop.biz.id</a></li>
                 <li><a href="https://tokopedia.com/itshoppwt" target="_blank">Tokopedia.com/itshoppwt</a></li>
                 <li><a href="https://shopee.co.id/itshoppwt" target="_blank">Shopee.co.id/itshoppwt</a></li>
-                <li><a href="https://bukalapak.com/u/itshoppwt" target="_blank">Bukalapak.com/itshoppwt</a></li>
+                <li><a href="https://toco.id/store/itshop-purwokerto" target="_blank">Toco.id/store/itshop-purwokerto</a></li>
             </ul>
             </p>
             <?php if (session()->get('user_type') == 1) : ?>

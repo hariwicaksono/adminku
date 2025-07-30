@@ -4,18 +4,18 @@
     <v-container class="grey lighten-2 px-4 py-0 fill-height" fill-height fluid>
         <v-layout flex align-center justify-center>
             <v-flex xs12 sm8 md8>
-                <?php if (session()->getFlashdata('success')) { ?>
-                    <v-alert type="success" dismissible v-model="alert">
-                        <?= session()->getFlashdata('success') ?>
-                    </v-alert>
-                <?php } ?>
                 <v-card>
                     <v-card-text>
                         <v-row>
                             <v-col cols="12" md="5" style="background-image: url('<?= base_url() . $img_background; ?>') !important;background-position: center;background-repeat: no-repeat;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
                             </v-col>
                             <v-col cols="12" md="7" class="pa-8">
-                                <h1 class="text-h4 font-weight-medium mb-10">Login</h1>
+                                <h1 class="text-h4 font-weight-medium mb-5">Login</h1>
+                                <?php if (session()->getFlashdata('success')) { ?>
+                                    <v-alert type="success" dismissible v-model="alert" dense>
+                                        <?= session()->getFlashdata('success') ?>
+                                    </v-alert>
+                                <?php } ?>
                                 <v-form v-model="valid" ref="form">
                                     <p class="mb-2">Email</p>
                                     <v-text-field label="<?= lang('App.labelEmail') ?>" v-model="email" :rules="[rules.email]" :error-messages="emailError" outlined></v-text-field>

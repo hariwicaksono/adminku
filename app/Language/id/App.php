@@ -82,7 +82,7 @@ return [
     'videoDeleted' => 'Video berhasil dihapus',
 
     //User
-    'users' => 'Pengguna',
+    'users' => 'Users',
     'editUser' => 'Ubah User',
     'listUser' => 'Daftar User',
     'newPassword' => 'Buat Password Baru',

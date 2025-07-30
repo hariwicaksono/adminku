@@ -6,6 +6,7 @@ use App\Controllers\BaseControllerApi;
 use App\Modules\Group\Models\GroupUserModel;
 use App\Modules\User\Models\UserModel;
 use App\Modules\Log\Models\LogModel;
+use App\Modules\Role\Models\RoleUserModel;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
@@ -17,17 +18,43 @@ class User extends BaseControllerApi
     protected $modelName    = UserModel::class;
     protected $log;
     protected $group;
+    protected $role;
 
     public function __construct()
     {
         $this->log = new LogModel();
         $this->group = new GroupUserModel();
+        $this->role = new RoleUserModel();
     }
 
 
     public function index()
     {
-        $data = $this->model->getUsers();
+        $data = $this->model->findAll();
+        foreach ($data as &$user) {
+            $query = $this->role->getUserHasRoles($user['user_id']);
+            $user['roles'] = $query;
+        }
+        if (!empty($data)) {
+            $response = [
+                "status" => true,
+                "message" => lang('App.getSuccess'),
+                "data" => $data
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => false,
+                'message' => lang('App.noData'),
+                'data' => []
+            ];
+            return $this->respond($response, 200);
+        }
+    }
+
+    public function show($id = null)
+    {
+        $data = $this->model->where('email', $id)->first();
         if (!empty($data)) {
             $response = [
                 "status" => true,
@@ -358,6 +385,79 @@ class User extends BaseControllerApi
                 'data' => []
             ];
             return $this->respond($response, 200);
+        }
+    }
+
+    public function updateRoles($id = null)
+    {
+        $rules = [
+            'roles'    => 'permit_empty|is_array',
+            'roles.*'  => 'permit_empty|integer'
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Validasi gagal',
+                'data' => $this->validator->getErrors(),
+            ], 400);
+        }
+
+        $json = $this->request->getJSON();
+        $roleIds = $json->roles ?? [];
+
+        $db = \Config\Database::connect();
+
+        // Cek user ada atau tidak
+        $user = $db->table('users')->getWhere(['user_id' => $id])->getRow();
+        if (!$user) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'User tidak ditemukan',
+            ], 404);
+        }
+
+        // Validasi: Pastikan semua role_id memang ada di tabel roles
+        if (!empty($roleIds)) {
+            $existingRoles = $db->table('roles')
+                ->select('role_id')
+                ->whereIn('role_id', $roleIds)
+                ->get()
+                ->getResultArray();
+
+            $validRoleIds = array_column($existingRoles, 'role_id');
+        } else {
+            $validRoleIds = [];
+        }
+
+        try {
+            $builder = $db->table('role_user');
+
+            // Hapus semua role lama
+            $builder->where('user_id', $id)->delete();
+
+            // Tambah yang baru (jika ada)
+            if (!empty($validRoleIds)) {
+                $insertData = [];
+                foreach ($validRoleIds as $rid) {
+                    $insertData[] = [
+                        'user_id' => $id,
+                        'role_id' => $rid
+                    ];
+                }
+                $builder->insertBatch($insertData);
+            }
+
+            return $this->respond([
+                'status' => true,
+                'message' => 'Roles berhasil diperbarui',
+            ], 200);
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Gagal memperbarui roles',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

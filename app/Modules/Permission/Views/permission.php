@@ -14,10 +14,9 @@
         <v-data-table :headers="headers" :items="data" :options.sync="options" :server-items-length="totalData" :items-per-page="10" :loading="loading" :search="search" class="elevation-1" loading-text="<?= lang('App.loadingWait'); ?>">
             <template v-slot:item="{ item }">
                 <tr>
-                    <td>{{item.gaji_id}}</td>
-                    <td>{{item.gaji_golongan}}</td>
-                    <td>{{item.gaji_masa_kerja}}</td>
-                    <td>{{RibuanNoRp(item.gaji_pokok)}}</td>
+                    <td>{{item.permission_id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.created_at}}</td>
                     <td>
                         <v-btn color="primary" class="mr-3" @click="editItem(item)" title="Edit" alt="Edit" icon>
                             <v-icon>mdi-pencil</v-icon>
@@ -38,7 +37,7 @@
     <v-row justify="center">
         <v-dialog v-model="modalAdd" persistent max-width="700px">
             <v-card>
-                <v-card-title><?= lang('App.add') ?> Gaji
+                <v-card-title><?= lang('App.add') ?> Permission
                     <v-spacer></v-spacer>
                     <v-btn icon @click="modalAddClose">
                         <v-icon>mdi-close</v-icon>
@@ -47,19 +46,13 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form v-model="valid" ref="form">
-                        <v-select v-model="golonganId" name="golongan" :items="dataGolongan" item-text="golongan_nama" item-value="golongan_id" label="Golongan *" @change="getGolonganByID" :loading="loading2" :error-messages="golongan_idError" outlined></v-select>
-
-                        <v-text-field v-model="gajiGolongan" label="Golongan Nama *" :error-messages="gaji_golonganError" outlined></v-text-field>
-
-                        <v-text-field v-model="gajiMasakerja" label="Masa Kerja *" :error-messages="gaji_masa_kerjaError" outlined></v-text-field>
-
-                        <v-text-field v-model="gajiPokok" label="Gaji Pokok *" :error-messages="gaji_pokokError" outlined></v-text-field>
+                        <v-text-field v-model="name" label="Name *" :error-messages="nameError" outlined></v-text-field>
                     </v-form>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="saveGaji" :loading="loading1">
+                    <v-btn large color="primary" @click="savePermission" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.save') ?>
                     </v-btn>
                 </v-card-actions>
@@ -74,7 +67,7 @@
     <v-row justify="center">
         <v-dialog v-model="modalEdit" persistent max-width="700px">
             <v-card>
-                <v-card-title><?= lang('App.edit') ?> Gaji ID: {{gajiIdEdit}}
+                <v-card-title><?= lang('App.edit') ?> Permission ID: {{permissionIdEdit}}
                     <v-spacer></v-spacer>
                     <v-btn icon @click="modalEditClose">
                         <v-icon>mdi-close</v-icon>
@@ -83,19 +76,14 @@
                 <v-divider></v-divider>
                 <v-card-text class="py-5">
                     <v-form ref="form" v-model="valid">
-                        <v-select v-model="golonganIdEdit" name="golongan" :items="dataGolongan" item-text="golongan_nama" item-value="golongan_id" label="Golongan *" @change="getGolonganByID" :loading="loading2" :error-messages="golongan_idError" outlined></v-select>
-
-                        <v-text-field v-model="gajiGolonganEdit" label="Golongan Nama *" :error-messages="gaji_golonganError" outlined></v-text-field>
-
-                        <v-text-field v-model="gajiMasakerjaEdit" label="Masa Kerja *" :error-messages="gaji_masa_kerjaError" outlined></v-text-field>
-
-                        <v-text-field v-model="gajiPokokEdit" label="Gaji Pokok *" :error-messages="gaji_pokokError" outlined></v-text-field>
+                        <v-text-field v-model="nameEdit" label="Name *" :error-messages="nameError" outlined></v-text-field>
+                        
                     </v-form>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn large color="primary" @click="updateGaji" :loading="loading1">
+                    <v-btn large color="primary" @click="updatePermission" :loading="loading1">
                         <v-icon>mdi-content-save</v-icon> <?= lang('App.update') ?>
                     </v-btn>
                 </v-card-actions>
@@ -118,7 +106,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="font-weight-medium" text large @click="deleteGaji" :loading="loading1"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
+                    <v-btn class="font-weight-medium" text large @click="deletePermission" :loading="loading1"><?= lang("App.yes") ?>, <?= lang("App.delete"); ?></v-btn>
                     <v-btn color="error" text large @click="modalDelete = false"><?= lang("App.no") ?></v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
@@ -160,56 +148,39 @@
         endDate: "<?= $akhirTahun; ?>",
         headers: [{
             text: '# ',
-            value: 'gaji_id'
+            value: 'permission_id'
         }, {
-            text: 'Golongan',
-            value: 'gaji_golongan'
-        }, {
-            text: 'Masa Kerja',
-            value: 'gaji_masa_kerja'
-        }, {
-            text: 'Gaji Pokok',
-            value: 'gaji_pokok'
+            text: 'Name',
+            value: 'name'
+        },  {
+            text: 'Tanggal',
+            value: 'created_at'
         }, {
             text: '<?= lang('App.action') ?>',
             value: 'actions',
             sortable: false
         }, ],
-        dataGaji: [],
+        dataPermission: [],
         totalData: 0,
         data: [],
         options: {},
-
-        dataGolongan: [],
-        dataGolonganById: [],
 
         modalAdd: false,
         modalEdit: false,
         modalDelete: false,
 
-        gajiId: "",
-        gajiIdEdit: "",
-        gajiIdDelete: "",
-        golonganId: "",
-        golonganIdEdit: "",
-        golongan_idError: "",
-        gajiGolongan: "",
-        gajiGolonganEdit: "",
-        gaji_golonganError: "",
-        gajiMasakerja: "",
-        gajiMasakerjaEdit: "",
-        gaji_masa_kerjaError: "",
-        gajiPokok: 0,
-        gajiPokokEdit: 0,
-        gaji_pokokError: ""
-
+        permissionId: "",
+        permissionIdEdit: "",
+        permissionIdDelete: "",
+        name: "",
+        nameEdit: "",
+        nameError: "",
     }
 
     // Vue Created
     // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
-        this.getGaji();
-        this.getGolongan();
+        this.getPermission();
     }
 
     // Vue Computed
@@ -230,8 +201,8 @@
             deep: true,
         },
 
-        dataGaji: function() {
-            if (this.dataGaji != '') {
+        dataPermission: function() {
+            if (this.dataPermission != '') {
                 // Call server-side paginate and sort
                 this.getDataFromApi();
             }
@@ -287,7 +258,7 @@
 
                 let search = this.search ?? "".trim();
 
-                let items = this.dataGaji
+                let items = this.dataPermission
                 const total = items.length
 
                 if (search == search.toLowerCase()) {
@@ -345,13 +316,13 @@
 
         // Handle Search Filter
         handleSearch: function() {
-            this.getGaji();
+            this.getPermission();
         },
 
-        // Get Golongan
-        getGolongan: function() {
+        // Get Permission
+        getPermission: function() {
             this.loading = true;
-            axios.get('<?= base_url(); ?>api/golongan', options)
+            axios.get('<?= base_url(); ?>api/permission', options)
                 .then(res => {
                     // handle success
                     this.loading = false;
@@ -359,11 +330,12 @@
                     if (data.status == true) {
                         //this.snackbar = true;
                         //this.snackbarMessage = data.message;
-                        this.dataGolongan = data.data;
+                        this.dataPermission = data.data;
                     } else {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
-                        this.dataGolongan = data.data;
+                        this.dataPermission = data.data;
+                        this.data = data.data;
                     }
                 })
                 .catch(err => {
@@ -379,87 +351,11 @@
                 })
         },
 
-        // Get Golongan By ID
-        getGolonganByID: function() {
-            this.loading2 = true;
-            axios.get(`<?= base_url(); ?>api/golongan/${this.golonganId}`, options)
-                .then(res => {
-                    // handle success
-                    this.loading2 = false;
-                    var data = res.data;
-                    if (data.status == true) {
-                        //this.snackbar = true;
-                        //this.snackbarMessage = data.message;
-                        this.dataGolonganById = data.data;
-                        this.gajiGolongan = this.dataGolonganById.golongan_nama;
-                    } else {
-                        this.snackbar = true;
-                        this.snackbarMessage = data.message;
-                        this.dataGolonganById = data.data;
-                        this.gajiGolongan = this.dataGolonganById.golongan_nama;
-                    }
-                })
-                .catch(err => {
-                    // handle error
-                    console.log(err);
-                    this.loading = false
-                    var error = err.response;
-                    if (error.data.expired == true) {
-                        this.snackbar = true;
-                        this.snackbarMessage = error.data.message;
-                        setTimeout(() => window.location.href = error.data.data.url, 1000);
-                    }
-                })
-        },
-
-        // Get Gaji
-        getGaji: function() {
-            this.loading = true;
-            axios.get('<?= base_url(); ?>api/gaji', options)
-                .then(res => {
-                    this.loading = false;
-                    const data = res.data;
-                    this.dataGaji = data.data;
-                    this.snackbar = true;
-                    this.snackbarMessage = data.message;
-                })
-                .catch(err => {
-                    this.loading = false;
-                    console.error(err);
-                    const error = err.response;
-                    if (error) {
-                        // Jika token expired
-                        if (error.data?.expired) {
-                            this.snackbar = true;
-                            this.snackbarMessage = error.data.message || 'Session expired';
-                            setTimeout(() => window.location.href = error.data.data?.url || '/login', 1000);
-                        }
-                        // Jika 403 permission denied
-                        else if (error.status === 403) {
-                            this.snackbar = true;
-                            this.snackbarMessage = error.data?.message || 'Access denied';
-                        }
-                        // Error umum lainnya
-                        else {
-                            this.snackbar = true;
-                            this.snackbarMessage = error.data?.message || 'There is an error';
-                        }
-                    } else {
-                        this.snackbar = true;
-                        this.snackbarMessage = 'Cannot connect to server';
-                    }
-                });
-        },
-
-
-        // Save Gaji
-        saveGaji: function() {
+        // Save Permission
+        savePermission: function() {
             this.loading1 = true;
-            axios.post('<?= base_url(); ?>api/gaji/save', {
-                    golongan_id: this.golonganId,
-                    gaji_golongan: this.gajiGolongan,
-                    gaji_masa_kerja: this.gajiMasakerja,
-                    gaji_pokok: this.gajiPokok,
+            axios.post('<?= base_url(); ?>api/permission/save', {
+                    name: this.name,
                 }, options)
                 .then(res => {
                     // handle success
@@ -468,11 +364,8 @@
                     if (data.status == true) {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
-                        this.golonganId = "";
-                        this.gajiGolongan = "";
-                        this.gajiMasakerja = "";
-                        this.gajiPokok = 0;
-                        this.getGaji();
+                        this.name = "";
+                        this.getPermission();
                         this.modalAdd = false;
                         this.$refs.form.resetValidation();
                     } else {
@@ -510,25 +403,19 @@
         editItem: function(item) {
             this.modalEdit = true;
             this.show = false;
-            this.gajiIdEdit = item.gaji_id;
-            this.golonganIdEdit = item.golongan_id,
-                this.gajiGolonganEdit = item.gaji_golongan;
-            this.gajiMasakerjaEdit = item.gaji_masa_kerja;
-            this.gajiPokokEdit = item.gaji_pokok;
+            this.permissionIdEdit = item.permission_id;
+            this.nameEdit = item.name;
         },
         modalEditClose: function() {
             this.modalEdit = false;
             this.$refs.form.resetValidation();
         },
 
-        //Update Gaji
-        updateGaji: function() {
+        //Update Permission
+        updatePermission: function() {
             this.loading1 = true;
-            axios.put(`<?= base_url(); ?>api/gaji/update/${this.gajiIdEdit}`, {
-                    golongan_id: this.golonganIdEdit,
-                    gaji_golongan: this.gajiGolonganEdit,
-                    gaji_masa_kerja: this.gajiMasakerjaEdit,
-                    gaji_pokok: this.gajiPokokEdit,
+            axios.put(`<?= base_url(); ?>api/permission/update/${this.permissionIdEdit}`, {
+                    name: this.nameEdit,
                 }, options)
                 .then(res => {
                     // handle success
@@ -537,7 +424,7 @@
                     if (data.status == true) {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
-                        this.getGaji();
+                        this.getPermission();
                         this.modalEdit = false;
                         this.$refs.form.resetValidation();
                     } else {
@@ -574,13 +461,13 @@
         // Get Item Delete
         deleteItem: function(item) {
             this.modalDelete = true;
-            this.gajiIdDelete = item.gaji_id;
+            this.permissionIdDelete = item.permission_id;
         },
 
-        // Delete Gaji
-        deleteGaji: function() {
+        // Delete Permission
+        deletePermission: function() {
             this.loading1 = true;
-            axios.delete(`<?= base_url(); ?>api/gaji/delete/${this.gajiIdDelete}`, options)
+            axios.delete(`<?= base_url(); ?>api/permission/delete/${this.permissionIdDelete}`, options)
                 .then(res => {
                     // handle success
                     this.loading1 = false;
@@ -588,7 +475,7 @@
                     if (data.status == true) {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
-                        this.getGaji();
+                        this.getPermission();
                         this.modalDelete = false;
                     } else {
                         this.snackbar = true;

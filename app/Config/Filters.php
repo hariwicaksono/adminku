@@ -39,7 +39,8 @@ class Filters extends BaseConfig
         'performance'   => PerformanceMetrics::class,
         'jwtauth'  => JWTAuthenticationFilter::class,
         'auth'     => AuthFilter::class,
-        'permit'     => PermissionBased::class
+        'permit'     => PermissionBased::class,
+        'permission' => \App\Filters\PermissionFilter::class,
     ];
 
     /**

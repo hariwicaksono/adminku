@@ -18,6 +18,7 @@ $routes->group('password', ['namespace' => 'App\Modules\Auth\Controllers'], func
 
 $routes->group('auth', ['namespace' => 'App\Modules\Auth\Controllers\Api'], function ($routes) {
     $routes->post('login', 'Auth::login');
+    $routes->post('refresh', 'Auth::refresh');
 	$routes->post('register', 'Auth::register');
 	$routes->post('resetPassword', 'Auth::resetPassword');
 	$routes->post('changePassword', 'Auth::changePassword');

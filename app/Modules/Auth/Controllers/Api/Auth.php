@@ -5,6 +5,8 @@ namespace App\Modules\Auth\Controllers\Api;
 use App\Controllers\BaseControllerApi;
 use App\Modules\Auth\Models\UserModel;
 use App\Modules\Group\Models\GroupUserModel;
+use App\Modules\Role\Models\RoleUserModel;
+use App\Modules\Permission\Models\PermissionRoleModel;
 use App\Modules\Log\Models\LogModel;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -17,12 +19,16 @@ class Auth extends BaseControllerApi
     protected $modelName    = UserModel::class;
     protected $log;
     protected $group;
+    protected $role;
+    protected $permission;
 
     public function __construct()
     {
         helper('app');
         $this->log = new LogModel();
         $this->group = new GroupUserModel();
+        $this->role = new RoleUserModel();
+        $this->permission = new PermissionRoleModel();
     }
 
     /**
@@ -250,28 +256,39 @@ class Auth extends BaseControllerApi
 
             helper('jwt');
 
-            $group = $this->group->getGroupById($user['user_id']);
+            //$group = $this->group->getGroupById($user['user_id']);
+
+            $role = $this->role->where('user_id', $user['user_id'])->first();
+            $roleId = $role['role_id'];
+
+            $permissions = $this->permission
+                ->select('permissions.name')
+                ->join('permissions', 'permissions.permission_id = permission_role.permission_id')
+                ->where('permission_role.role_id', $roleId)
+                ->findAll();
+            $permissionNames = array_column($permissions, 'name');
 
             $setSession = [
                 'id' => $user['user_id'],
+                'user_id' => $user['user_id'],
                 'email' => $user['email'],
                 'username' => $user['username'],
                 'fullname' => $user['fullname'],
-                'role' => $group['group_id'],
+                'role' => $roleId,
                 'active' => $user['is_active'],
-                'group' => $group['group_name'],
+                'permissions' => $permissionNames,
                 'logged_in' => true
             ];
             $this->session->set($setSession);
 
             if ($remember == true) {
                 // 8 Jam
-                setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 28800, "/", null, null, true);
+                setcookie("access_token", getSignedJWTForUser($emailAddress), time() + (24 * 3600), "/", null, null, true);
             } else {
                 // 2 Jam
                 setcookie("access_token", getSignedJWTForUser($emailAddress), time() + 7200, "/", null, null, true);
             }
-           
+
             // Update last_logged_in
             $lastLogin = [
                 'last_logged_in' => date('Y-m-d H:i:s'),
@@ -288,6 +305,7 @@ class Auth extends BaseControllerApi
                     'message' => lang('App.authSuccess'),
                     'data' => $user,
                     'access_token' => getSignedJWTForUser($emailAddress),
+                    'refresh_token' => createJWT($emailAddress, 60 * 24 * 7),
                     'appdata' => ['username' => $user, 'token' => getSignedJWTForUser($emailAddress)]
                 ]
             );
@@ -299,6 +317,29 @@ class Auth extends BaseControllerApi
                 ],
                 $responseCode
             );
+        }
+    }
+
+    public function refresh()
+    {
+        $json = $this->request->getJSON();
+        $refreshToken = $json->refresh_token ?? null;
+        $emailAddress = $json->email ?? null;
+
+        if (!$refreshToken) {
+            return $this->fail('Refresh token dibutuhkan', 400);
+        }
+
+        try {
+            helper('jwt');
+            $newAccessToken = createJWT($emailAddress, 60 * 24 * 7);
+
+            return $this->respond([
+                'status' => true,
+                'access_token' => $newAccessToken
+            ]);
+        } catch (\Exception $e) {
+            return $this->fail('Refresh token tidak valid / expired', 401);
         }
     }
 }

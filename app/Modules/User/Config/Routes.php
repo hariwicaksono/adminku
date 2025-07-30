@@ -11,6 +11,7 @@ $routes->group('user', ['filter' => 'auth', 'namespace' => 'App\Modules\User\Con
 
 $routes->group('api', ['filter' => 'jwtauth', 'namespace' => 'App\Modules\User\Controllers\Api'], function($routes){
 	$routes->get('user', 'User::index', ['filter' => 'permit:viewUser']);
+	$routes->get('user/(:segment)', 'User::show/$1', ['filter' => 'permit:viewUser']);
 	$routes->post('user/save', 'User::create', ['filter' => 'permit:createUser']);
 	$routes->put('user/update/(:segment)', 'User::update/$1', ['filter' => 'permit:updateUser']);
 	$routes->delete('user/delete/(:segment)', 'User::delete/$1', ['filter' => 'permit:deleteUser']);
@@ -18,4 +19,5 @@ $routes->group('api', ['filter' => 'jwtauth', 'namespace' => 'App\Modules\User\C
 	$routes->put('user/setRole/(:segment)', 'User::setRole/$1', ['filter' => 'permit:updateUser']);
 	$routes->post('user/changePassword', 'User::changePassword', ['filter' => 'permit:updateUser']);
 	$routes->put('user/setgroup/(:segment)', 'User::setGroup/$1', ['filter' => 'permit:updateUser']);
+	$routes->post('user/update-roles/(:segment)', 'User::updateRoles/$1');
 });

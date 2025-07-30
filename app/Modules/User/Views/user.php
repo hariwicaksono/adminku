@@ -18,12 +18,20 @@
                     <td>{{item.email}}</td>
                     <td>{{item.username}}</td>
                     <td>
-                        <span v-if="item.username == 'admin'">
-                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line disabled></v-select>
-                        </span>
-                        <span v-else>
-                            <v-select v-model="item.group_id" name="group" :items="groups" item-text="group_name" item-value="group_id" label="Select" single-line @change="setGroup(item)" :disabled="item.user_id == <?= session('id'); ?>"></v-select>
-                        </span>
+                        <v-select
+                            v-model="userRoleSelection[item.user_id]"
+                            :items="allRoles"
+                            item-text="name"
+                            item-value="role_id"
+                            label="Roles"
+                            multiple
+                            chips
+                            dense
+                            hide-details
+                            :loading="roleLoading[item.user_id] === true"
+                            :disabled="roleLoading[item.user_id] === true || item.user_id == '1'"
+                            @change="(val) => updateRoles(item.user_id, val)"
+                            class="w-100"></v-select>
                     </td>
                     <td>
                         <span v-if="item.username == 'admin'">
@@ -287,7 +295,7 @@
             text: 'Username',
             value: 'username'
         }, {
-            text: 'Group',
+            text: 'Roles',
             value: ''
         }, {
             text: '<?= lang("App.active") ?>',
@@ -345,12 +353,17 @@
             text: 'Date',
             value: 'created_at'
         }, ],
+
+        allRoles: [], // [{ id: 1, name: 'Admin' }, ...]
+        userRoleSelection: {}, // { user_id: [role_ids] }
+        roleLoading: {},
     }
 
     // Vue Created
     // Created: Dipanggil secara sinkron setelah instance dibuat
     createdVue = function() {
         this.getUsers();
+        this.getRoles();
         this.getGroups();
     }
 
@@ -512,6 +525,10 @@
                         //this.snackbar = true;
                         //this.snackbarMessage = data.message;
                         this.dataUsers = data.data;
+                        // Init selected roles per user
+                        res.data.data.forEach(user => {
+                            this.$set(this.userRoleSelection, user.user_id, user.roles.map(role => role.role_id));
+                        });
                     } else {
                         this.snackbar = true;
                         this.snackbarMessage = data.message;
@@ -927,6 +944,27 @@
             this.dataUserLog = [];
             this.reset();
         },
+
+        getRoles: function() {
+            axios.get('<?= base_url('api/role') ?>').then((res) => {
+                this.allRoles = res.data.data; // Assumes [{id, name}]
+            });
+        },
+
+        updateRoles: function(userId, newRoleIds) {
+            this.$set(this.roleLoading, userId, true);
+            axios.post(`<?= base_url('api/user/update-roles/') ?>${userId}`, {
+                roles: newRoleIds
+            }).then(res => {
+                this.snackbar = true;
+                this.snackbarMessage = res.data.message;
+            }).catch(err => {
+                this.snackbar = true;
+                this.snackbarMessage = err.response?.data?.message || 'Gagal memperbarui roles';
+            }).finally(() => {
+                this.$set(this.roleLoading, userId, false);
+            });
+        }
     }
 </script>
 <?php $this->endSection("js") ?>
