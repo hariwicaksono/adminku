@@ -1,15 +1,13 @@
 <?php
-
-use App\Libraries\Settings;
-
-$setting = new Settings();
+$language = new \App\Libraries\Language();
+$setting = new \App\Libraries\Settings();
 $appName = $setting->info['app_name'];
 $logo = $setting->info['img_logo'];
 $background = $setting->info['img_background'];
 $navbarColor = $setting->info['navbar_color'];
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?= $language->getHtmlLang(); ?>">
 
 <head>
     <meta charset="UTF-8">
@@ -52,7 +50,7 @@ $navbarColor = $setting->info['navbar_color'];
                 </v-btn>
                 <v-spacer></v-spacer>
                 <?php if (empty(session()->get('username'))) : ?>
-                    <v-btn text @click="modalAuthOpen">
+                    <v-btn text @click="modalAuthOpen" class="mr-2">
                         <v-icon>mdi-login-variant</v-icon> <span class="d-none d-sm-flex">Login</span>
                     </v-btn>
                 <?php endif; ?>
@@ -60,7 +58,7 @@ $navbarColor = $setting->info['navbar_color'];
                 <?php if (!empty(session()->get('username'))) : ?>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn text v-bind="attrs" v-on="on">
+                            <v-btn text v-bind="attrs" v-on="on" class="mr-2">
                                 <v-icon>mdi-account-circle</v-icon> <span class="d-none d-sm-flex"><?= session()->get('email') ?></span> <v-icon>mdi-chevron-down</v-icon>
                             </v-btn>
                         </template>
@@ -102,7 +100,7 @@ $navbarColor = $setting->info['navbar_color'];
                         </v-list>
                     </v-menu>
                 <?php endif; ?>
-                <v-btn icon @click.stop="rightMenu = !rightMenu">
+                <v-btn icon @click.stop="rightMenu = !rightMenu" class="mr-2">
                     <v-icon>mdi-cog-outline</v-icon>
                 </v-btn>
             </v-app-bar>
@@ -274,6 +272,13 @@ $navbarColor = $setting->info['navbar_color'];
             toggleTheme() {
                 this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
                 localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
+            },
+            formatNumber(number) {
+                const formattedNumber = new Intl.NumberFormat('<?= $language->getSiteLang(); ?>', {
+                    notation: 'compact',
+                    compactDisplay: 'short',
+                }).format(number);
+                return formattedNumber;
             },
         }
         var VueMasonryPlugin = window["vue-masonry-plugin"].VueMasonryPlugin;

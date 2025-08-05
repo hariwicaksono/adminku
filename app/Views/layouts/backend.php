@@ -1,14 +1,6 @@
 <?php
-// Memanggil library
-use App\Libraries\Permission;
-use App\Libraries\Settings;
-use App\Libraries\Language;
-
-$language = new Language();
-$permission = new Permission();
-$user_permission = $permission->init();
-
-$setting = new Settings();
+$language = new \App\Libraries\Language();
+$setting = new \App\Libraries\Settings();
 $appName = $setting->info['app_name'];
 $logo = $setting->info['img_logo'];
 $background = $setting->info['img_background'];
@@ -16,7 +8,7 @@ $navbarColor = $setting->info['navbar_color'];
 $sidebarColor = $setting->info['sidebar_color'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $language->getHtmlLang(); ?>">
 
 <head>
     <meta charset="UTF-8">
@@ -81,7 +73,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                 <?php if (!empty(session()->get('username'))) : ?>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn text v-bind="attrs" v-on="on">
+                            <v-btn text v-bind="attrs" v-on="on" class="mr-2">
                                 <v-icon>mdi-account-circle</v-icon> <span class="d-none d-sm-flex"><?= session()->get('email') ?></span> <v-icon>mdi-chevron-down</v-icon>
                             </v-btn>
                         </template>
@@ -121,8 +113,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                         </v-list>
                     </v-menu>
                 <?php endif; ?>
-                <v-divider class="mx-1" vertical></v-divider>
-                <v-btn icon @click.stop="rightMenu = !rightMenu">
+                <v-btn icon @click.stop="rightMenu = !rightMenu" class="mr-2">
                     <v-icon>mdi-cog-outline</v-icon>
                 </v-btn>
             </v-app-bar>
@@ -144,20 +135,18 @@ $sidebarColor = $setting->info['sidebar_color'];
                 <v-list nav>
                     <?php $uri = new \CodeIgniter\HTTP\URI(current_url()); ?>
 
-                    <?php if (in_array('menuDashboard', $user_permission)) : ?>
-                        <?php if (in_array('viewDashboard', $user_permission)) : ?>
-                            <v-list-item link href="<?= base_url('dashboard'); ?>" <?php if ($uri->getSegment(1) == "dashboard") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Dashboard" title="Dashboard">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-home</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>Dashboard</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        <?php endif; ?>
+                    <?php if (userHasPermission('dashboard.view')): ?>
+                        <v-list-item link href="<?= base_url('dashboard'); ?>" <?php if ($uri->getSegment(1) == "dashboard") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Dashboard" title="Dashboard">
+                            <v-list-item-icon>
+                                <v-icon>mdi-home</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>Dashboard</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
                     <?php endif; ?>
 
-                    <?php if (in_array('viewGaji', $user_permission)) : ?>
+                    <?php if (userHasPermission('gaji.view')): ?>
                         <v-list-item link href="<?= base_url('gaji'); ?>" <?php if ($uri->getSegment(1) == "gaji") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Daftar Gaji" title="Daftar Gaji">
                             <v-list-item-icon>
                                 <v-icon>mdi-cash-multiple</v-icon>
@@ -168,7 +157,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                         </v-list-item>
                     <?php endif; ?>
 
-                    <?php if (in_array('viewGolongan', $user_permission)) : ?>
+                    <?php if (userHasPermission('golongan.view')): ?>
                         <v-list-item link href="<?= base_url('golongan'); ?>" <?php if ($uri->getSegment(1) == "golongan") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Golongan" alt="Golongan">
                             <v-list-item-icon>
                                 <v-icon>mdi-file-document-outline</v-icon>
@@ -179,28 +168,15 @@ $sidebarColor = $setting->info['sidebar_color'];
                         </v-list-item>
                     <?php endif; ?>
 
-                    <?php if (in_array('menuPages', $user_permission)) : ?>
-                        <?php if (in_array('viewPages', $user_permission)) : ?>
-                            <v-list-item link href="<?= base_url('pages'); ?>" <?php if ($uri->getSegment(1) == "pages") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pages" title="Pages">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-file-document</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>Pages</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        <?php endif; ?>
-                    <?php endif; ?>
-
-                    <?php if (in_array('menuUser', $user_permission)) : ?>
-                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
+                    <?php if (userHasPermission('user.view')): ?>
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-account-multiple" <?php if ($uri->getSegment(1) == "user" || $uri->getSegment(1) == "role" || $uri->getSegment(1) == "permission" || $uri->getSegment(1) == "group") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.users') ?>" alt="<?= lang('App.users') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.users'); ?></v-list-item-title>
                                 </v-list-item-content>
                             </template>
 
-                            <?php if (in_array('viewUser', $user_permission)) : ?>
+                            <?php if (userHasPermission('user.view')): ?>
                                 <v-list-item link href="<?= base_url('user'); ?>" <?php if ($uri->getSegment(1) == "user") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.users'); ?>" alt="<?= lang('App.users'); ?>">
                                     <v-list-item-icon>
                                         <v-icon>mdi-account</v-icon>
@@ -211,28 +187,39 @@ $sidebarColor = $setting->info['sidebar_color'];
                                 </v-list-item>
                             <?php endif; ?>
 
-                            <?php if (in_array('viewGroup', $user_permission)) : ?>
-                                <v-list-item link href="<?= base_url('group'); ?>" <?php if ($uri->getSegment(1) == "group") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Group" alt="Group">
+                            <?php if (userHasPermission('role.view')): ?>
+                                <v-list-item link href="<?= base_url('role'); ?>" <?php if ($uri->getSegment(1) == "role") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Roles" alt="Roles">
                                     <v-list-item-icon>
-                                        <v-icon>mdi-shield-check</v-icon>
+                                        <v-icon>mdi-account-check</v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-content>
-                                        <v-list-item-title>Group</v-list-item-title>
+                                        <v-list-item-title>Roles</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <?php endif; ?>
+
+                            <?php if (userHasPermission('permission.view')): ?>
+                                <v-list-item link href="<?= base_url('permission'); ?>" <?php if ($uri->getSegment(1) == "permission") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Permissions" alt="Permissions">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-account-details</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>Permissions</v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
                             <?php endif; ?>
                         </v-list-group>
                     <?php endif; ?>
 
-                    <?php if (in_array('menuSetting', $user_permission)) : ?>
-                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-cog" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
+                    <?php if (userHasPermission('setting.view')): ?>
+                        <v-list-group color="<?= ($sidebarColor == 'white' ? 'dark' : 'white'); ?>" prepend-icon="mdi-cog-outline" <?php if ($uri->getSegment(1) == "settings" || $uri->getSegment(1) == "pages" || $uri->getSegment(1) == "backup") : ?><?= 'value="true"'; ?><?php endif; ?> title="<?= lang('App.settings') ?>" alt="<?= lang('App.settings') ?>">
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title><?= lang('App.settings'); ?></v-list-item-title>
                                 </v-list-item-content>
                             </template>
 
-                            <?php if (in_array('viewSetting', $user_permission)) : ?>
+                            <?php if (userHasPermission('setting.view')): ?>
                                 <v-list-item link href="<?= base_url('settings'); ?>" <?php if ($uri->getSegment(1) == "settings") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="<?= lang('App.application'); ?>" alt="<?= lang('App.application'); ?>">
                                     <v-list-item-icon>
                                         <v-icon>mdi-cog</v-icon>
@@ -243,7 +230,18 @@ $sidebarColor = $setting->info['sidebar_color'];
                                 </v-list-item>
                             <?php endif; ?>
 
-                            <?php if (in_array('viewBackup', $user_permission)) : ?>
+                            <?php if (userHasPermission('page.view')): ?>
+                                <v-list-item link href="<?= base_url('pages'); ?>" <?php if ($uri->getSegment(1) == "pages") : ?><?php echo 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> alt="Pages" title="Pages">
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-file-document</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>Pages</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <?php endif; ?>
+
+                            <?php if (userHasPermission('backup.view')): ?>
                                 <v-list-item link href="<?= base_url('backup'); ?>" <?php if ($uri->getSegment(1) == "backup") : ?><?= 'class="v-item--active v-list-item--active"'; ?><?php endif; ?> title="Backup Database" alt="Backup Database">
                                     <v-list-item-icon>
                                         <v-icon>mdi-database</v-icon>
@@ -260,15 +258,6 @@ $sidebarColor = $setting->info['sidebar_color'];
                 </v-list>
 
                 <template v-slot:append>
-                    <v-divider></v-divider>
-                    <div class="text-center">
-                        <v-list-item>
-                            <v-list-item-icon style="font-size:12px;" v-if="toggleMini">
-                                &copy; {{ new Date().getFullYear() }}
-                            </v-list-item-icon>
-                            <v-list-item-content style="font-size:12px;" v-else>&copy; {{ new Date().getFullYear() }} <?= env('appCompany') ?>. <?= $appName; ?> <?= env('appVersion') ?></v-list-item-content>
-                        </v-list-item>
-                    </div>
                 </template>
 
             </v-navigation-drawer>
@@ -317,9 +306,14 @@ $sidebarColor = $setting->info['sidebar_color'];
             </v-navigation-drawer>
 
             <v-main>
-                <v-container class="pa-5" fluid>
+                <v-container class="pa-5 mb-15" fluid>
                     <?= $this->renderSection('content') ?>
                 </v-container>
+                <v-footer absolute :color="$vuetify.theme.dark ? '':'#fff'" padless class="justify-center">
+                    <v-col class="text-center text-caption py-2" cols="12">
+                        &copy; {{ new Date().getFullYear() }} <a href="<?= env('appWebsite'); ?>" target="_blank"><?= env('appCompany'); ?></a>. <?= $appName; ?> <?= env('appVersion') ?>. All rights reserved.
+                    </v-col>
+                </v-footer>
             </v-main>
 
             <v-snackbar v-model="snackbar" :timeout="timeout" style="bottom:20px;">
@@ -469,7 +463,7 @@ $sidebarColor = $setting->info['sidebar_color'];
                 localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
             },
             formatNumber(number) {
-                const formattedNumber = new Intl.NumberFormat('<?= $language->siteLang; ?>', {
+                const formattedNumber = new Intl.NumberFormat('<?= $language->getSiteLang(); ?>', {
                     notation: 'compact',
                     compactDisplay: 'short',
                 }).format(number);

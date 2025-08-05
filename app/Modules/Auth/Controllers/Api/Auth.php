@@ -5,6 +5,7 @@ namespace App\Modules\Auth\Controllers\Api;
 use App\Controllers\BaseControllerApi;
 use App\Modules\Auth\Models\UserModel;
 use App\Modules\Group\Models\GroupUserModel;
+use App\Modules\Role\Models\RoleModel;
 use App\Modules\Role\Models\RoleUserModel;
 use App\Modules\Permission\Models\PermissionRoleModel;
 use App\Modules\Log\Models\LogModel;
@@ -20,6 +21,7 @@ class Auth extends BaseControllerApi
     protected $log;
     protected $group;
     protected $role;
+    protected $roleUser;
     protected $permission;
 
     public function __construct()
@@ -27,7 +29,8 @@ class Auth extends BaseControllerApi
         helper('app');
         $this->log = new LogModel();
         $this->group = new GroupUserModel();
-        $this->role = new RoleUserModel();
+        $this->role = new RoleModel();
+        $this->roleUser = new RoleUserModel();
         $this->permission = new PermissionRoleModel();
     }
 
@@ -258,8 +261,9 @@ class Auth extends BaseControllerApi
 
             //$group = $this->group->getGroupById($user['user_id']);
 
-            $role = $this->role->where('user_id', $user['user_id'])->first();
-            $roleId = $role['role_id'];
+            $roleUser = $this->roleUser->where('user_id', $user['user_id'])->first();
+            $roleId = $roleUser['role_id'];
+            $role = $this->role->find($roleId);
 
             $permissions = $this->permission
                 ->select('permissions.name')
@@ -275,6 +279,7 @@ class Auth extends BaseControllerApi
                 'username' => $user['username'],
                 'fullname' => $user['fullname'],
                 'role' => $roleId,
+                'group' => $role['name'],
                 'active' => $user['is_active'],
                 'permissions' => $permissionNames,
                 'logged_in' => true
