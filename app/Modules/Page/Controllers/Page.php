@@ -27,8 +27,7 @@ class Page extends BaseController
 
 	public function page()
 	{
-		$uri = new \CodeIgniter\HTTP\URI(current_url());
-		$slug = $uri->getSegment(1);
+		$slug = $this->request->getUri()->getSegment(1);
 
 		$page = $this->page->where('slug', $slug)->first();
 		if (session()->get('lang') == 'id') {
@@ -40,7 +39,7 @@ class Page extends BaseController
 		}
 		return view('page', [
 			'title' => ucfirst($pageTitle),
-			'slug' => $uri->getSegment(1)
+			'slug' => $this->request->getUri()->getSegment(1)
 		]);
 	}
 
