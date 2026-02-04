@@ -1,9 +1,106 @@
 # Changelog
 
-## [v4.6.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.0) (2025-05-02)
+## [v4.6.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.4) (2025-12-12)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.3...v4.6.4)
+
+### Fixed Bugs
+
+* fix: prevent non-shared DB instances from polluting shared cache by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9679
+* fix: `Connection::getFieldData()` default value convention for `SQLSRV` and `OCI8` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9680
+* fix: `Forge::modifyColumn()` for Postgre handler by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9676
+* fix: setting `created_at` field in `Model::replace()` method by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9693
+* fix: Casting in insertBatch and updateBatch methods. by @patel-vansh in https://github.com/codeigniter4/CodeIgniter4/pull/9698
+* fix: `compileOrderBy()` method by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9697
+* fix: SQLite3 password handling for empty string by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9729
+* fix: TypeError in `valid_base64` rule when checking invalid base64 strings by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9733
+* fix: debug toolbar logs collector behavior on `isEmpty()` by @mjomble in https://github.com/codeigniter4/CodeIgniter4/pull/9724
+* fix: crash in `toggleViewsHints` - `debugDiv.appendChild` (`toolbar.js`) by @mjomble in https://github.com/codeigniter4/CodeIgniter4/pull/9735
+* fix: cannot read properties of null in `toggleViewsHints` (`toolbar.js`) by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9736
+* fix: type error in controlled cell by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9784
+* fix: handle resources and closures in JSON exception responses by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9788
+* fix: quote reserved keyword `timestamp` used as a field name for session table by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9805
+* fix: Add an IDs for toolbar form fields by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9823
+* fix: disable echo in the preload file by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9825
+* fix(cache): prevent Redis error when `deleteMatching()` finds no keys by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9829
+
+### Refactoring
+
+* refactor: change `$request` to `CLIRequest|IncomingRequest` in `ResponseTrait` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9658
+* refactor: fix phpdoc and improve code in `Language` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9656
+* refactor: remove redundant property declarations in `BaseController` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9659
+* refactor: update `CheckPhpIni` code by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9672
+* refactor: Improve types for phpstan by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9685
+* refactor: fix phpstan issues on magic properties by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9728
+* refactor: use `superglobals` service in the `UserAgent` class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9783
+
+## [v4.6.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.3) (2025-08-02)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.2...v4.6.3)
+
+### Fixed Bugs
+
+* fix: CID check in Email class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9645
+* fix: SMTP connection resource validation in `Email` class destructor by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9648
+
+### Refactoring
+
+* refactor: update preload script to exclude `util_bootstrap` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9649
+* refactor: phpdoc for `Config\Filters::$globals` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9652
+
+## [v4.6.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.2) (2025-07-26)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.1...v4.6.2)
+
+### Security
+
+* **ImageMagickHandler**: *Command Injection Vulnerability in ImageMagick Handler*
+    Fixes a vulnerability relating to uses of `ImageMagickHandler`'s `resize()` or `text()` methods
+    where an attacker can upload malicious filenames containing shell metacharacters that get executed when
+    the image is processed or when text is added to the image.
+
+    See the [security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9952-gv64-x94c)
+    for details. Credits to @vicevirus for reporting the issue.
+
+### Fixed Bugs
+
+* chore: add missing EscaperInterface to the AutoloadConfig by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9561
+* fix: remove service dependency from sanitize_filename() helper function by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9560
+* fix: use native PHP truthiness for condition evaluation in when()/whenNot() by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9576
+* fix: add error handling for corrupted cache files in `FileHandler` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9586
+* fix: correct `getHostname()` fallback logic in `Email` class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9587
+* fix: encapsulation violation in `BasePreparedQuery` class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9603
+* fix: URI authority generation for schemes without default ports by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9605
+* fix: correct path parsing in `SiteURIFactory::parseRequestURI()` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9613
+* fix: support for multibyte folder names when the app is served from a subfolder by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9615
+* fix: use correct 24-hour time format in development error page. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/9628
+* fix: improve CURLRequest intermediate HTTP response handling by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9627
+* fix: ensure `make:test` works on Windows by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9635
+* fix: ensure `make:test` generates test files ending in `Test` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9636
+* fix: `make:test` requires 3 inputs after entering an empty class name by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9637
+* fix: add filename parameters to inline Content-Disposition headers by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9638
+
+### Refactoring
+
+* refactor: add `system/util_bootstrap.php` to curb overreliance to `system/Test/bootstrap.php` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9562
+* refactor: update places to use `system/util_bootstrap.php` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9568
+* refactor: more accurate array PHPDocs of Cookie by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9569
+* refactor: use native phpdocs wherever possible by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9571
+* refactor: fix `notIdentical.alwaysTrue` error by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9579
+* refactor: fix phpstan errors in `Events` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9580
+* refactor: fix non-booleans in if conditions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9578
+* refactor: fix and micro-optimize code in `Format` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9583
+* refactor: fix various phpstan errors in Log component by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9581
+* refactor: partial fix errors on Email by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9582
+* refactor: fix phpstan errors in `ResponseTrait` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9591
+* refactor: precise PHPDocs for Autoloader by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9593
+* refactor: fix phpstan errors in mock classes by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9594
+* refactor: fix various phpstan errors in Cache by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9610
+* fix: apply rector rule TernaryImplodeToImplodeRector by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9614
+* refactor: `Console::showHeader()` call `date()` only once by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9616
+
+## [v4.6.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.1) (2025-05-02)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.0...v4.6.1)
 
 ### Fixed Bugs
+
 * fix(CURLRequest): multiple header sections after redirects by @ducng99 in https://github.com/codeigniter4/CodeIgniter4/pull/9426
 * fix: set headers for CORS by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9437
 * fix: upsert with composite unique index by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9454
@@ -13,6 +110,7 @@
 * fix: added "application/octet-stream" to the "stl" mime type in the M… by @Franky5831 in https://github.com/codeigniter4/CodeIgniter4/pull/9543
 
 ### Refactoring
+
 * refactor: get upper first protocol only one call in Email by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9449
 * refactor: PHPDocs in `env()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9468
 * refactor: remove lowercase event name for logging by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9483
