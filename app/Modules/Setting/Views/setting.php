@@ -31,6 +31,16 @@
                 </tr>
             </template>
         </v-data-table>
+        <v-alert shaped type="info">
+            Cara mengetahui google analytics script
+            Melalui Dasbor Google Analytics (Admin):
+            Login ke akun Google Analytics Anda.
+            Masuk ke bagian Admin (ikon roda gigi di kiri bawah).
+            Pilih Data Streams di bawah properti.
+            Klik aliran data web (website Anda).
+            Gulir ke bawah ke bagian "Google tag", lalu klik View tag instructions.
+            Pilih tab "Install manually" untuk melihat script lengkap yang harus dipasang.
+        </v-alert>
     </v-card>
 
 </template>

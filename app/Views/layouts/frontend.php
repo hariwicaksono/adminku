@@ -5,6 +5,7 @@ $appName = $setting->info['app_name'];
 $logo = $setting->info['img_logo'];
 $background = $setting->info['img_background'];
 $navbarColor = $setting->info['navbar_color'];
+$googleAnalytics = $setting->info['google_analytics'];
 ?>
 <!DOCTYPE html>
 <html lang="<?= $language->getHtmlLang(); ?>">
@@ -302,6 +303,7 @@ $navbarColor = $setting->info['navbar_color'];
             methods: methodsVue
         })
     </script>
+    <?= $googleAnalytics ?>
 </body>
 
 </html>

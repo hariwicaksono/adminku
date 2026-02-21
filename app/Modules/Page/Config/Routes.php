@@ -15,6 +15,8 @@ $routes->group('', ['namespace' => 'App\Modules\Page\Controllers'], function($ro
 	$routes->get('privacy', 'Page::page');
 	$routes->get('legal', 'Page::page');
 	$routes->get('about', 'Page::page');
+	$routes->get('services', 'Page::page');
+	$routes->get('contact', 'Page::page');
 });
 
 $routes->group('api/home', ['namespace' => 'App\Modules\Page\Controllers\Api'], function($routes){
