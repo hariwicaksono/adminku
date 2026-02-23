@@ -29,6 +29,8 @@ class Page extends BaseController
 	{
 		$slug = $this->request->getUri()->getSegment(1);
 
+		track_visitor($slug);
+
 		$page = $this->page->where('slug', $slug)->first();
 		if (session()->get('lang') == 'id') {
 			$pageTitle = $page['page_title'];
@@ -42,5 +44,4 @@ class Page extends BaseController
 			'slug' => $this->request->getUri()->getSegment(1)
 		]);
 	}
-
 }

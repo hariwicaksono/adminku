@@ -20,6 +20,7 @@ class Home extends BaseController
 
 	public function index(): string
 	{
+		track_visitor('home');
 		return view('home', [
 			'title' => 'Home',
 		]);
@@ -27,7 +28,7 @@ class Home extends BaseController
 
 	public function sitemap()
 	{
-		$this->response->setHeader('Content-Type', 'text/xml;charset=UTF-8'); 
+		$this->response->setHeader('Content-Type', 'text/xml;charset=UTF-8');
 		return view('sitemap', [
 			'title' => 'Sitemap',
 			'pages' => $this->page->orderBy('page_id', 'DESC')->findAll(),

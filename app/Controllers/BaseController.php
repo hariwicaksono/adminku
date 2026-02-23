@@ -37,8 +37,7 @@ abstract class BaseController extends Controller
      */
     protected $helpers = ['form', 'cookie'];
 
-    
-	/**
+    /**
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
      * to all other controllers that extend BaseController.
@@ -46,7 +45,7 @@ abstract class BaseController extends Controller
      * @var array
      */
     protected $session;
-	
+
     /**
      * Constructor.
      */
