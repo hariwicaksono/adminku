@@ -70,7 +70,7 @@
         <v-card>
             <v-card-title>Visitor Berdasarkan Jenis</v-card-title>
             <v-card-text>
-                <bar-chart3 :chart-jenis="chartJenis" :chart-jumlah="chartJumlah"></bar-chart3>
+                <pie-chart1 :chart-jenis="chartJenis" :chart-jumlah="chartJumlah"></pie-chart1>
             </v-card-text>
         </v-card>
     </template>
@@ -246,8 +246,8 @@
         },
 
         chart3: function() {
-            Vue.component('bar-chart3', {
-                extends: VueChartJs.Bar,
+            Vue.component('pie-chart1', {
+                extends: VueChartJs.Pie,
                 props: ['chartJenis', 'chartJumlah'],
                 watch: {
                     chartJenis: {
@@ -273,40 +273,29 @@
                             datasets: [{
                                 data: this.chartJumlah.map(Number),
                                 backgroundColor: [
-                                    'rgba(54, 162, 235, 0.6)',
-                                    'rgba(0, 128, 0, 0.6)',
-                                    'rgba(244, 67, 54, 0.6)',
+                                    'rgba(59, 130, 246, 0.8)', // Desktop
+                                    'rgba(16, 185, 129, 0.8)', // Mobile
+                                    'rgba(244, 63, 94, 0.8)', // Others
                                 ],
                                 borderColor: [
-                                    'rgb(54, 162, 235)',
-                                    'rgb(0, 255, 0)',
-                                    'rgb(244, 67, 54)',
+                                    'rgb(59, 130, 246)',
+                                    'rgb(16, 185, 129)',
+                                    'rgb(244, 63, 94)',
+                                ],
+                                hoverBackgroundColor: [
+                                    'rgba(59, 130, 246, 1)',
+                                    'rgba(16, 185, 129, 1)',
+                                    'rgba(244, 63, 94, 1)',
                                 ],
                                 borderWidth: 1,
                             }]
                         }, {
+                            responsive: true,
                             maintainAspectRatio: false,
                             legend: {
-                                display: false
-                            },
-                            scales: {
-                                xAxes: [{
-                                    display: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Jenis Device'
-                                    }
-                                }],
-                                yAxes: [{
-                                    display: true,
-                                    ticks: {
-                                        beginAtZero: true,
-                                        steps: 10,
-                                        stepValue: 5,
-                                        max: 10
-                                    }
-                                }]
-                            },
+                                display: true,
+                                position: 'bottom'
+                            }
                         })
                     }
                 }
