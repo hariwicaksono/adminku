@@ -61,11 +61,10 @@
                             </v-tab>
 
                             <v-tab-item class="mt-4">
-                                <quill-editor v-model="pageBody" ref="quillEditor" :options="editorOption" :error-messages="page_bodyError"></vue-quill-editor>
+                                <quill-editor v-model="pageBody" ref="quillEditor" :options="editorOption" :error-messages="page_bodyError"></quill-editor>
                             </v-tab-item>
                             <v-tab-item class="mt-4">
-                                <quill-editor v-model="pageBodyEn" ref="quillEditor" :options="editorOption" :error-messages="page_body_enError"></vue-quill-editor>
-
+                                <quill-editor v-model="pageBodyEn" ref="quillEditor" :options="editorOption" :error-messages="page_body_enError"></quill-editor>
                             </v-tab-item>
                         </v-tabs>
                     </v-form>
